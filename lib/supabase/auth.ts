@@ -99,6 +99,7 @@ export async function createTrainerProfile(
         qualification: data.qualification || null,
         years_of_experience: data.yearsOfExperience || 0,
         status: 'pending',
+        approved: false,
       },
     ])
     .select()

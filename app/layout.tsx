@@ -3,8 +3,8 @@ import { Geist, Geist_Mono } from 'next/font/google'
 
 import { Analytics } from '@vercel/analytics/next'
 
-import { Navbar } from '@/components/navbar'
-import { Footer } from '@/components/footer'
+//import { Navbar } from '@/components/navbar'
+//import { Footer } from '@/components/footer'
 
 import './globals.css'
 
@@ -68,17 +68,14 @@ export default function RootLayout({
       <body
         className={`${geist.variable} ${geistMono.variable} font-sans antialiased bg-white text-slate-900`}
       >
-        {/* Navbar */}
-        <Navbar />
+       
 
         {/* Main Content */}
         <main className="min-h-screen">
           {children}
         </main>
 
-        {/* Footer */}
-        <Footer />
-
+    
         {/* Analytics */}
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>

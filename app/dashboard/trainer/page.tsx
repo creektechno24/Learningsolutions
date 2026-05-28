@@ -1,101 +1,136 @@
-'use client'
-
+import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import {
-  Users,
-  Building2,
   BookOpen,
-  MessageSquare,
+  CalendarDays,
+  Clock3,
+  User2,
 } from 'lucide-react'
 
-export default function AdminDashboardPage() {
+import { createClient } from '@/lib/supabase/server'
+
+export default async function TrainerDashboardPage() {
+  const supabase = await createClient()
+
+  // USER
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
+
+  if (!user) {
+    redirect('/auth/login')
+  }
+
+  // TRAINER PROFILE
+  const { data: trainer } = await supabase
+    .from('trainer_profiles')
+    .select('*')
+    .eq('id', user.id)
+    .single()
+
+  if (!trainer) {
+    redirect('/auth/login')
+  }
+
+  // PENDING
+  if (trainer.status === 'pending') {
+    redirect('/dashboard/trainer-pending')
+  }
+
+  // REJECTED
+  if (trainer.status === 'rejected') {
+    redirect('/dashboard/trainer-rejected')
+  }
+
+  // APPROVED ONLY
   return (
     <div className="space-y-8">
       {/* Header */}
       <div>
         <h1 className="text-3xl font-bold text-slate-900">
-          Admin Dashboard
+          Trainer Dashboard
         </h1>
 
         <p className="text-slate-600 mt-2">
-          Manage trainers, enterprises, courses and inquiries.
+          Welcome back, {trainer.first_name}
         </p>
       </div>
 
       {/* Analytics Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
-        {/* Trainers */}
+
+        {/* Assigned Trainings */}
         <div className="bg-white rounded-2xl border p-6 shadow-sm">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-slate-500">
-                Total Trainers
+                Assigned Trainings
               </p>
 
               <h2 className="text-3xl font-bold mt-2">
-                --
+                0
               </h2>
             </div>
 
             <div className="w-12 h-12 rounded-xl bg-blue-100 flex items-center justify-center">
-              <Users className="text-blue-600" />
+              <BookOpen className="text-blue-600" />
             </div>
           </div>
         </div>
 
-        {/* Enterprises */}
+        {/* Upcoming Sessions */}
         <div className="bg-white rounded-2xl border p-6 shadow-sm">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-slate-500">
-                Enterprises
+                Upcoming Sessions
               </p>
 
               <h2 className="text-3xl font-bold mt-2">
-                --
+                0
               </h2>
             </div>
 
             <div className="w-12 h-12 rounded-xl bg-green-100 flex items-center justify-center">
-              <Building2 className="text-green-600" />
+              <CalendarDays className="text-green-600" />
             </div>
           </div>
         </div>
 
-        {/* Courses */}
+        {/* Training Hours */}
         <div className="bg-white rounded-2xl border p-6 shadow-sm">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-slate-500">
-                Courses
+                Training Hours
               </p>
 
               <h2 className="text-3xl font-bold mt-2">
-                --
+                0
               </h2>
             </div>
 
             <div className="w-12 h-12 rounded-xl bg-purple-100 flex items-center justify-center">
-              <BookOpen className="text-purple-600" />
+              <Clock3 className="text-purple-600" />
             </div>
           </div>
         </div>
 
-        {/* Inquiries */}
+        {/* Profile Status */}
         <div className="bg-white rounded-2xl border p-6 shadow-sm">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-slate-500">
-                Inquiries
+                Profile Status
               </p>
 
-              <h2 className="text-3xl font-bold mt-2">
-                --
+              <h2 className="text-xl font-bold mt-2 text-green-600">
+                Approved
               </h2>
             </div>
 
-            <div className="w-12 h-12 rounded-xl bg-orange-100 flex items-center justify-center">
-              <MessageSquare className="text-orange-600" />
+            <div className="w-12 h-12 rounded-xl bg-green-100 flex items-center justify-center">
+              <User2 className="text-green-600" />
             </div>
           </div>
         </div>
@@ -109,64 +144,36 @@ export default function AdminDashboardPage() {
 
         <div className="flex flex-wrap gap-4">
           <Link
-            href="/dashboard/admin/trainers"
+            href="/dashboard/trainer/profile"
             className="px-5 py-3 rounded-xl bg-blue-600 text-white hover:bg-blue-700 transition-colors"
           >
-            Manage Trainers
+            Edit Profile
           </Link>
 
           <Link
-            href="/dashboard/admin/enterprises"
+            href="/dashboard/trainer/trainings"
             className="px-5 py-3 rounded-xl bg-green-600 text-white hover:bg-green-700 transition-colors"
           >
-            Manage Enterprises
+            View Trainings
           </Link>
 
           <Link
-            href="/dashboard/admin/courses"
+            href="/dashboard/trainer/courses"
             className="px-5 py-3 rounded-xl bg-purple-600 text-white hover:bg-purple-700 transition-colors"
           >
-            Manage Courses
+            My Courses
           </Link>
         </div>
       </div>
 
-      {/* Pending Approvals */}
-      <div className="grid md:grid-cols-2 gap-6">
-        {/* Pending Trainers */}
-        <div className="bg-white rounded-2xl border p-6 shadow-sm">
-          <h3 className="text-xl font-semibold mb-4">
-            Pending Trainer Approvals
-          </h3>
+      {/* Recent Trainings */}
+      <div className="bg-white rounded-2xl border p-6 shadow-sm">
+        <h3 className="text-xl font-semibold mb-6">
+          Recent Assigned Trainings
+        </h3>
 
-          <p className="text-4xl font-bold text-blue-600 mb-6">
-            --
-          </p>
-
-          <Link
-            href="/dashboard/admin/trainers"
-            className="inline-flex items-center justify-center px-5 py-3 rounded-xl bg-blue-600 text-white hover:bg-blue-700 transition-colors"
-          >
-            Review Trainers
-          </Link>
-        </div>
-
-        {/* Pending Enterprises */}
-        <div className="bg-white rounded-2xl border p-6 shadow-sm">
-          <h3 className="text-xl font-semibold mb-4">
-            Pending Enterprise Approvals
-          </h3>
-
-          <p className="text-4xl font-bold text-green-600 mb-6">
-            --
-          </p>
-
-          <Link
-            href="/dashboard/admin/enterprises"
-            className="inline-flex items-center justify-center px-5 py-3 rounded-xl bg-green-600 text-white hover:bg-green-700 transition-colors"
-          >
-            Review Enterprises
-          </Link>
+        <div className="border rounded-xl p-6 text-center text-slate-500">
+          No trainings assigned yet
         </div>
       </div>
     </div>

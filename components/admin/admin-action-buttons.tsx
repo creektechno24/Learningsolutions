@@ -1,88 +1,81 @@
-import { Button } from '@/components/ui/button'
+'use client'
+
 import { useState } from 'react'
-import { Check, X, Loader2 } from 'lucide-react'
+import { Button } from '@/components/ui/button'
 
 interface AdminActionButtonsProps {
   id: string
-  status: string
-  type: 'trainer' | 'enterprise'
-  onStatusChange?: (newStatus: string) => void
+  status: 'approved' | 'pending' | 'rejected'
+  type: 'trainer'
+  onStatusChange: (
+    status: 'approved' | 'pending' | 'rejected'
+  ) => void
 }
 
 export function AdminActionButtons({
   id,
   status,
-  type,
   onStatusChange,
 }: AdminActionButtonsProps) {
   const [loading, setLoading] = useState(false)
 
-  const handleApprove = async () => {
-    setLoading(true)
+  const updateStatus = async (
+    newStatus: 'approved' | 'pending' | 'rejected'
+  ) => {
     try {
-      const endpoint = `/api/admin/${type === 'trainer' ? 'trainers' : 'enterprises'}/${id}`
-      const response = await fetch(endpoint, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ status: 'approved' }),
-      })
+      setLoading(true)
 
-      if (!response.ok) throw new Error('Failed to approve')
-      onStatusChange?.('approved')
+      const response = await fetch(
+        `/api/admin/trainers/${id}`,
+        {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            status: newStatus,
+          }),
+        }
+      )
+
+      const data = await response.json()
+
+      console.log(data)
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed')
+      }
+
+      onStatusChange(newStatus)
     } catch (error) {
-      console.error('Approval error:', error)
-      alert('Failed to approve')
+      console.error(error)
     } finally {
       setLoading(false)
     }
-  }
-
-  const handleReject = async () => {
-    setLoading(true)
-    try {
-      const endpoint = `/api/admin/${type === 'trainer' ? 'trainers' : 'enterprises'}/${id}`
-      const response = await fetch(endpoint, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ status: 'rejected' }),
-      })
-
-      if (!response.ok) throw new Error('Failed to reject')
-      onStatusChange?.('rejected')
-    } catch (error) {
-      console.error('Rejection error:', error)
-      alert('Failed to reject')
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  if (status === 'approved' || status === 'rejected') {
-    return null
   }
 
   return (
-    <div className="flex gap-2">
-      <Button
-        size="sm"
-        variant="default"
-        onClick={handleApprove}
-        disabled={loading}
-        className="gap-1"
-      >
-        {loading ? <Loader2 size={16} className="animate-spin" /> : <Check size={16} />}
-        Approve
-      </Button>
-      <Button
-        size="sm"
-        variant="destructive"
-        onClick={handleReject}
-        disabled={loading}
-        className="gap-1"
-      >
-        {loading ? <Loader2 size={16} className="animate-spin" /> : <X size={16} />}
-        Reject
-      </Button>
+    <div className="flex items-center justify-end gap-2">
+      {status !== 'approved' && (
+        <Button
+          size="sm"
+          disabled={loading}
+          onClick={() => updateStatus('approved')}
+        >
+          Approve
+        </Button>
+      )}
+
+      {status !== 'rejected' && (
+        <Button
+          size="sm"
+          variant="destructive"
+          disabled={loading}
+          onClick={() => updateStatus('rejected')}
+        >
+          Reject
+        </Button>
+      )}
     </div>
   )
 }

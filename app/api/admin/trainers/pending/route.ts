@@ -8,6 +8,8 @@ export async function GET() {
     const { data, error } = await supabase
       .from('trainer_profiles')
       .select('*')
+      .eq('status', 'pending')
+      .eq('approved', false)
       .order('created_at', { ascending: false })
 
     if (error) {

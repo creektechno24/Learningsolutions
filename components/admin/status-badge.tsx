@@ -1,25 +1,29 @@
-import { Badge } from '@/components/ui/badge'
-
 interface StatusBadgeProps {
-  status: 'pending' | 'approved' | 'rejected'
+  status: 'approved' | 'pending' | 'rejected'
 }
 
-export function StatusBadge({ status }: StatusBadgeProps) {
-  const variants: Record<string, string> = {
-    pending: 'bg-yellow-100 text-yellow-800',
-    approved: 'bg-green-100 text-green-800',
-    rejected: 'bg-red-100 text-red-800',
+export function StatusBadge({
+  status,
+}: StatusBadgeProps) {
+  if (status === 'approved') {
+    return (
+      <span className="px-3 py-1 rounded-full text-sm bg-green-100 text-green-700">
+        Approved
+      </span>
+    )
   }
 
-  const labels: Record<string, string> = {
-    pending: 'Pending',
-    approved: 'Approved',
-    rejected: 'Rejected',
+  if (status === 'rejected') {
+    return (
+      <span className="px-3 py-1 rounded-full text-sm bg-red-100 text-red-700">
+        Rejected
+      </span>
+    )
   }
 
   return (
-    <Badge className={variants[status]}>
-      {labels[status]}
-    </Badge>
+    <span className="px-3 py-1 rounded-full text-sm bg-yellow-100 text-yellow-700">
+      Pending
+    </span>
   )
 }

@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
-import { Menu, X, ChevronRight } from 'lucide-react'
+import { Menu, X } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { cn } from '@/lib/utils'
@@ -23,8 +23,8 @@ export function Navbar() {
         } = await supabase.auth.getUser()
 
         setUser(user)
-      } catch (err) {
-        console.error('Error fetching user:', err)
+      } catch (error) {
+        console.error('Error fetching user:', error)
       } finally {
         setLoading(false)
       }
@@ -38,7 +38,9 @@ export function Navbar() {
 
     window.addEventListener('scroll', handleScroll)
 
-    return () => window.removeEventListener('scroll', handleScroll)
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+    }
   }, [])
 
   return (
@@ -47,15 +49,16 @@ export function Navbar() {
         'sticky top-0 z-50 transition-all duration-300',
         scrolled
           ? 'backdrop-blur-xl bg-white/80 border-b border-white/20 shadow-[0_8px_30px_rgba(15,23,42,0.08)]'
-          : 'bg-transparent'
+          : 'bg-white'
       )}
     >
       <div className="max-w-7xl mx-auto px-4 md:px-6">
         <div className="h-20 flex items-center justify-between">
+
           {/* Logo */}
           <Link
             href="/"
-            className="flex items-center gap-3 group"
+            className="flex items-center gap-3"
           >
             <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-blue-600 via-indigo-600 to-violet-600 flex items-center justify-center shadow-lg shadow-blue-500/20">
               <span className="text-white font-bold text-lg">
@@ -67,6 +70,7 @@ export function Navbar() {
               <h1 className="text-lg font-bold tracking-tight text-slate-900">
                 LearningSolutions
               </h1>
+
               <p className="text-xs text-slate-500 -mt-1">
                 Enterprise Training Platform
               </p>
@@ -104,17 +108,20 @@ export function Navbar() {
             </Link>
           </div>
 
-          {/* Right Actions */}
+          {/* Desktop Right */}
           <div className="hidden lg:flex items-center gap-3">
             {!loading && (
               <>
                 {user ? (
-                  <Link href="/dashboard">
-                    <Button className="h-11 px-5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 shadow-lg shadow-blue-500/20">
-                      Dashboard
-                      <ChevronRight className="ml-2 w-4 h-4" />
+                  <form action="/auth/logout" method="POST">
+                    <Button
+                      type="submit"
+                      variant="outline"
+                      className="h-11 px-5 rounded-xl"
+                    >
+                      Logout
                     </Button>
-                  </Link>
+                  </form>
                 ) : (
                   <>
                     <Link href="/auth/login">
@@ -137,10 +144,10 @@ export function Navbar() {
             )}
           </div>
 
-          {/* Mobile Button */}
+          {/* Mobile Menu Button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="lg:hidden w-11 h-11 rounded-xl border border-slate-200 bg-white/80 backdrop-blur flex items-center justify-center"
+            className="lg:hidden w-11 h-11 rounded-xl border border-slate-200 bg-white flex items-center justify-center"
           >
             {isOpen ? (
               <X className="w-5 h-5 text-slate-700" />
@@ -152,7 +159,8 @@ export function Navbar() {
 
         {/* Mobile Menu */}
         {isOpen && (
-          <div className="lg:hidden py-5 border-t border-slate-200 bg-white/90 backdrop-blur-xl rounded-b-3xl shadow-2xl">
+          <div className="lg:hidden py-5 border-t border-slate-200 bg-white rounded-b-3xl shadow-2xl">
+
             <div className="flex flex-col gap-2">
               {[
                 { label: 'Courses', href: '/courses' },
@@ -175,13 +183,18 @@ export function Navbar() {
               {!loading && (
                 <>
                   {user ? (
-                    <Link href="/dashboard">
-                      <Button className="w-full h-11 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600">
-                        Dashboard
+                    <form action="/auth/logout" method="POST">
+                      <Button
+                        type="submit"
+                        variant="outline"
+                        className="w-full h-11 rounded-xl"
+                      >
+                        Logout
                       </Button>
-                    </Link>
+                    </form>
                   ) : (
                     <div className="space-y-3">
+
                       <Link href="/auth/login">
                         <Button
                           variant="outline"
@@ -196,11 +209,13 @@ export function Navbar() {
                           Get Started
                         </Button>
                       </Link>
+
                     </div>
                   )}
                 </>
               )}
             </div>
+
           </div>
         )}
       </div>

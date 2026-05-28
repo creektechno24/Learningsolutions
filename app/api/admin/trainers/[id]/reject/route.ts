@@ -3,23 +3,21 @@ import { createClient } from '@/lib/supabase/server'
 
 export async function PATCH(
   request: NextRequest,
-  context: { params: Promise<{ id: string }> }
+  context: { params: { id: string } }
 ) {
   try {
     const supabase = await createClient()
 
-    const body = await request.json()
-    const { status } = body
-
-    const params = await context.params
+    const trainerId = context.params.id
 
     const { data, error } = await supabase
       .from('trainer_profiles')
       .update({
-        status,
-        approved: status === 'approved',
+        approved: false,
+        status: 'rejected',
+        updated_at: new Date().toISOString(),
       })
-      .eq('id', params.id)
+      .eq('id', trainerId)
       .select()
       .single()
 
@@ -31,9 +29,9 @@ export async function PATCH(
     }
 
     return NextResponse.json(data)
-  } catch (error: any) {
+  } catch (error) {
     return NextResponse.json(
-      { error: error.message },
+      { error: 'Internal server error' },
       { status: 500 }
     )
   }

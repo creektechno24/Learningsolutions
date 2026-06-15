@@ -10,14 +10,10 @@ import { Input } from '@/components/ui/input'
 import {
   signUp,
   createTrainerProfile,
-  createEnterpriseProfile,
-  type UserType,
 } from '@/lib/supabase/auth'
 
 export default function SignUpPage() {
   const router = useRouter()
-
-  const [userType, setUserType] = useState<UserType | null>(null)
 
   const [loading, setLoading] = useState(false)
 
@@ -29,7 +25,6 @@ export default function SignUpPage() {
     confirmPassword: '',
     firstName: '',
     lastName: '',
-    companyName: '',
   })
 
   const handleInputChange = (
@@ -49,37 +44,29 @@ export default function SignUpPage() {
       return false
     }
 
-    if (formData.password !== formData.confirmPassword) {
+    if (
+      formData.password !==
+      formData.confirmPassword
+    ) {
       setError('Passwords do not match')
       return false
     }
 
     if (formData.password.length < 6) {
-      setError('Password must be at least 6 characters')
+      setError(
+        'Password must be at least 6 characters'
+      )
       return false
     }
 
-    if (userType === 'trainer') {
-      if (
-        !formData.firstName ||
-        !formData.lastName
-      ) {
-        setError(
-          'First name and last name are required for trainers'
-        )
-
-        return false
-      }
-    }
-
-    if (userType === 'enterprise') {
-      if (!formData.companyName) {
-        setError(
-          'Company name is required for enterprises'
-        )
-
-        return false
-      }
+    if (
+      !formData.firstName ||
+      !formData.lastName
+    ) {
+      setError(
+        'First name and last name are required'
+      )
+      return false
     }
 
     return true
@@ -92,11 +79,6 @@ export default function SignUpPage() {
 
     setError(null)
 
-    if (!userType) {
-      setError('Please select a user type')
-      return
-    }
-
     if (!validateForm()) {
       return
     }
@@ -104,17 +86,13 @@ export default function SignUpPage() {
     setLoading(true)
 
     try {
-      /* ---------------- SIGNUP ---------------- */
-
       const result = await signUp({
         email: formData.email,
         password: formData.password,
-        userType,
+        userType: 'trainer',
 
         firstName: formData.firstName,
         lastName: formData.lastName,
-
-        companyName: formData.companyName,
       })
 
       if (result.error) {
@@ -129,48 +107,24 @@ export default function SignUpPage() {
         return
       }
 
-      /* ---------------- TRAINER PROFILE ---------------- */
+      const trainerProfile =
+        await createTrainerProfile(
+          user.id,
+          {
+            firstName: formData.firstName,
+            lastName: formData.lastName,
+            email: formData.email,
+          }
+        )
 
-      if (userType === 'trainer') {
-        const trainerProfile =
-          await createTrainerProfile(
-            user.id,
-            {
-              firstName: formData.firstName,
-              lastName: formData.lastName,
-              email: formData.email,
-            }
-          )
-
-        if (trainerProfile.error) {
-          setError(trainerProfile.error)
-          return
-        }
+      if (trainerProfile.error) {
+        setError(trainerProfile.error)
+        return
       }
 
-      /* ---------------- ENTERPRISE PROFILE ---------------- */
-
-      if (userType === 'enterprise') {
-        const enterpriseProfile =
-          await createEnterpriseProfile(
-            user.id,
-            {
-              companyName:
-                formData.companyName,
-
-              email: formData.email,
-            }
-          )
-
-        if (enterpriseProfile.error) {
-          setError(enterpriseProfile.error)
-          return
-        }
-      }
-
-      /* ---------------- SUCCESS ---------------- */
-
-      router.push('/auth/sign-up-success')
+      router.push(
+        '/auth/sign-up-success'
+      )
     } catch (error) {
       setError('Something went wrong')
     } finally {
@@ -178,94 +132,17 @@ export default function SignUpPage() {
     }
   }
 
-  /* ---------------- USER TYPE SCREEN ---------------- */
-
-  if (!userType) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center px-4">
-        <div className="w-full max-w-md">
-          <div className="bg-white rounded-lg shadow-lg p-8">
-            <h1 className="text-3xl font-bold text-gray-900 mb-8 text-center">
-              Create Account
-            </h1>
-
-            <p className="text-center text-gray-600 mb-8">
-              What type of account would you
-              like to create?
-            </p>
-
-            <div className="space-y-4">
-              <button
-                onClick={() =>
-                  setUserType('trainer')
-                }
-                className="w-full p-6 border-2 border-gray-200 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition-all text-left"
-              >
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                  I&apos;m a Trainer
-                </h3>
-
-                <p className="text-sm text-gray-600">
-                  Share your expertise and
-                  create courses
-                </p>
-              </button>
-
-              <button
-                onClick={() =>
-                  setUserType('enterprise')
-                }
-                className="w-full p-6 border-2 border-gray-200 rounded-lg hover:border-indigo-500 hover:bg-indigo-50 transition-all text-left"
-              >
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                  I&apos;m from an Enterprise
-                </h3>
-
-                <p className="text-sm text-gray-600">
-                  Find trainers and manage
-                  training inquiries
-                </p>
-              </button>
-            </div>
-
-            <p className="text-center text-gray-600 mt-8">
-              Already have an account?{' '}
-              <Link
-                href="/auth/login"
-                className="text-blue-600 hover:text-blue-700 font-semibold"
-              >
-                Sign in
-              </Link>
-            </p>
-          </div>
-        </div>
-      </div>
-    )
-  }
-
-  /* ---------------- SIGNUP FORM ---------------- */
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center px-4">
       <div className="w-full max-w-md">
         <div className="bg-white rounded-lg shadow-lg p-8">
-          <button
-            onClick={() => setUserType(null)}
-            className="text-sm text-gray-600 hover:text-gray-900 mb-4"
-          >
-            ← Back
-          </button>
 
           <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            {userType === 'trainer'
-              ? 'Join as Trainer'
-              : 'Join as Enterprise'}
+            Join as Trainer
           </h1>
 
           <p className="text-gray-600 mb-8">
-            {userType === 'trainer'
-              ? 'Create your trainer account'
-              : 'Create your enterprise account'}
+            Create your trainer account
           </p>
 
           {error && (
@@ -278,7 +155,32 @@ export default function SignUpPage() {
             onSubmit={handleSubmit}
             className="space-y-4"
           >
-            {/* EMAIL */}
+
+            <div>
+              <label className="block text-sm font-medium mb-2">
+                First Name
+              </label>
+
+              <Input
+                name="firstName"
+                value={formData.firstName}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium mb-2">
+                Last Name
+              </label>
+
+              <Input
+                name="lastName"
+                value={formData.lastName}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
 
             <div>
               <label className="block text-sm font-medium mb-2">
@@ -294,57 +196,6 @@ export default function SignUpPage() {
               />
             </div>
 
-            {/* TRAINER */}
-
-            {userType === 'trainer' && (
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium mb-2">
-                    First Name
-                  </label>
-
-                  <Input
-                    name="firstName"
-                    value={formData.firstName}
-                    onChange={handleInputChange}
-                    required
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium mb-2">
-                    Last Name
-                  </label>
-
-                  <Input
-                    name="lastName"
-                    value={formData.lastName}
-                    onChange={handleInputChange}
-                    required
-                  />
-                </div>
-              </div>
-            )}
-
-            {/* ENTERPRISE */}
-
-            {userType === 'enterprise' && (
-              <div>
-                <label className="block text-sm font-medium mb-2">
-                  Company Name
-                </label>
-
-                <Input
-                  name="companyName"
-                  value={formData.companyName}
-                  onChange={handleInputChange}
-                  required
-                />
-              </div>
-            )}
-
-            {/* PASSWORD */}
-
             <div>
               <label className="block text-sm font-medium mb-2">
                 Password
@@ -358,8 +209,6 @@ export default function SignUpPage() {
                 required
               />
             </div>
-
-            {/* CONFIRM PASSWORD */}
 
             <div>
               <label className="block text-sm font-medium mb-2">
@@ -385,6 +234,17 @@ export default function SignUpPage() {
                 : 'Create Account'}
             </Button>
           </form>
+
+          <p className="text-center text-gray-600 mt-8">
+            Already have an account?{' '}
+            <Link
+              href="/auth/login"
+              className="text-blue-600 hover:text-blue-700 font-semibold"
+            >
+              Sign in
+            </Link>
+          </p>
+
         </div>
       </div>
     </div>

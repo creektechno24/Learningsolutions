@@ -21,7 +21,6 @@ export async function PATCH(
       })
       .eq('id', params.id)
       .select()
-      .single()
 
     if (error) {
       return NextResponse.json(

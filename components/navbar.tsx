@@ -109,40 +109,22 @@ export function Navbar() {
           </div>
 
           {/* Desktop Right */}
-          <div className="hidden lg:flex items-center gap-3">
-            {!loading && (
-              <>
-                {user ? (
-                  <form action="/auth/logout" method="POST">
-                    <Button
-                      type="submit"
-                      variant="outline"
-                      className="h-11 px-5 rounded-xl"
-                    >
-                      Logout
-                    </Button>
-                  </form>
-                ) : (
-                  <>
-                    <Link href="/auth/login">
-                      <Button
-                        variant="ghost"
-                        className="h-11 px-5 rounded-xl text-slate-700 hover:bg-slate-100"
-                      >
-                        Sign In
-                      </Button>
-                    </Link>
+      <div className="hidden lg:flex items-center gap-3">
+  <Link href="/auth/login">
+    <Button
+      variant="ghost"
+      className="h-11 px-5 rounded-xl text-slate-700 hover:bg-slate-100"
+    >
+      Sign In
+    </Button>
+  </Link>
 
-                    <Link href="/auth/sign-up">
-                      <Button className="h-11 px-5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 shadow-lg shadow-blue-500/20">
-                        Get Started
-                      </Button>
-                    </Link>
-                  </>
-                )}
-              </>
-            )}
-          </div>
+  <Link href="/auth/sign-up">
+    <Button className="h-11 px-5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700">
+      Get Started
+    </Button>
+  </Link>
+</div>
 
           {/* Mobile Menu Button */}
           <button
@@ -179,42 +161,28 @@ export function Navbar() {
               ))}
             </div>
 
-            <div className="mt-5 pt-5 border-t border-slate-200 px-5">
-              {!loading && (
-                <>
-                  {user ? (
-                    <form action="/auth/logout" method="POST">
-                      <Button
-                        type="submit"
-                        variant="outline"
-                        className="w-full h-11 rounded-xl"
-                      >
-                        Logout
-                      </Button>
-                    </form>
-                  ) : (
-                    <div className="space-y-3">
+          <div className="mt-5 pt-5 border-t border-slate-200 px-5">
 
-                      <Link href="/auth/login">
-                        <Button
-                          variant="outline"
-                          className="w-full h-11 rounded-xl"
-                        >
-                          Sign In
-                        </Button>
-                      </Link>
+  <div className="space-y-3">
 
-                      <Link href="/auth/sign-up">
-                        <Button className="w-full h-11 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600">
-                          Get Started
-                        </Button>
-                      </Link>
+    <Link href="/auth/login">
+      <Button
+        variant="outline"
+        className="w-full h-11 rounded-xl"
+      >
+        Sign In
+      </Button>
+    </Link>
 
-                    </div>
-                  )}
-                </>
-              )}
-            </div>
+    <Link href="/auth/sign-up">
+      <Button className="w-full h-11 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600">
+        Get Started
+      </Button>
+    </Link>
+
+  </div>
+
+</div>
 
           </div>
         )}

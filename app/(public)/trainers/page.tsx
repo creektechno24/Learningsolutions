@@ -33,32 +33,52 @@ interface PaginationData {
 
 function TrainersPageContent() {
   const searchParams = useSearchParams()
+
   const [trainers, setTrainers] = useState<Trainer[]>([])
   const [pagination, setPagination] = useState({
     page: 1,
     pages: 1,
     total: 0,
   })
-  const [loading, setLoading] = useState(true)
-  const [search, setSearch] = useState(searchParams?.get('search') || '')
-  const [specialty, setSpecialty] = useState(searchParams?.get('specialty') || '')
-  const [sort, setSort] = useState(searchParams?.get('sort') || 'created_at')
 
-  const currentPage = parseInt(searchParams?.get('page') || '1')
+  const [loading, setLoading] = useState(true)
+
+  const [search, setSearch] = useState(
+    searchParams?.get('search') || ''
+  )
+
+  const [specialty, setSpecialty] = useState(
+    searchParams?.get('specialty') || ''
+  )
+
+  const [sort, setSort] = useState(
+    searchParams?.get('sort') || 'created_at'
+  )
+
+  const currentPage = parseInt(
+    searchParams?.get('page') || '1'
+  )
 
   useEffect(() => {
     const fetchTrainers = async () => {
       setLoading(true)
+
       try {
         const params = new URLSearchParams()
+
         params.set('page', currentPage.toString())
         params.set('limit', '12')
+
         if (search) params.set('search', search)
         if (specialty) params.set('specialty', specialty)
         if (sort) params.set('sort', sort)
 
-        const response = await fetch(`/api/trainers?${params.toString()}`)
+        const response = await fetch(
+          `/api/trainers?${params.toString()}`
+        )
+
         const data: PaginationData = await response.json()
+
         setTrainers(data.data || [])
         setPagination(data.pagination)
       } catch (error) {
@@ -72,131 +92,148 @@ function TrainersPageContent() {
   }, [currentPage, search, specialty, sort])
 
   return (
-    <main className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <section className="bg-white border-b py-8">
-        <div className="container mx-auto px-4 md:px-6">
-          <h1 className="text-3xl md:text-4xl font-bold mb-2">
-            Find Expert Trainers
-          </h1>
-          <p className="text-gray-600">
-            Connect with verified and experienced professionals
-          </p>
-        </div>
-      </section>
+    <main className="min-h-screen bg-slate-50">
 
-      <div className="container mx-auto px-4 md:px-6 py-12">
-        <div className="grid md:grid-cols-4 gap-8">
-          {/* Sidebar - Filters */}
-          <aside className="md:col-span-1">
-            <div className="bg-white rounded-lg p-6 space-y-6 sticky top-4">
-              <div>
-                <h3 className="font-semibold mb-3">Search</h3>
-                <Input
-                  placeholder="Trainer name..."
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
-                  className="w-full"
-                />
-              </div>
+    <section className="bg-white border-b">
+  <div className="container mx-auto px-6 py-12">
 
-              <div>
-                <h3 className="font-semibold mb-3">Specialty</h3>
-                <Input
-                  placeholder="e.g., JavaScript, Python..."
-                  value={specialty}
-                  onChange={(e) => setSpecialty(e.target.value)}
-                  className="w-full"
-                />
-              </div>
+    <div className="flex items-center justify-between">
 
-              <div>
-                <h3 className="font-semibold mb-3">Sort By</h3>
-                <select
-                  value={sort}
-                  onChange={(e) => setSort(e.target.value)}
-                  className="w-full p-2 border rounded"
-                >
-                  <option value="created_at">Newest</option>
-                  <option value="experience">Most Experienced</option>
-                  <option value="rate_low">Rate: Low to High</option>
-                  <option value="rate_high">Rate: High to Low</option>
-                </select>
-              </div>
+      <div>
+        <span className="text-blue-600 font-semibold text-sm">
+          VERIFIED TRAINERS
+        </span>
 
-              <Button 
-                onClick={() => {
-                  setSearch('')
-                  setSpecialty('')
-                  setSort('created_at')
-                }} 
-                variant="outline" 
-                className="w-full"
-              >
-                Clear Filters
-              </Button>
-            </div>
-          </aside>
+        <h1 className="text-4xl font-bold text-slate-900 mt-2">
+          Expert Corporate Trainers
+        </h1>
 
-          {/* Main Content */}
-          <div className="md:col-span-3">
-            {loading ? (
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {[...Array(6)].map((_, i) => (
-                  <div key={i} className="bg-gray-200 rounded-lg h-96 animate-pulse" />
-                ))}
-              </div>
-            ) : trainers.length > 0 ? (
-              <>
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-                  {trainers.map((trainer) => (
-                    <TrainerCard key={trainer.id} {...trainer} />
-                  ))}
-                </div>
+        <p className="text-slate-600 mt-3 max-w-2xl">
+          Connect with experienced industry experts, consultants and
+          enterprise trainers for your workforce development needs.
+        </p>
+      </div>
 
-                {/* Pagination */}
-                {pagination.pages > 1 && (
-                  <div className="flex items-center justify-center gap-4 mt-12">
-                    {currentPage > 1 && (
-                      <Link href={`/trainers?page=${currentPage - 1}`}>
-                        <Button variant="outline" size="sm">
-                          <ChevronLeft size={16} />
-                        </Button>
-                      </Link>
-                    )}
+      <div className="hidden lg:flex gap-10">
 
-                    {[...Array(pagination.pages)].map((_, index) => {
-                      const pageNum = index + 1
-                      const isActive = pageNum === currentPage
-                      return (
-                        <Link key={pageNum} href={`/trainers?page=${pageNum}`}>
-                          <Button
-                            variant={isActive ? 'default' : 'outline'}
-                            size="sm"
-                          >
-                            {pageNum}
-                          </Button>
-                        </Link>
-                      )
-                    })}
+        <div>
+          <div className="text-3xl font-bold text-slate-900">
+            {pagination.total}+
+          </div>
 
-                    {currentPage < pagination.pages && (
-                      <Link href={`/trainers?page=${currentPage + 1}`}>
-                        <Button variant="outline" size="sm">
-                          <ChevronRight size={16} />
-                        </Button>
-                      </Link>
-                    )}
-                  </div>
-                )}
-              </>
-            ) : (
-              <div className="bg-white rounded-lg p-12 text-center">
-                <p className="text-gray-600 text-lg">No trainers found</p>
-              </div>
-            )}
+          <div className="text-slate-500 text-sm">
+            Trainers
           </div>
         </div>
+
+        <div>
+          <div className="text-3xl font-bold text-slate-900">
+            100+
+          </div>
+
+          <div className="text-slate-500 text-sm">
+            Programs
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+      <div className="container mx-auto px-6 py-12">
+
+     <div className="container mx-auto px-6 py-10">
+
+  {/* Search Bar */}
+  <div className="bg-white rounded-3xl border border-slate-200 shadow-sm p-5 mb-10">
+
+    <div className="grid md:grid-cols-4 gap-4">
+
+      <Input
+        placeholder="Search trainers..."
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+      />
+
+      <Input
+        placeholder="Specialty (React, AWS...)"
+        value={specialty}
+        onChange={(e) => setSpecialty(e.target.value)}
+      />
+
+      <select
+        value={sort}
+        onChange={(e) => setSort(e.target.value)}
+        className="border rounded-xl px-4"
+      >
+        <option value="created_at">Newest</option>
+        <option value="experience">Experience</option>
+        <option value="rate_low">Low Rate</option>
+        <option value="rate_high">High Rate</option>
+      </select>
+
+      <Button
+        variant="outline"
+        onClick={() => {
+          setSearch('')
+          setSpecialty('')
+          setSort('created_at')
+        }}
+      >
+        Clear Filters
+      </Button>
+
+    </div>
+
+  </div>
+
+  {/* Heading */}
+  <div className="flex justify-between items-center mb-8">
+
+    <div>
+      <h2 className="text-3xl font-bold text-slate-900">
+        Expert Trainers
+      </h2>
+
+      <p className="text-slate-500">
+        {pagination.total} Trainers Available
+      </p>
+    </div>
+
+  </div>
+
+  {/* Cards */}
+  {loading ? (
+    <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
+      {[...Array(6)].map((_, i) => (
+        <div
+          key={i}
+          className="h-[420px] rounded-3xl bg-slate-200 animate-pulse"
+        />
+      ))}
+    </div>
+  ) : trainers.length > 0 ? (
+    <>
+      <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
+        {trainers.map((trainer) => (
+          <TrainerCard
+            key={trainer.id}
+            {...trainer}
+          />
+        ))}
+      </div>
+    </>
+  ) : (
+    <div className="bg-white rounded-3xl border p-12 text-center">
+      No trainers found
+    </div>
+  )}
+
+</div>
+
       </div>
     </main>
   )
@@ -204,11 +241,15 @@ function TrainersPageContent() {
 
 export default function TrainersPage() {
   return (
-    <Suspense fallback={
-      <main className="min-h-screen bg-gray-50">
-        <div className="container mx-auto px-4 md:px-6 py-12">Loading...</div>
-      </main>
-    }>
+    <Suspense
+      fallback={
+        <main className="min-h-screen bg-slate-50">
+          <div className="container mx-auto px-6 py-12">
+            Loading...
+          </div>
+        </main>
+      }
+    >
       <TrainersPageContent />
     </Suspense>
   )

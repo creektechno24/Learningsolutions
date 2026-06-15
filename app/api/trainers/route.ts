@@ -14,24 +14,24 @@ export async function GET(request: NextRequest) {
     const sort = searchParams.get('sort') || 'created_at'
 
     let query = supabase
-      .from('trainers')
+      .from('trainer_profiles')
       .select(
         `
-        id,
-        first_name,
-        last_name,
-        bio,
-        profile_image_url,
-        expertise,
-        qualification,
-        years_of_experience,
-        hourly_rate,
-        is_verified,
-        created_at
+       id,
+first_name,
+last_name,
+bio,
+profile_image_url,
+expertise,
+qualification,
+years_of_experience,
+hourly_rate,
+created_at,
+status
       `,
         { count: 'exact' }
       )
-      .eq('is_verified', true)
+    
       .eq('status', 'approved')
 
     // Apply specialty filter

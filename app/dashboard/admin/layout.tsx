@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
+import AdminSidebar from '@/components/admin/admin-sidebar'
 
 export default async function AdminLayout({
   children,
@@ -42,42 +43,7 @@ export default async function AdminLayout({
             Admin Panel
           </h2>
 
-          <nav className="space-y-4">
-            <Link
-              href="/dashboard/admin"
-              className="block hover:text-blue-400"
-            >
-              Dashboard
-            </Link>
-
-            <Link
-              href="/dashboard/admin/trainers"
-              className="block hover:text-blue-400"
-            >
-              Trainers
-            </Link>
-
-            <Link
-              href="/dashboard/admin/enterprises"
-              className="block hover:text-blue-400"
-            >
-              Enterprises
-            </Link>
-
-            <Link
-              href="/dashboard/admin/courses"
-              className="block hover:text-blue-400"
-            >
-              Courses
-            </Link>
-
-            <Link
-              href="/dashboard/admin/inquiries"
-              className="block hover:text-blue-400"
-            >
-              Inquiries
-            </Link>
-          </nav>
+          <AdminSidebar />
         </div>
 
         {/* Logout */}

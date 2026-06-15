@@ -86,13 +86,12 @@ export default async function TrainerLayout({
             >
               Courses
             </Link>
-
-            <Link
-              href="/dashboard/trainer/trainings"
+<Link
+  href="/dashboard/trainer/clients"
               className="block px-4 py-3 rounded-xl hover:bg-slate-800 transition-colors"
-            >
-              Trainings
-            </Link>
+>
+  Clients
+</Link>
 
           </nav>
         </div>

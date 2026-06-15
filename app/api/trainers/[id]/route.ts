@@ -7,44 +7,48 @@ export async function GET(
 ) {
   try {
     const { id } = await params
+
+    console.log('====================')
+    console.log('API ID =>', id)
+    console.log('====================')
+
     const supabase = await createClient()
 
     const { data, error } = await supabase
-      .from('trainers')
-      .select(
-        `
-        id,
-        first_name,
-        last_name,
-        bio,
-        profile_image_url,
-        expertise,
-        qualification,
-        years_of_experience,
-        hourly_rate,
-        is_verified,
-        email,
-        phone,
-        courses(id, title, slug, description, thumbnail_url, price)
-      `
-      )
+      .from('trainer_profiles')
+      .select('*')
       .eq('id', id)
-      .eq('is_verified', true)
-      .eq('status', 'approved')
       .single()
+
+    console.log('DATA =>', data)
+    console.log('ERROR =>', error)
 
     if (error) {
       return NextResponse.json(
-        { error: 'Trainer not found' },
+        {
+          success: false,
+          error: error.message,
+          details: error,
+        },
         { status: 404 }
       )
     }
 
-    return NextResponse.json(data, { status: 200 })
-  } catch (error) {
-    console.error('Error fetching trainer:', error)
     return NextResponse.json(
-      { error: 'Internal server error' },
+      {
+        success: true,
+        data,
+      },  
+      { status: 200 }
+    )
+  } catch (error) {
+    console.error('SERVER ERROR =>', error)
+
+    return NextResponse.json(
+      {
+        success: false,
+        error: 'Internal server error',
+      },
       { status: 500 }
     )
   }

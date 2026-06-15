@@ -1,52 +1,57 @@
 'use client'
 
+
+
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 
 interface AdminActionButtonsProps {
   id: string
   status: 'approved' | 'pending' | 'rejected'
-  type: 'trainer'
-  onStatusChange: (
-    status: 'approved' | 'pending' | 'rejected'
-  ) => void
+  type: 'trainer' | 'enterprise' | 'training-request'
 }
-
 export function AdminActionButtons({
   id,
   status,
-  onStatusChange,
+  type,
+ // onStatusChange,
 }: AdminActionButtonsProps) {
   const [loading, setLoading] = useState(false)
 
   const updateStatus = async (
     newStatus: 'approved' | 'pending' | 'rejected'
   ) => {
+      console.log('ID:', id)
+  console.log('TYPE:', type)
+
     try {
       setLoading(true)
 
-      const response = await fetch(
-        `/api/admin/trainers/${id}`,
-        {
-          method: 'PATCH',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            status: newStatus,
-          }),
-        }
-      )
+     const endpoint =
+  type === 'trainer'
+    ? `/api/admin/trainers/${id}`
+    : type === 'enterprise'
+    ? `/api/admin/enterprises/${id}`
+    : `/api/admin/training-requests/${id}`
+
+      const response = await fetch(endpoint, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          status: newStatus,
+        }),
+      })
 
       const data = await response.json()
-
-      console.log(data)
 
       if (!response.ok) {
         throw new Error(data.error || 'Failed')
       }
 
-      onStatusChange(newStatus)
+      //onStatusChange(newStatus)
+      window.location.reload()
     } catch (error) {
       console.error(error)
     } finally {

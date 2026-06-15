@@ -9,8 +9,13 @@ import { useParams } from 'next/navigation'
 import { CourseCard } from '@/components/course-card'
 
 export default function TrainerDetailPage() {
-  const params = useParams()
-  const id = params.id as string
+const params = useParams()
+
+console.log('PARAMS =>', params)
+
+const slug = params.slug as string
+
+console.log('SLUG =>', slug)
   
   const [trainer, setTrainer] = useState<any>(null)
   const [loading, setLoading] = useState(true)
@@ -18,10 +23,13 @@ export default function TrainerDetailPage() {
   useEffect(() => {
     const fetchTrainer = async () => {
       try {
-        const response = await fetch(`/api/trainers/${id}`)
+        const response = await fetch(`/api/trainers/${slug}`)
         if (!response.ok) throw new Error('Trainer not found')
-        const data = await response.json()
-        setTrainer(data)
+       const result = await response.json()
+
+console.log( result)
+
+setTrainer(result.data)
       } catch (error) {
         console.error('Error fetching trainer:', error)
       } finally {
@@ -30,7 +38,7 @@ export default function TrainerDetailPage() {
     }
 
     fetchTrainer()
-  }, [id])
+  }, [slug])
 
   if (loading) {
     return (
@@ -163,6 +171,9 @@ export default function TrainerDetailPage() {
             </div>
           </div>
         </div>
+
+
+  
 
         {/* Expertise */}
         <div className="bg-white rounded-lg p-8 mb-8">

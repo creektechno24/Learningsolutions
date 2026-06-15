@@ -1,14 +1,44 @@
-'use client'
+import { createClient } from '@/lib/supabase/server'
 
 import Link from 'next/link'
 import {
   Users,
-  Building2,
   BookOpen,
   MessageSquare,
 } from 'lucide-react'
 
-export default function AdminDashboardPage() {
+export default async function AdminDashboardPage() {
+  const supabase = await createClient()
+
+  const { count: trainerCount } = await supabase
+    .from('trainer_profiles')
+    .select('*', {
+      count: 'exact',
+      head: true,
+    })
+
+  const { count: courseCount } = await supabase
+    .from('courses')
+    .select('*', {
+      count: 'exact',
+      head: true,
+    })
+
+  const { count: inquiryCount } = await supabase
+    .from('inquiries')
+    .select('*', {
+      count: 'exact',
+      head: true,
+    })
+
+  const { count: pendingTrainerCount } = await supabase
+    .from('trainer_profiles')
+    .select('*', {
+      count: 'exact',
+      head: true,
+    })
+    .eq('status', 'pending')
+
   return (
     <div className="space-y-8">
       {/* Header */}
@@ -18,12 +48,12 @@ export default function AdminDashboardPage() {
         </h1>
 
         <p className="text-slate-600 mt-2">
-          Manage trainers, enterprises, courses and inquiries.
+          Manage trainers, courses and inquiries.
         </p>
       </div>
 
       {/* Analytics Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Trainers */}
         <div className="bg-white rounded-2xl border p-6 shadow-sm">
           <div className="flex items-center justify-between">
@@ -33,31 +63,12 @@ export default function AdminDashboardPage() {
               </p>
 
               <h2 className="text-3xl font-bold mt-2">
-                --
+                {trainerCount || 0}
               </h2>
             </div>
 
             <div className="w-12 h-12 rounded-xl bg-blue-100 flex items-center justify-center">
               <Users className="text-blue-600" />
-            </div>
-          </div>
-        </div>
-
-        {/* Enterprises */}
-        <div className="bg-white rounded-2xl border p-6 shadow-sm">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-slate-500">
-                Enterprises
-              </p>
-
-              <h2 className="text-3xl font-bold mt-2">
-                --
-              </h2>
-            </div>
-
-            <div className="w-12 h-12 rounded-xl bg-green-100 flex items-center justify-center">
-              <Building2 className="text-green-600" />
             </div>
           </div>
         </div>
@@ -71,7 +82,7 @@ export default function AdminDashboardPage() {
               </p>
 
               <h2 className="text-3xl font-bold mt-2">
-                --
+                {courseCount || 0}
               </h2>
             </div>
 
@@ -90,7 +101,7 @@ export default function AdminDashboardPage() {
               </p>
 
               <h2 className="text-3xl font-bold mt-2">
-                --
+                {inquiryCount || 0}
               </h2>
             </div>
 
@@ -116,58 +127,37 @@ export default function AdminDashboardPage() {
           </Link>
 
           <Link
-            href="/dashboard/admin/enterprises"
-            className="px-5 py-3 rounded-xl bg-green-600 text-white hover:bg-green-700 transition-colors"
-          >
-            Manage Enterprises
-          </Link>
-
-          <Link
             href="/dashboard/admin/courses"
             className="px-5 py-3 rounded-xl bg-purple-600 text-white hover:bg-purple-700 transition-colors"
           >
             Manage Courses
           </Link>
+
+          <Link
+            href="/dashboard/admin/inquiries"
+            className="px-5 py-3 rounded-xl bg-orange-600 text-white hover:bg-orange-700 transition-colors"
+          >
+            Manage Inquiries
+          </Link>
         </div>
       </div>
 
-      {/* Pending Approvals */}
-      <div className="grid md:grid-cols-2 gap-6">
-        {/* Pending Trainers */}
-        <div className="bg-white rounded-2xl border p-6 shadow-sm">
-          <h3 className="text-xl font-semibold mb-4">
-            Pending Trainer Approvals
-          </h3>
+      {/* Pending Trainer Approvals */}
+      <div className="bg-white rounded-2xl border p-6 shadow-sm">
+        <h3 className="text-xl font-semibold mb-4">
+          Pending Trainer Approvals
+        </h3>
 
-          <p className="text-4xl font-bold text-blue-600 mb-6">
-            --
-          </p>
+        <p className="text-4xl font-bold text-blue-600 mb-6">
+          {pendingTrainerCount || 0}
+        </p>
 
-          <Link
-            href="/dashboard/admin/trainers"
-            className="inline-flex items-center justify-center px-5 py-3 rounded-xl bg-blue-600 text-white hover:bg-blue-700 transition-colors"
-          >
-            Review Trainers
-          </Link>
-        </div>
-
-        {/* Pending Enterprises */}
-        <div className="bg-white rounded-2xl border p-6 shadow-sm">
-          <h3 className="text-xl font-semibold mb-4">
-            Pending Enterprise Approvals
-          </h3>
-
-          <p className="text-4xl font-bold text-green-600 mb-6">
-            --
-          </p>
-
-          <Link
-            href="/dashboard/admin/enterprises"
-            className="inline-flex items-center justify-center px-5 py-3 rounded-xl bg-green-600 text-white hover:bg-green-700 transition-colors"
-          >
-            Review Enterprises
-          </Link>
-        </div>
+        <Link
+          href="/dashboard/admin/trainers"
+          className="inline-flex items-center justify-center px-5 py-3 rounded-xl bg-blue-600 text-white hover:bg-blue-700 transition-colors"
+        >
+          Review Trainers
+        </Link>
       </div>
     </div>
   )

@@ -52,79 +52,203 @@ export function Navbar() {
           : 'bg-white'
       )}
     >
-      <div className="max-w-7xl mx-auto px-4 md:px-6">
-        <div className="h-20 flex items-center justify-between">
+      <div className="max-w-[1900px] mx-auto px-10">
+        <div className="py-3">
+   <div className="flex items-center justify-between">
 
-          {/* Logo */}
-          <Link
-            href="/"
-            className="flex items-center gap-3"
-          >
-            <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-blue-600 via-indigo-600 to-violet-600 flex items-center justify-center shadow-lg shadow-blue-500/20">
-              <span className="text-white font-bold text-lg">
-                LS
-              </span>
-            </div>
+  <div>
+    <h1 className="text-2xl font-bold text-slate-900 tracking-tight">
+      Creek Learning Solutions
+    </h1>
 
-            <div>
-              <h1 className="text-lg font-bold tracking-tight text-slate-900">
-                LearningSolutions
-              </h1>
+    <p className="text-xs text-slate-500">
+      Inspiring People! Aspiring Life!!
+    </p>
+  </div>
 
-              <p className="text-xs text-slate-500 -mt-1">
-                Enterprise Training Platform
-              </p>
-            </div>
-          </Link>
-
-          {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center gap-10">
-            <Link
-              href="/courses"
-              className="text-sm font-medium text-slate-700 hover:text-blue-600 transition-colors"
-            >
-              Courses
-            </Link>
-
-            <Link
-              href="/trainers"
-              className="text-sm font-medium text-slate-700 hover:text-blue-600 transition-colors"
-            >
-              Trainers
-            </Link>
-
-            <Link
-              href="/about"
-              className="text-sm font-medium text-slate-700 hover:text-blue-600 transition-colors"
-            >
-              About
-            </Link>
-
-            <Link
-              href="/contact"
-              className="text-sm font-medium text-slate-700 hover:text-blue-600 transition-colors"
-            >
-              Contact
-            </Link>
-          </div>
-
-          {/* Desktop Right */}
-      <div className="hidden lg:flex items-center gap-3">
+  <div className="hidden xl:flex items-center gap-3 w-[320px] justify-end shrink-0">
   <Link href="/auth/login">
     <Button
       variant="ghost"
-      className="h-11 px-5 rounded-xl text-slate-700 hover:bg-slate-100"
+      className="h-11 px-5 rounded-xl"
     >
       Sign In
     </Button>
   </Link>
 
   <Link href="/auth/sign-up">
-    <Button className="h-11 px-5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700">
+    <Button className="h-12 px-7 rounded-2xl bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600 shadow-lg hover:shadow-xl transition-all">
       Get Started
     </Button>
   </Link>
 </div>
+
+</div>
+
+  
+
+   {/* Desktop Navigation */}
+   <div className="hidden xl:flex items-center justify-center gap-12 border-t border-slate-100 mt-4 pt-4 pl-20">
+  <Link
+  href="/about"
+className="text-[15px] font-semibold tracking-tight text-slate-700 hover:text-blue-600 transition-all whitespace-nowrap">
+  About Us
+</Link>
+
+<Link
+  href="/courses"
+className="text-[15px] font-semibold tracking-tight text-slate-700 hover:text-blue-600 transition-all whitespace-nowrap">
+  Courses
+</Link>
+
+ <Link
+  href="/trainers"
+className="text-[15px] font-semibold tracking-tight text-slate-700 hover:text-blue-600 transition-all whitespace-nowrap">
+  Trainers
+</Link>
+
+  <div className="relative group">
+ <button className="text-[15px] font-semibold tracking-tight text-slate-700 hover:text-blue-600 transition-all whitespace-nowrap">
+  Curated Training Programs
+</button>
+
+  <div className="absolute top-full left-0 mt-2 w-72 bg-white rounded-xl shadow-xl border opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+
+    <Link
+      href="/training-programs/behavioral-training"
+      className="block px-5 py-3 hover:bg-slate-100"
+    >
+      Behavioral Training
+    </Link>
+
+    <Link
+      href="/training-programs/core-hr-trainings"
+      className="block px-5 py-3 hover:bg-slate-100"
+    >
+      Core HR Trainings
+    </Link>
+
+    <Link
+      href="/training-programs/leadership"
+      className="block px-5 py-3 hover:bg-slate-100"
+    >
+      Leadership
+    </Link>
+
+    <Link
+      href="/training-programs/retail"
+      className="block px-5 py-3 hover:bg-slate-100"
+    >
+      Retail
+    </Link>
+
+    <Link
+      href="/training-programs/soft-skills-training"
+      className="block px-5 py-3 hover:bg-slate-100"
+    >
+      Soft Skills Training
+    </Link>
+
+    <Link
+      href="/training-programs/industrial-safety"
+      className="block px-5 py-3 hover:bg-slate-100"
+    >
+      Industrial Safety
+    </Link>
+
+    <Link
+      href="/training-programs/it-ites"
+      className="block px-5 py-3 hover:bg-slate-100"
+    >
+      IT & ITES
+    </Link>
+
+  </div>
+</div>
+
+<div className="relative group">
+  <button className="text-[15px] font-semibold tracking-tight text-slate-700 hover:text-blue-600 transition-all whitespace-nowrap">
+  Premium Services
+</button>
+  
+
+  <div className="absolute left-0 top-full w-80 bg-[#2f2f2f] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+
+    <div className="h-1 bg-lime-500"></div>
+
+    <Link
+      href="/premium-services/assessment-development-centre"
+      className="block px-6 py-4 text-white hover:bg-[#3b3b3b]"
+    >
+      Assessment Development Centre (ADC)
+    </Link>
+
+    <Link
+      href="/premium-services/boot-camps-ttt"
+      className="block px-6 py-4 text-white hover:bg-[#3b3b3b]"
+    >
+      Boot Camps & TTT Programs
+    </Link>
+
+    <Link
+      href="/premium-services/coaching-mentoring"
+      className="block px-6 py-4 text-white hover:bg-[#3b3b3b]"
+    >
+      Coaching & Mentoring
+    </Link>
+
+    <Link
+      href="/premium-services/csr-projects"
+      className="block px-6 py-4 text-white hover:bg-[#3b3b3b]"
+    >
+      CSR Projects
+    </Link>
+
+    <Link
+      href="/premium-services/organizational-development"
+      className="block px-6 py-4 text-white hover:bg-[#3b3b3b]"
+    >
+      Organizational Development (OD)
+    </Link>
+
+    <Link
+      href="/premium-services/outbound-training"
+      className="block px-6 py-4 text-white hover:bg-[#3b3b3b]"
+    >
+      Out Bound Training (OBT)
+    </Link>
+
+    <Link
+      href="/premium-services/psychometric-test"
+      className="block px-6 py-4 text-white hover:bg-[#3b3b3b]"
+    >
+      Psychometric Test
+    </Link>
+
+  </div>
+</div>
+
+<Link
+  href="/clients-industries"
+className="text-[15px] font-semibold tracking-tight text-slate-700 hover:text-blue-600 transition-all whitespace-nowrap">
+  Clients & Industries
+</Link>
+
+<Link
+  href="/group-brands"
+className="text-[15px] font-semibold tracking-tight text-slate-700 hover:text-blue-600 transition-all whitespace-nowrap">
+  Group Brands
+</Link>
+
+ <Link
+  href="/contact"
+className="text-[15px] font-semibold tracking-tight text-slate-700 hover:text-blue-600 transition-all whitespace-nowrap">
+  Contact Us
+</Link>
+</div>
+
+          
+
 
           {/* Mobile Menu Button */}
           <button
@@ -145,11 +269,11 @@ export function Navbar() {
 
             <div className="flex flex-col gap-2">
               {[
-                { label: 'Courses', href: '/courses' },
-                { label: 'Trainers', href: '/trainers' },
-                { label: 'About', href: '/about' },
-                { label: 'Contact', href: '/contact' },
-              ].map((item) => (
+  { label: 'About Us', href: '/about' },
+  { label: 'Courses', href: '/courses' },
+  { label: 'Trainers', href: '/trainers' },
+  { label: 'Contact', href: '/contact' },
+].map((item) => (
                 <Link
                   key={item.label}
                   href={item.href}

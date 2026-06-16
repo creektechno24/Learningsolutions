@@ -17,12 +17,13 @@ export async function GET(request: NextRequest) {
       .from('trainer_profiles')
       .select(
         `
-       id,
+   id,
 first_name,
 last_name,
 bio,
 profile_image_url,
 expertise,
+expertise_text,
 qualification,
 years_of_experience,
 hourly_rate,
@@ -35,16 +36,21 @@ status
       .eq('status', 'approved')
 
     // Apply specialty filter
-    if (specialty) {
-      query = query.contains('expertise', [specialty])
-    }
+if (specialty?.trim()) {
+  query = query.ilike(
+    'expertise_text',
+    `%${specialty.trim()}%`
+  )
+}
 
     // Apply search filter
-    if (search) {
-      query = query.or(
-        `first_name.ilike.%${search}%,last_name.ilike.%${search}%,bio.ilike.%${search}%`
-      )
-    }
+if (search?.trim()) {
+  const searchTerm = search.trim()
+
+  query = query.or(
+    `first_name.ilike.%${searchTerm}%,last_name.ilike.%${searchTerm}%,bio.ilike.%${searchTerm}%,qualification.ilike.%${searchTerm}%,expertise_text.ilike.%${searchTerm}%`
+  )
+}
 
     // Apply sorting
     if (sort === 'experience') {
@@ -65,8 +71,22 @@ status
     const { data, error, count } = await query
 
     if (error) {
-      return NextResponse.json({ error: error.message }, { status: 400 })
-    }
+  console.log(error)
+
+  return NextResponse.json(
+    {
+      data: [],
+      pagination: {
+        page: 1,
+        limit: 12,
+        total: 0,
+        pages: 0,
+      },
+      error: error.message,
+    },
+    { status: 400 }
+  )
+}
 
     return NextResponse.json(
       {

@@ -70,7 +70,12 @@ function TrainersPageContent() {
         params.set('limit', '12')
 
         if (search) params.set('search', search)
-        if (specialty) params.set('specialty', specialty)
+        if (specialty) {
+  params.set(
+    'specialty',
+    specialty.toLowerCase().trim()
+  )
+}
         if (sort) params.set('sort', sort)
 
         const response = await fetch(
@@ -80,7 +85,13 @@ function TrainersPageContent() {
         const data: PaginationData = await response.json()
 
         setTrainers(data.data || [])
-        setPagination(data.pagination)
+        setPagination(
+  data.pagination || {
+    page: 1,
+    pages: 1,
+    total: 0,
+  }
+)
       } catch (error) {
         console.error('Error fetching trainers:', error)
       } finally {
@@ -94,48 +105,57 @@ function TrainersPageContent() {
   return (
     <main className="min-h-screen bg-slate-50">
 
-    <section className="bg-white border-b">
-  <div className="container mx-auto px-6 py-12">
+<section className="relative overflow-hidden bg-gradient-to-br from-slate-950 via-blue-950 to-indigo-950 text-white">  <div className="container mx-auto px-6 py-20">
 
-    <div className="flex items-center justify-between">
+    <span className="bg-white/10 px-4 py-2 rounded-full text-sm">
+      CORPORATE TRAINING EXPERTS
+    </span>
+
+    <h1 className="text-5xl font-bold mt-6">
+      Meet Our Expert Trainers
+    </h1>
+
+    <p className="text-xl text-slate-200 mt-4 max-w-3xl">
+      Learn from experienced industry leaders, consultants and
+      certified corporate trainers across India.
+    </p>
+
+    <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-10">
 
       <div>
-        <span className="text-blue-600 font-semibold text-sm">
-          VERIFIED TRAINERS
-        </span>
-
-        <h1 className="text-4xl font-bold text-slate-900 mt-2">
-          Expert Corporate Trainers
-        </h1>
-
-        <p className="text-slate-600 mt-3 max-w-2xl">
-          Connect with experienced industry experts, consultants and
-          enterprise trainers for your workforce development needs.
+        <h2 className="text-4xl font-bold">
+        {pagination?.total || 0}+
+        </h2>
+        <p className="text-slate-300">
+          Expert Trainers
         </p>
       </div>
 
-      <div className="hidden lg:flex gap-10">
+      <div>
+        <h2 className="text-4xl font-bold">
+          100+
+        </h2>
+        <p className="text-slate-300">
+          Programs
+        </p>
+      </div>
 
-        <div>
-          <div className="text-3xl font-bold text-slate-900">
-            {pagination.total}+
-          </div>
+      <div>
+        <h2 className="text-4xl font-bold">
+          25+
+        </h2>
+        <p className="text-slate-300">
+          Years Experience
+        </p>
+      </div>
 
-          <div className="text-slate-500 text-sm">
-            Trainers
-          </div>
-        </div>
-
-        <div>
-          <div className="text-3xl font-bold text-slate-900">
-            100+
-          </div>
-
-          <div className="text-slate-500 text-sm">
-            Programs
-          </div>
-        </div>
-
+      <div>
+        <h2 className="text-4xl font-bold">
+          2L+
+        </h2>
+        <p className="text-slate-300">
+          Professionals Trained
+        </p>
       </div>
 
     </div>
@@ -143,71 +163,105 @@ function TrainersPageContent() {
   </div>
 </section>
 
-      <div className="container mx-auto px-6 py-12">
+      <div className="container mx-auto px-6 -mt-16 relative z-20">
 
-     <div className="container mx-auto px-6 py-10">
+     <div className="py-6">
 
   {/* Search Bar */}
-  <div className="bg-white rounded-3xl border border-slate-200 shadow-sm p-5 mb-10">
+ <div className="relative overflow-hidden rounded-[40px] border border-white/20 bg-white/95 backdrop-blur-xl shadow-[0_30px_80px_rgba(15,23,42,0.12)] p-12 mb-14">
 
-    <div className="grid md:grid-cols-4 gap-4">
+  <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600" />
 
-      <Input
-        placeholder="Search trainers..."
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-      />
+  <div className="mb-8">
+    <p className="text-sm font-semibold text-blue-600 uppercase tracking-wider">
+      Find The Right Expert
+    </p>
 
-      <Input
-        placeholder="Specialty (React, AWS...)"
-        value={specialty}
-        onChange={(e) => setSpecialty(e.target.value)}
-      />
+   <h3 className="text-5xl font-extrabold tracking-tight text-slate-900 mt-2">
+      Search Corporate Trainers
+    </h3>
 
-      <select
-        value={sort}
-        onChange={(e) => setSort(e.target.value)}
-        className="border rounded-xl px-4"
-      >
-        <option value="created_at">Newest</option>
-        <option value="experience">Experience</option>
-        <option value="rate_low">Low Rate</option>
-        <option value="rate_high">High Rate</option>
-      </select>
+    <p className="text-slate-500 mt-4 text-lg max-w-3xl leading-relaxed">
+      Explore trainers by expertise, industry experience and training specialization.
+    </p>
+  </div>
 
-      <Button
-        variant="outline"
-        onClick={() => {
-          setSearch('')
-          setSpecialty('')
-          setSort('created_at')
-        }}
-      >
-        Clear Filters
-      </Button>
+  <div className="grid lg:grid-cols-4 gap-6 items-center">
+    <Input
+      placeholder="Trainer Name"
+      value={search}
+      onChange={(e) => setSearch(e.target.value)}
+      className="h-16 rounded-3xl border-slate-200 bg-slate-50 px-6 text-lg focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
+    />
 
-    </div>
+    <Input
+      placeholder="Skill / Expertise"
+      value={specialty}
+      onChange={(e) => setSpecialty(e.target.value)}
+      className="h-16 rounded-3xl border-slate-200 bg-slate-50 px-6 text-lg focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
+    />
+
+    <select
+      value={sort}
+      onChange={(e) => setSort(e.target.value)}
+      className="h-14 rounded-2xl border border-slate-200 px-5 bg-white"
+    >
+      <option value="created_at">Newest</option>
+      <option value="experience">Most Experienced</option>
+      <option value="rate_low">Lowest Rate</option>
+      <option value="rate_high">Highest Rate</option>
+    </select>
+
+    <Button
+      className="h-14 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-base font-semibold"
+    >
+      Search Trainers
+    </Button>
 
   </div>
 
+  <div className="flex items-center justify-between mt-8 pt-6 border-t border-slate-100">
+
+    <p className="text-slate-600 font-medium">
+     Showing {pagination?.total || 0} expert trainers
+    </p>
+
+    <Button
+      
+  variant="outline"
+  className="rounded-2xl border-slate-200 px-6"
+
+      onClick={() => {
+        setSearch('')
+        setSpecialty('')
+        setSort('created_at')
+      }}
+    >
+      Reset Filters
+    </Button>
+
+  </div>
+
+</div>
+
   {/* Heading */}
-  <div className="flex justify-between items-center mb-8">
+  <div className="flex justify-between items-center mb-10 mt-4">
 
     <div>
-      <h2 className="text-3xl font-bold text-slate-900">
-        Expert Trainers
-      </h2>
+    <h2 className="text-4xl font-bold text-slate-900">
+  Our Certified Corporate Trainers
+</h2>
 
-      <p className="text-slate-500">
-        {pagination.total} Trainers Available
-      </p>
+<p className="text-slate-500 text-lg mt-2">
+  Connect with industry experts, facilitators and certified trainers for enterprise learning programs.
+</p>
     </div>
 
   </div>
 
   {/* Cards */}
   {loading ? (
-    <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
+ <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-8">
       {[...Array(6)].map((_, i) => (
         <div
           key={i}
@@ -217,7 +271,7 @@ function TrainersPageContent() {
     </div>
   ) : trainers.length > 0 ? (
     <>
-      <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
+   <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-8">
         {trainers.map((trainer) => (
           <TrainerCard
             key={trainer.id}
@@ -244,7 +298,7 @@ export default function TrainersPage() {
     <Suspense
       fallback={
         <main className="min-h-screen bg-slate-50">
-          <div className="container mx-auto px-6 py-12">
+          <div className="max-w-7xl mx-auto px-6 -mt-16 relative z-20">
             Loading...
           </div>
         </main>

@@ -6,8 +6,10 @@ import { Menu, X } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { cn } from '@/lib/utils'
+import { usePathname } from 'next/navigation'
 
 export function Navbar() {
+    const pathname = usePathname()
   const [isOpen, setIsOpen] = useState(false)
   const [user, setUser] = useState<any>(null)
   const [loading, setLoading] = useState(true)
@@ -88,27 +90,59 @@ export function Navbar() {
   
 
    {/* Desktop Navigation */}
-   <div className="hidden xl:flex items-center justify-center gap-12 border-t border-slate-100 mt-4 pt-4 pl-20">
-  <Link
+   <div className="hidden xl:flex items-center justify-center gap-10 border-t border-slate-100 mt-4 pt-4 ">
+ <Link
+  href="/"
+  className={`text-[15px] font-semibold whitespace-nowrap transition-all ${
+    pathname === '/'
+  ? 'text-blue-600'
+  : 'text-slate-700 hover:text-blue-600'
+  }`}
+>
+  Home
+</Link>
+
+<Link
   href="/about"
-className="text-[15px] font-semibold tracking-tight text-slate-700 hover:text-blue-600 transition-all whitespace-nowrap">
+  className={`text-[15px] font-semibold whitespace-nowrap transition-all ${
+    pathname === '/about'
+  ? 'text-blue-600'
+  : 'text-slate-700 hover:text-blue-600'
+  }`}
+>
   About Us
 </Link>
 
 <Link
   href="/courses"
-className="text-[15px] font-semibold tracking-tight text-slate-700 hover:text-blue-600 transition-all whitespace-nowrap">
+  className={`text-[15px] font-semibold whitespace-nowrap transition-all ${
+    pathname.startsWith('/courses')
+  ? 'text-blue-600'
+  : 'text-slate-700 hover:text-blue-600'
+  }`}
+>
   Courses
 </Link>
 
- <Link
+<Link
   href="/trainers"
-className="text-[15px] font-semibold tracking-tight text-slate-700 hover:text-blue-600 transition-all whitespace-nowrap">
+  className={`text-[15px] font-semibold whitespace-nowrap transition-all ${
+  pathname.startsWith('/trainers')
+  ? 'text-blue-600'
+  : 'text-slate-700 hover:text-blue-600'
+  }`}
+>
   Trainers
 </Link>
 
   <div className="relative group">
- <button className="text-[15px] font-semibold tracking-tight text-slate-700 hover:text-blue-600 transition-all whitespace-nowrap">
+ <button
+  className={`text-[15px] font-semibold whitespace-nowrap transition-all ${
+    pathname.startsWith('/training-programs')
+      ? 'text-blue-600'
+      : 'text-slate-700 hover:text-blue-600'
+  }`}
+>
   Curated Training Programs
 </button>
 
@@ -167,10 +201,15 @@ className="text-[15px] font-semibold tracking-tight text-slate-700 hover:text-bl
 </div>
 
 <div className="relative group">
-  <button className="text-[15px] font-semibold tracking-tight text-slate-700 hover:text-blue-600 transition-all whitespace-nowrap">
+ <button
+  className={`text-[15px] font-semibold whitespace-nowrap transition-all ${
+    pathname.startsWith('/premium-services')
+      ? 'text-blue-600'
+      : 'text-slate-700 hover:text-blue-600'
+  }`}
+>
   Premium Services
 </button>
-  
 
   <div className="absolute left-0 top-full w-80 bg-[#2f2f2f] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
 
@@ -230,19 +269,34 @@ className="text-[15px] font-semibold tracking-tight text-slate-700 hover:text-bl
 
 <Link
   href="/clients-industries"
-className="text-[15px] font-semibold tracking-tight text-slate-700 hover:text-blue-600 transition-all whitespace-nowrap">
+  className={`text-[15px] font-semibold whitespace-nowrap transition-all ${
+    pathname.startsWith('/clients-industries')
+      ? 'text-blue-600'
+      : 'text-slate-700 hover:text-blue-600'
+  }`}
+>
   Clients & Industries
 </Link>
 
 <Link
   href="/group-brands"
-className="text-[15px] font-semibold tracking-tight text-slate-700 hover:text-blue-600 transition-all whitespace-nowrap">
+  className={`text-[15px] font-semibold whitespace-nowrap transition-all ${
+    pathname.startsWith('/group-brands')
+      ? 'text-blue-600'
+      : 'text-slate-700 hover:text-blue-600'
+  }`}
+>
   Group Brands
 </Link>
 
  <Link
   href="/contact"
-className="text-[15px] font-semibold tracking-tight text-slate-700 hover:text-blue-600 transition-all whitespace-nowrap">
+  className={`text-[15px] font-semibold whitespace-nowrap transition-all ${
+   pathname === '/contact'
+  ? 'text-blue-600'
+  : 'text-slate-700 hover:text-blue-600'
+  }`}
+>
   Contact Us
 </Link>
 </div>

@@ -3,6 +3,8 @@ import { Geist, Geist_Mono } from 'next/font/google'
 
 import { Analytics } from '@vercel/analytics/next'
 
+import { Toaster } from '@/components/ui/toaster' 
+
 //import { Navbar } from '@/components/navbar'
 //import { Footer } from '@/components/footer'
 
@@ -66,19 +68,17 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body
-        className={`${geist.variable} ${geistMono.variable} font-sans antialiased bg-white text-slate-900`}
-      >
-       
+  className={`${geist.variable} ${geistMono.variable} font-sans antialiased bg-white text-slate-900`}
+>
 
-        {/* Main Content */}
-        <main className="min-h-screen">
-          {children}
-        </main>
+  <main className="min-h-screen">
+    {children}
+  </main>
 
-    
-        {/* Analytics */}
-        {process.env.NODE_ENV === 'production' && <Analytics />}
-      </body>
+  <Toaster />
+
+  {process.env.NODE_ENV === 'production' && <Analytics />}
+</body>
     </html>
   )
 }

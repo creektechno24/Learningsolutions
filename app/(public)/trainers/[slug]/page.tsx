@@ -83,10 +83,10 @@ setTrainer(result.data)
       <div className="container mx-auto px-4 md:px-6 py-12">
         {/* Profile Section */}
         <div className="bg-white rounded-lg p-8 mb-8">
-          <div className="flex flex-col md:flex-row gap-8">
+         <div className="flex flex-col lg:flex-row gap-10 items-start">
             {/* Image */}
-            <div className="md:w-1/4 flex-shrink-0">
-              <div className="relative w-full aspect-square rounded-lg overflow-hidden bg-gray-200">
+            <div className="md:w-[280px] flex-shrink-0 relative">
+              <div className="relative w-56 h-56 rounded-[32px] overflow-hidden bg-gray-200 border-4 border-white shadow-2xl -mt-24 mx-auto md:mx-0">
                 {trainer.profile_image_url ? (
                   <Image
                     src={trainer.profile_image_url}
@@ -110,10 +110,10 @@ setTrainer(result.data)
             <div className="md:w-3/4">
               <div className="flex items-start justify-between mb-6">
                 <div>
-                  <h1 className="text-4xl font-bold mb-2">
+                  <h1 className="text-text-4xl lg:text-5xl font-bold mb-2">
                     {trainer.first_name} {trainer.last_name}
                   </h1>
-                  <p className="text-lg text-gray-600 mb-2">{trainer.qualification}</p>
+                  <p className="text-xl text-slate-500 mb-3">{trainer.qualification}</p>
                   {trainer.is_verified && (
                     <div className="flex items-center gap-1 text-green-600 font-semibold">
                       <Award size={20} />
@@ -121,36 +121,46 @@ setTrainer(result.data)
                     </div>
                   )}
                 </div>
-                <div className="text-right">
-                  <p className="text-3xl font-bold text-blue-600">
-                    ${trainer.hourly_rate}/hr
-                  </p>
-                </div>
+                 <div className="text-right">
+
+  <p className="text-sm uppercase tracking-wider text-slate-500">
+    Training Fee
+  </p>
+
+  <h2 className="text-5xl font-bold text-blue-600">
+    ${trainer.hourly_rate}
+  </h2>
+
+  <p className="text-slate-500">
+    Per Hour
+  </p>
+
+</div>
               </div>
 
               {/* Stats */}
-              <div className="grid md:grid-cols-3 gap-4 mb-6 pb-6 border-b">
-                <div>
+              <div className="grid md:grid-cols-3 gap-4 mt-8 mb-8">
+         <div className="bg-slate-50 rounded-2xl p-5 border">
                   <p className="text-sm text-gray-600">Experience</p>
                   <p className="text-2xl font-bold">{trainer.years_of_experience}+ years</p>
                 </div>
-                <div>
+                <div className="bg-slate-50 rounded-2xl p-5 border">
                   <p className="text-sm text-gray-600">Courses Taught</p>
                   <p className="text-2xl font-bold">{trainer.courses?.length || 0}</p>
                 </div>
-                <div>
+                <div className="bg-slate-50 rounded-2xl p-5 border">
                   <p className="text-sm text-gray-600">Students</p>
                   <p className="text-2xl font-bold">500+</p>
                 </div>
               </div>
 
               {/* Bio */}
-              <p className="text-gray-700 leading-relaxed mb-6">
+              <p className="text-slate-600 leading-8 mb-6 max-w-4xl">
                 {trainer.bio}
               </p>
 
               {/* Contact Buttons */}
-              <div className="flex gap-4">
+              <div className="flex flex-wrap gap-4 mt-6">
                 {trainer.email && (
                   <a href={`mailto:${trainer.email}`}>
                     <Button className="gap-2">
@@ -176,19 +186,32 @@ setTrainer(result.data)
   
 
         {/* Expertise */}
-        <div className="bg-white rounded-lg p-8 mb-8">
-          <h2 className="text-2xl font-bold mb-4">Expertise</h2>
-          <div className="flex flex-wrap gap-3">
-            {trainer.expertise?.map((skill: string, index: number) => (
-              <span
-                key={index}
-                className="bg-blue-100 text-blue-800 px-4 py-2 rounded-full font-semibold"
-              >
-                {skill}
-              </span>
-            ))}
-          </div>
-        </div>
+      <div className="bg-white rounded-[32px] shadow-xl border border-slate-200 overflow-hidden mb-8">
+
+  <div className="h-16 bg-gradient-to-r from-blue-700 via-indigo-600 to-violet-600" />
+
+  <div className="p-6">
+
+    <h2 className="text-3xl font-bold text-slate-900 mb-6">
+      Expertise
+    </h2>
+
+    <div className="flex flex-wrap gap-3">
+
+      {trainer.expertise?.map((skill: string, index: number) => (
+        <span
+          key={index}
+          className="px-5 py-2 rounded-full bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-100 text-blue-700 font-semibold"
+        >
+          {skill}
+        </span>
+      ))}
+
+    </div>
+
+  </div>
+
+</div>
 
         {/* Courses */}
         {trainer.courses && trainer.courses.length > 0 && (

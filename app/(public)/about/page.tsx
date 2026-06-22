@@ -1,4 +1,4 @@
-import { CheckCircle } from 'lucide-react'
+//import { CheckCircle } from 'lucide-react'
 import Image from 'next/image'
 
 export const metadata = {
@@ -8,33 +8,43 @@ export const metadata = {
 }
 
 export default function AboutPage() {
-  const coreValues = [
-    {
-      title: 'Integrity',
-      description:
-        'We uphold the highest standards of honesty and transparency.',
-    },
-    {
-      title: 'Excellence',
-      description:
-        'We strive for quality in every training experience.',
-    },
-    {
-      title: 'Innovation',
-      description:
-        'We embrace new ideas and technologies to stay ahead.',
-    },
-    {
-      title: 'Empowerment',
-      description:
-        'We believe in unlocking human potential through learning.',
-    },
-    {
-      title: 'Collaboration',
-      description:
-        'We build lasting partnerships with our clients and learners.',
-    },
-  ]
+const coreValues = [
+  {
+    letter: 'I',
+    title: 'Integrity',
+    image: '/images/about/integrity.jpeg',
+    description:
+      'We uphold the highest standards of honesty, ethics, and transparency in every engagement.',
+  },
+  {
+    letter: 'I',
+    title: 'Innovation',
+    image: '/images/about/innovation.jpeg',
+    description:
+      'We embrace creativity, new ideas, and emerging technologies to drive transformation.',
+  },
+  {
+    letter: 'C',
+    title: 'Collaboration',
+    image: '/images/about/collaboration.jpeg',
+    description:
+      'We build strong partnerships and work together to achieve shared success.',
+  },
+  {
+    letter: 'E',
+    title: 'Empowerment',
+    image: '/images/about/empowerment.jpeg',
+    description:
+      'We enable individuals and teams to unlock their full potential through learning.',
+  },
+  {
+    letter: 'E',
+    title: 'Excellence',
+    image: '/images/about/excellence.jpeg',
+    description:
+      'We strive for outstanding quality, measurable impact, and continuous improvement.',
+  },
+]
 
   const differentiators = [
     {
@@ -226,31 +236,112 @@ export default function AboutPage() {
           </div>
 
           {/* Core Values */}
-          <div className="mt-16">
-            <h2 className="text-4xl font-bold text-center text-slate-900 mb-12">
-              Core Values
-            </h2>
+        {/* Core Values - IICEE Framework */}
+<div className="mt-20">
 
-            <div className="grid md:grid-cols-2 xl:grid-cols-5 gap-6">
-              {coreValues.map((value) => (
-                <div
-                  key={value.title}
-                  className="bg-white border rounded-3xl p-6 shadow-sm hover:shadow-lg transition-all duration-300"
-                >
-                  <CheckCircle className="w-8 h-8 text-blue-600 mb-4" />
+  <div className="text-center mb-14">
+    <span className="inline-flex items-center rounded-full bg-blue-100 text-blue-700 px-4 py-2 text-sm font-semibold">
+      Our Core Values
+    </span>
 
-                  <h3 className="text-xl font-semibold mb-3">
-                    {value.title}
-                  </h3>
+    <h2 className="mt-4 text-4xl md:text-5xl font-bold text-slate-900">
+      The IICEE Framework
+    </h2>
 
-                  <p className="text-slate-600 leading-7">
-                    {value.description}
-                  </p>
-                </div>
-              ))}
-            </div>
+    <p className="mt-4 text-lg text-slate-600 max-w-3xl mx-auto">
+      Integrity, Innovation, Collaboration, Empowerment and Excellence form
+      the foundation of how we deliver learning solutions, build partnerships,
+      and create lasting impact.
+    </p>
+  </div>
+
+{/* First Row */}
+<div className="grid md:grid-cols-2 xl:grid-cols-3 gap-8">
+
+  {coreValues.slice(0, 3).map((value) => (
+    <div
+      key={value.title}
+      className="group overflow-hidden rounded-[32px] bg-white border border-slate-200 shadow-sm hover:shadow-2xl transition-all duration-500 hover:-translate-y-2"
+    >
+
+      <div className="relative h-[240px] bg-white p-3">
+        <Image
+          src={value.image}
+          alt={value.title}
+          fill
+          className="object-contain group-hover:scale-105 transition duration-700"
+        />
+      </div>
+
+      <div className="p-6">
+
+        <div className="flex items-center gap-3 mb-3">
+
+          <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center text-white font-bold text-lg">
+            {value.letter}
           </div>
 
+          <h3 className="text-2xl font-bold text-slate-900">
+            {value.title}
+          </h3>
+
+        </div>
+
+        <p className="text-slate-600 leading-7">
+          {value.description}
+        </p>
+
+      </div>
+
+    </div>
+  ))}
+
+</div>
+
+{/* Second Row */}
+<div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto mt-8">
+
+  {coreValues.slice(3).map((value) => (
+    <div
+      key={value.title}
+      className="group overflow-hidden rounded-[32px] bg-white border border-slate-200 shadow-sm hover:shadow-2xl transition-all duration-500 hover:-translate-y-2"
+    >
+
+      <div className="relative h-[240px] bg-white p-3">
+        <Image
+          src={value.image}
+          alt={value.title}
+          fill
+          className="object-contain group-hover:scale-105 transition duration-700"
+        />
+      </div>
+
+      <div className="p-6">
+
+        <div className="flex items-center gap-3 mb-3">
+
+          <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center text-white font-bold text-lg">
+            {value.letter}
+          </div>
+
+          <h3 className="text-2xl font-bold text-slate-900">
+            {value.title}
+          </h3>
+
+        </div>
+
+        <p className="text-slate-600 leading-7">
+          {value.description}
+        </p>
+
+      </div>
+
+    </div>
+  ))}
+
+</div>
+
+</div>
           {/* What Sets Us Apart */}
           <div className="mt-20">
             <h2 className="text-4xl font-bold text-center text-slate-900 mb-12">

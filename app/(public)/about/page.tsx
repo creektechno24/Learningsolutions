@@ -264,16 +264,17 @@ const coreValues = [
       className="group overflow-hidden rounded-[32px] bg-white border border-slate-200 shadow-sm hover:shadow-2xl transition-all duration-500 hover:-translate-y-2"
     >
 
-      <div className="relative h-[240px] bg-white p-3">
-        <Image
-          src={value.image}
-          alt={value.title}
-          fill
-          className="object-contain group-hover:scale-105 transition duration-700"
-        />
-      </div>
+     <div className="h-[280px] flex items-center justify-center bg-white p-4">
+  <Image
+    src={value.image}
+    alt={value.title}
+    width={500}
+    height={350}
+    className="h-[240px] w-full object-contain group-hover:scale-105 transition duration-700"
+  />
+</div>
 
-      <div className="p-6">
+      <div className="p-5">
 
         <div className="flex items-center gap-3 mb-3">
 
@@ -287,7 +288,7 @@ const coreValues = [
 
         </div>
 
-        <p className="text-slate-600 leading-7">
+        <p className="text-slate-600 leading-6">
           {value.description}
         </p>
 
@@ -307,16 +308,17 @@ const coreValues = [
       className="group overflow-hidden rounded-[32px] bg-white border border-slate-200 shadow-sm hover:shadow-2xl transition-all duration-500 hover:-translate-y-2"
     >
 
-      <div className="relative h-[240px] bg-white p-3">
-        <Image
-          src={value.image}
-          alt={value.title}
-          fill
-          className="object-contain group-hover:scale-105 transition duration-700"
-        />
-      </div>
+     <div className="h-[280px] flex items-center justify-center bg-white p-4">
+  <Image
+    src={value.image}
+    alt={value.title}
+    width={500}
+    height={350}
+    className="h-[240px] w-full object-contain group-hover:scale-105 transition duration-700"
+  />
+</div>
 
-      <div className="p-6">
+      <div className="p-5">
 
         <div className="flex items-center gap-3 mb-3">
 
@@ -330,7 +332,7 @@ const coreValues = [
 
         </div>
 
-        <p className="text-slate-600 leading-7">
+        <p className="text-slate-600 leading-6">
           {value.description}
         </p>
 

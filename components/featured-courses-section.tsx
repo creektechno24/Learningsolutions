@@ -14,7 +14,8 @@ export function FeaturedCoursesSection() {
   useEffect(() => {
     const fetchFeaturedCourses = async () => {
       try {
-        const response = await fetch('/api/courses?limit=6&sort=featured')
+
+        const response = await fetch('/api/courses?limit=6')
 
         const data = await response.json()
 
@@ -53,55 +54,48 @@ export function FeaturedCoursesSection() {
   }
 
   return (
-    <section className="relative py-24 md:py-32 bg-white overflow-hidden">
+    <section className="relative py-24 md:py-28 overflow-hidden bg-white">
 
       {/* Background Effects */}
-      <div className="absolute top-0 left-0 w-[400px] h-[400px] bg-blue-100 rounded-full blur-3xl opacity-40" />
-      <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-indigo-100 rounded-full blur-3xl opacity-40" />
+<div className="absolute top-0 left-0 w-[600px] h-[600px] bg-blue-100/50 rounded-full blur-3xl" />
 
+<div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-indigo-100/50 rounded-full blur-3xl" />
       <div className="relative max-w-7xl mx-auto px-4 md:px-6">
 
         {/* Header */}
-        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8 mb-16">
+        <div className="max-w-4xl mx-auto text-center mb-10">
 
-          <div className="max-w-3xl">
+  <div className="inline-flex items-center gap-2 bg-white border border-slate-200 rounded-full px-4 py-2 text-sm font-semibold text-blue-700 mb-6">
+    <Sparkles className="w-4 h-4" />
+    Latest Courses
+  </div>
 
-            {/* Badge */}
-            <div className="inline-flex items-center gap-2 bg-blue-50 text-blue-700 rounded-full px-4 py-2 text-sm font-semibold mb-6">
-              <Sparkles className="w-4 h-4" />
-              Featured Enterprise Programs
-            </div>
+  <h2 className="text-4xl md:text-5xl xl:text-6xl font-bold tracking-tight text-slate-900 mb-6">
+    Explore Our
+    <span className="text-blue-600">
+      {" "}Latest Learning Programs
+    </span>
+  </h2>
 
-            {/* Heading */}
-            <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-slate-900 leading-tight mb-6">
-              Discover Premium Workforce
-              <span className="block text-blue-700">
-                Learning Experiences
-              </span>
-            </h2>
+  <p className="text-lg md:text-xl text-slate-600 leading-relaxed max-w-3xl mx-auto">
+    Discover expertly designed learning programs and professional development
+    courses curated to help individuals and organizations achieve measurable
+    growth and long-term success.
+  </p>
 
-            {/* Description */}
-            <p className="text-lg text-slate-600 leading-relaxed">
-              Explore expertly curated enterprise learning programs designed to
-              enhance workforce capabilities, technical expertise, and business
-              performance.
-            </p>
-          </div>
+  <div className="mt-6 flex justify-center">
+    <Link href="/courses">
+      <Button
+        size="lg"
+        className="h-12 px-6 rounded-xl bg-blue-600 hover:bg-blue-700"
+      >
+        Browse All Courses
+        <ArrowRight className="ml-2 w-4 h-4" />
+      </Button>
+    </Link>
+  </div>
 
-          {/* CTA */}
-          <div>
-            <Link href="/courses">
-              <Button
-                size="lg"
-                variant="outline"
-                className="h-14 px-7 rounded-2xl border-slate-300 hover:border-blue-200 hover:bg-blue-50"
-              >
-                Browse All Courses
-                <ArrowRight className="ml-2 w-5 h-5" />
-              </Button>
-            </Link>
-          </div>
-        </div>
+</div>
 
         {/* Courses Grid */}
         {courses.length > 0 ? (
@@ -117,7 +111,7 @@ export function FeaturedCoursesSection() {
             </h3>
 
             <p className="text-slate-600 mb-8">
-              Featured enterprise programs will appear here soon.
+              Recently published training programs will appear here soon.
             </p>
 
             <Link href="/courses">
@@ -138,17 +132,16 @@ export function FeaturedCoursesSection() {
 
             <div>
               <div className="inline-flex items-center gap-2 bg-white/10 border border-white/10 backdrop-blur-xl rounded-full px-4 py-2 text-sm text-blue-100 mb-6">
-                Enterprise Learning Solutions
+                Professional Learning Solutions
               </div>
 
               <h3 className="text-4xl font-bold text-white leading-tight mb-5">
-                Build A Future-Ready Workforce
+                Accelerate Professional Growth
               </h3>
 
               <p className="text-blue-100 text-lg leading-relaxed">
-                Accelerate organizational growth with customized enterprise
-                learning programs, expert trainers, and scalable workforce
-                transformation solutions.
+               Advance careers and strengthen teams through expert-led training,
+industry-recognized programs, and practical learning experiences.
               </p>
             </div>
 
@@ -169,7 +162,7 @@ export function FeaturedCoursesSection() {
                     variant="outline"
                     className="h-14 px-8 rounded-2xl border-white/20 bg-white/10 backdrop-blur-xl text-white hover:bg-white/20"
                   >
-                    Contact Sales
+                    Contact Us
                   </Button>
                 </Link>
               </div>

@@ -138,7 +138,7 @@ and workforce development solutions designed for modern organizations.
 
 
 {/* Trusted Companies */}
-<section className="py-8 bg-white">
+{/*<section className="py-8 bg-white">
   <div className="max-w-7xl mx-auto px-6">
 
     <p className="text-center text-sm font-semibold tracking-[0.3em] text-slate-500 uppercase mb-10">
@@ -165,7 +165,7 @@ and workforce development solutions designed for modern organizations.
     </div>
 
   </div>
-</section>
+</section>*/}
 
 {/* Enterprise Solutions */}
 <section className="relative py-16 md:py-20 overflow-hidden bg-gradient-to-b from-white via-slate-50 to-white">

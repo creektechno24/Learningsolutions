@@ -223,56 +223,53 @@ export function Navbar() {
 >
   Premium Services
 </button>
-
-  <div className="absolute left-0 top-full w-80 bg-[#2f2f2f] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-
-    <div className="h-1 bg-lime-500"></div>
+<div className="absolute top-full left-0 mt-2 w-80 bg-white rounded-xl shadow-xl border opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
 
     <Link
       href="/premium-services/assessment-development-centre"
-      className="block px-6 py-4 text-white hover:bg-[#3b3b3b]"
+      className="block px-5 py-3 hover:bg-slate-100 text-slate-700"
     >
       Assessment Development Centre (ADC)
     </Link>
 
     <Link
       href="/premium-services/boot-camps-ttt"
-      className="block px-6 py-4 text-white hover:bg-[#3b3b3b]"
+  className="block px-5 py-3 hover:bg-slate-100 text-slate-700"
     >
       Boot Camps & TTT Programs
     </Link>
 
     <Link
       href="/premium-services/coaching-mentoring"
-      className="block px-6 py-4 text-white hover:bg-[#3b3b3b]"
+      className="block px-5 py-3 hover:bg-slate-100 text-slate-700"
     >
       Coaching & Mentoring
     </Link>
 
     <Link
       href="/premium-services/csr-projects"
-      className="block px-6 py-4 text-white hover:bg-[#3b3b3b]"
+     className="block px-5 py-3 hover:bg-slate-100 text-slate-700"
     >
       CSR Projects
     </Link>
 
     <Link
       href="/premium-services/organizational-development"
-      className="block px-6 py-4 text-white hover:bg-[#3b3b3b]"
+     className="block px-5 py-3 hover:bg-slate-100 text-slate-700"
     >
       Organizational Development (OD)
     </Link>
 
     <Link
       href="/premium-services/outbound-training"
-      className="block px-6 py-4 text-white hover:bg-[#3b3b3b]"
+     className="block px-5 py-3 hover:bg-slate-100 text-slate-700"
     >
       Out Bound Training (OBT)
     </Link>
 
     <Link
       href="/premium-services/psychometric-test"
-      className="block px-6 py-4 text-white hover:bg-[#3b3b3b]"
+   className="block px-5 py-3 hover:bg-slate-100 text-slate-700"
     >
       Psychometric Test
     </Link>

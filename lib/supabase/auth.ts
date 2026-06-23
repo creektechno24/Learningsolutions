@@ -21,13 +21,16 @@ export interface LoginData {
 export async function signUp(data: SignUpData) {
   const supabase = createClient()
 
-  const { data: authData, error: authError } = await supabase.auth.signUp({
+ const { data: authData, error: authError } =
+  await supabase.auth.signUp({
     email: data.email,
     password: data.password,
     options: {
       emailRedirectTo:
         process.env.NEXT_PUBLIC_DEV_SUPABASE_REDIRECT_URL ??
-        `${typeof window !== 'undefined' ? window.location.origin : ''}/auth/callback`,
+        `${typeof window !== 'undefined'
+          ? window.location.origin
+          : ''}/auth/callback`,
       data: {
         user_type: data.userType,
         first_name: data.firstName || '',
@@ -36,6 +39,8 @@ export async function signUp(data: SignUpData) {
       },
     },
   })
+  
+ 
 
   if (authError) {
     return { error: authError.message }

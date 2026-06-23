@@ -7,6 +7,7 @@ import { useState, useEffect } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { cn } from '@/lib/utils'
 import { usePathname } from 'next/navigation'
+import Image from 'next/image'
 
 export function Navbar() {
     const pathname = usePathname()
@@ -58,16 +59,28 @@ export function Navbar() {
         <div className="py-3">
    <div className="flex items-center justify-between">
 
-  <div>
-    <h1 className="text-2xl font-bold text-slate-900 tracking-tight">
+<Link
+  href="/"
+  className="flex items-center gap-3"
+>
+  <Image
+    src="/favicon-32x32.png"
+    alt="Creek Learning Solutions"
+    width={52}
+    height={52}
+    className="rounded-xl"
+  />
+
+  <div className="leading-tight">
+    <span className="block text-xl font-bold text-slate-900">
       Creek Learning Solutions
-    </h1>
+    </span>
 
-    <p className="text-xs text-slate-500">
-      Inspiring People! Aspiring Life!!
-    </p>
+    <span className="block text-[11px] font-medium tracking-[0.06em] text-blue-600">
+   Inspiring People! Aspiring Life!!
+    </span>
   </div>
-
+</Link>
   <div className="hidden xl:flex items-center gap-3 w-[320px] justify-end shrink-0">
   <Link href="/auth/login">
     <Button
@@ -148,54 +161,54 @@ export function Navbar() {
 
   <div className="absolute top-full left-0 mt-2 w-72 bg-white rounded-xl shadow-xl border opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
 
-    <Link
-      href="/training-programs/behavioral-training"
-      className="block px-5 py-3 hover:bg-slate-100"
-    >
-      Behavioral Training
-    </Link>
+   <Link
+  href="/courses?category=behavioral-training"
+  className="block px-5 py-3 hover:bg-slate-100"
+>
+  Behavioral Training
+</Link>
 
-    <Link
-      href="/training-programs/core-hr-trainings"
-      className="block px-5 py-3 hover:bg-slate-100"
-    >
-      Core HR Trainings
-    </Link>
+<Link
+  href="/courses?category=core-hr-trainings"
+  className="block px-5 py-3 hover:bg-slate-100"
+>
+  Core HR Trainings
+</Link>
 
-    <Link
-      href="/training-programs/leadership"
-      className="block px-5 py-3 hover:bg-slate-100"
-    >
-      Leadership
-    </Link>
+<Link
+  href="/courses?category=leadership"
+  className="block px-5 py-3 hover:bg-slate-100"
+>
+  Leadership
+</Link>
 
-    <Link
-      href="/training-programs/retail"
-      className="block px-5 py-3 hover:bg-slate-100"
-    >
-      Retail
-    </Link>
+<Link
+  href="/courses?category=retail"
+  className="block px-5 py-3 hover:bg-slate-100"
+>
+  Retail
+</Link>
 
-    <Link
-      href="/training-programs/soft-skills-training"
-      className="block px-5 py-3 hover:bg-slate-100"
-    >
-      Soft Skills Training
-    </Link>
+<Link
+  href="/courses?category=soft-skills"
+  className="block px-5 py-3 hover:bg-slate-100"
+>
+  Soft Skills
+</Link>
 
-    <Link
-      href="/training-programs/industrial-safety"
-      className="block px-5 py-3 hover:bg-slate-100"
-    >
-      Industrial Safety
-    </Link>
+<Link
+  href="/courses?category=industrial-safety"
+  className="block px-5 py-3 hover:bg-slate-100"
+>
+  Industrial Safety
+</Link>
 
-    <Link
-      href="/training-programs/it-ites"
-      className="block px-5 py-3 hover:bg-slate-100"
-    >
-      IT & ITES
-    </Link>
+<Link
+  href="/courses?category=it-and-ites"
+  className="block px-5 py-3 hover:bg-slate-100"
+>
+  IT & ITES
+</Link>
 
   </div>
 </div>

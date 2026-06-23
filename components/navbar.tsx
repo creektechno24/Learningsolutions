@@ -161,50 +161,51 @@ export function Navbar() {
 
   <div className="absolute top-full left-0 mt-2 w-72 bg-white rounded-xl shadow-xl border opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
 
-   <Link
-  href="/courses?category=behavioral-training"
+ <Link
+  href="/training-programs/behavioral-training"
   className="block px-5 py-3 hover:bg-slate-100"
 >
   Behavioral Training
 </Link>
 
 <Link
-  href="/courses?category=core-hr-trainings"
+href="/training-programs/core-hr-trainings"
   className="block px-5 py-3 hover:bg-slate-100"
 >
   Core HR Trainings
 </Link>
 
 <Link
-  href="/courses?category=leadership"
+  href="/training-programs/leadership-training"
   className="block px-5 py-3 hover:bg-slate-100"
 >
   Leadership
 </Link>
 
 <Link
-  href="/courses?category=retail"
+  href="/training-programs/retail-training"
+
   className="block px-5 py-3 hover:bg-slate-100"
 >
   Retail
 </Link>
 
 <Link
-  href="/courses?category=soft-skills"
+  href="/training-programs/soft-skills-training"
   className="block px-5 py-3 hover:bg-slate-100"
 >
   Soft Skills
 </Link>
 
 <Link
-  href="/courses?category=industrial-safety"
+  href="/training-programs/industrial-safety-training"
   className="block px-5 py-3 hover:bg-slate-100"
 >
   Industrial Safety
 </Link>
 
 <Link
-  href="/courses?category=it-and-ites"
+  href="/training-programs/it-ites-training"
   className="block px-5 py-3 hover:bg-slate-100"
 >
   IT & ITES

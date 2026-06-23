@@ -176,14 +176,14 @@ href="/training-programs/core-hr-trainings"
 </Link>
 
 <Link
-  href="/training-programs/leadership-training"
+  href="/training-programs/leadership"
   className="block px-5 py-3 hover:bg-slate-100"
 >
   Leadership
 </Link>
 
 <Link
-  href="/training-programs/retail-training"
+  href="/training-programs/retail"
 
   className="block px-5 py-3 hover:bg-slate-100"
 >
@@ -198,14 +198,14 @@ href="/training-programs/core-hr-trainings"
 </Link>
 
 <Link
-  href="/training-programs/industrial-safety-training"
+  href="/training-programs/industrial-safety"
   className="block px-5 py-3 hover:bg-slate-100"
 >
   Industrial Safety
 </Link>
 
 <Link
-  href="/training-programs/it-ites-training"
+  href="/training-programs/it-ites"
   className="block px-5 py-3 hover:bg-slate-100"
 >
   IT & ITES

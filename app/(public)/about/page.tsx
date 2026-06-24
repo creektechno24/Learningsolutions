@@ -77,41 +77,50 @@ const coreValues = [
   return (
     <main className="min-h-screen bg-slate-50">
       {/* Hero */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-blue-700 via-indigo-700 to-slate-900 text-white">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.15),transparent_40%)]" />
-<div className="relative container mx-auto px-4 md:px-6 py-24 md:py-32">
-  <div className="grid lg:grid-cols-2 gap-12 items-center">
+     {/* Hero Section */}
+<section className="relative min-h-[750px] overflow-hidden">
 
-    {/* Left Content */}
-    <div>
-      <span className="inline-flex items-center rounded-full bg-white/10 px-4 py-2 text-sm backdrop-blur">
-        Creek Learning Solutions
+  {/* Background Image */}
+  <Image
+    src="/images/hero/corporate-training.jpg"
+    alt="About Creek Learning Solutions"
+    fill
+    priority
+    className="object-cover"
+  />
+
+  {/* Overlay */}
+  <div className="absolute inset-0 bg-slate-950/75" />
+
+  {/* Content */}
+  <div className="relative container mx-auto px-6 min-h-[750px] flex items-center justify-center">
+
+    <div className="max-w-5xl text-center">
+
+      <span className="inline-flex items-center rounded-full bg-white/10 border border-white/20 px-5 py-2 text-sm backdrop-blur-md text-blue-200">
+        About Creek Learning Solutions
       </span>
 
-      <h1 className="mt-6 text-5xl md:text-6xl font-bold leading-tight">
-        About Us
+      <h1 className="mt-8 text-5xl md:text-7xl font-bold text-white leading-tight">
+        Transforming People.
+        <br />
+        Empowering Organizations.
       </h1>
 
-      <p className="mt-6 text-xl text-blue-100 leading-relaxed">
-        Welcome to Creek Learning Solutions, a unit of Creek Techno
-        Solutions Pvt. Ltd., Hyderabad, India.
+      <p className="mt-8 text-xl md:text-2xl text-slate-200 max-w-4xl mx-auto leading-relaxed">
+        With 25+ years of expertise in corporate learning, leadership
+        development, behavioral training, coaching, mentoring, and workforce
+        transformation, we help organizations build future-ready teams and
+        high-performing professionals.
       </p>
-    </div>
 
-    {/* Right Image */}
-    <div className="relative h-[400px] rounded-3xl overflow-hidden shadow-2xl border border-white/10">
-      <Image
-        src="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=1200&auto=format&fit=crop"
-        alt="Corporate Training"
-        fill
-        priority
-        className="object-cover"
-      />
     </div>
 
   </div>
-</div>
-      </section>
+
+</section>
+
+
 
       {/* About */}
       <section className="py-16 md:py-20">

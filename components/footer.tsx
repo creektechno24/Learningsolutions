@@ -1,262 +1,313 @@
-        import Link from 'next/link'
+import Link from 'next/link'
+import Image from 'next/image'
 
-import { Button } from '@/components/ui/button'
+import {
+  Mail,
+  Phone,
+  MapPin,
+  Linkedin,
+  Facebook,
+  Instagram,
+} from 'lucide-react'
 
 export function Footer() {
   return (
     <footer className="relative overflow-hidden bg-slate-950 text-white">
 
-      {/* Background Glow */}
-      <div className="absolute top-0 left-0 w-[400px] h-[400px] bg-blue-600/10 blur-3xl rounded-full" />
-      <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-indigo-600/10 blur-3xl rounded-full" />
+      {/* Background Effects */}
+      <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-blue-600/10 blur-3xl rounded-full" />
+      <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-indigo-600/10 blur-3xl rounded-full" />
 
-      <div className="relative">
-
-        {/* Top CTA */}
-        {/*
-        <div className="border-b border-white/10">
-          <div className="max-w-7xl mx-auto px-4 md:px-6 py-16">
-
-            <div className="grid lg:grid-cols-2 gap-10 items-center">
-
-             
-              <div>
-                <div className="inline-flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-4 py-2 text-sm text-blue-100 mb-6">
-                  Enterprise Learning Platform
-                </div>
-
-                <h2 className="text-4xl md:text-5xl font-bold tracking-tight leading-tight mb-6">
-                  Ready To Upskill Your Workforce?
-                </h2>
-
-                <p className="text-lg text-slate-300 leading-relaxed max-w-2xl">
-                  Accelerate business growth with expert-led enterprise
-                  learning, customized corporate training programs, and
-                  scalable workforce transformation solutions.
-                </p>
-              </div>
-
-              <div className="flex lg:justify-end">
-                <div className="flex flex-col sm:flex-row gap-4">
-
-                  <Link href="/courses">
-                    <Button
-                      size="lg"
-                      className="h-14 px-8 rounded-2xl bg-white text-slate-900 hover:bg-slate-100"
-                    >
-                      Explore Courses
-                    </Button>
-                  </Link>
-
-                  <Link href="/contact">
-                    <Button
-                      size="lg"
-                      variant="outline"
-                      className="h-14 px-8 rounded-2xl border-white/20 bg-white/10 text-white hover:bg-white/20"
-                    >
-                      Contact Sales
-                    </Button>
-                  </Link>
-
-                </div>
-              </div>
-
-            </div>
-
-          </div>
-        </div>*/}
+      <div className="relative max-w-7xl mx-auto px-6">
 
         {/* Main Footer */}
-        <div className="max-w-7xl mx-auto px-4 md:px-6 py-20">
+        <div className="py-16">
 
-          <div className="grid lg:grid-cols-5 gap-12">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-10">
 
             {/* Brand */}
-            <div className="lg:col-span-2">
+            <div>
 
-              {/* Logo */}
-              <Link href="/" className="flex items-center gap-4 mb-8">
+              <Link
+                href="/"
+                className="flex items-center gap-4 mb-6"
+              >
 
-                <div className="w-14 h-14 rounded-3xl bg-gradient-to-br from-blue-600 via-indigo-600 to-violet-600 flex items-center justify-center shadow-2xl shadow-blue-500/20">
-                  <span className="text-white text-xl font-bold">
-                    LS
-                  </span>
-                </div>
+                {/* Replace logo path later */}
+              <Image
+  src="/favicon-32x32.png"
+  alt="Creek Learning Solutions"
+  width={120}
+  height={120}
+  className="object-contain"
+/>
 
-                <div>
-                  <h3 className="text-2xl font-bold">
-                    LearningSolutions
+                <div className="min-w-[260px]">
+                  <h3 className="text-2xl font-bold leading-tight">
+                    Creek Learning Solutions
                   </h3>
 
-                  <p className="text-slate-400 text-sm">
-                    Enterprise Training Platform
+                  <p className="text-sm text-blue-300">
+                    Inspiring People! Aspiring Life!!
                   </p>
                 </div>
 
               </Link>
 
-              <p className="text-slate-400 leading-relaxed text-lg max-w-lg mb-8">
-                Empowering organizations through enterprise-grade workforce
-                development, expert-led corporate learning, and scalable
-                training solutions for modern businesses.
-              </p>
+                <p className="text-slate-400 leading-8">
+  Delivering leadership, behavioral, HR, retail,
+  and professional learning solutions that empower
+  individuals and organizations to achieve
+  sustainable growth.
+</p>
 
-              {/* Stats */}
-              <div className="grid grid-cols-3 gap-4">
+              {/* Social */}
+              <div className="flex items-center gap-4 mt-8">
 
-                {[
-                  {
-                    value: '500+',
-                    label: 'Trainings',
-                  },
-                  {
-                    value: '100+',
-                    label: 'Experts',
-                  },
-                  {
-                    value: '50+',
-                    label: 'Companies',
-                  },
-                ].map((item, index) => (
-                  <div
-                    key={index}
-                    className="rounded-2xl border border-white/10 bg-white/5 p-4"
-                  >
-                    <h4 className="text-2xl font-bold text-white">
-                      {item.value}
-                    </h4>
+                <a
+                  href="#"
+                  className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center hover:bg-blue-600 transition-all"
+                >
+                  <Linkedin size={18} />
+                </a>
 
-                    <p className="text-sm text-slate-400 mt-1">
-                      {item.label}
-                    </p>
-                  </div>
-                ))}
-
+            
               </div>
+
+            </div>
+
+            {/* Quick Links */}
+            <div>
+
+              <h4 className="text-lg font-semibold mb-6">
+                Quick Links
+              </h4>
+
+              <ul className="space-y-4 text-slate-400">
+
+                <li>
+                  <Link
+                    href="/"
+                    className="hover:text-white transition-colors"
+                  >
+                    Home
+                  </Link>
+                </li>
+
+                <li>
+                  <Link
+                    href="/about"
+                    className="hover:text-white transition-colors"
+                  >
+                    About Us
+                  </Link>
+                </li>
+
+                <li>
+                  <Link
+                    href="/courses"
+                    className="hover:text-white transition-colors"
+                  >
+                    Courses
+                  </Link>
+                </li>
+
+                <li>
+                  <Link
+                    href="/trainers"
+                    className="hover:text-white transition-colors"
+                  >
+                    Trainers
+                  </Link>
+                </li>
+
+                <li>
+                  <Link
+                    href="/contact"
+                    className="hover:text-white transition-colors"
+                  >
+                    Contact Us
+                  </Link>
+                </li>
+
+              </ul>
 
             </div>
 
             {/* Training Programs */}
             <div>
+
               <h4 className="text-lg font-semibold mb-6">
                 Training Programs
               </h4>
 
               <ul className="space-y-4 text-slate-400">
 
-                {[
-                  'Leadership Training',
-                  'Technical Upskilling',
-                  'Cloud Computing',
-                  'Data Science',
-                  'Cybersecurity',
-                ].map((item) => (
-                  <li key={item}>
-                    <Link
-                      href="/courses"
-                      className="hover:text-white transition-colors"
-                    >
-                      {item}
-                    </Link>
-                  </li>
-                ))}
+  <li>
+    <Link href="/training-programs/behavioral-training" className="hover:text-white transition-colors">
+      Behavioral Training
+    </Link>
+  </li>
 
-              </ul>
+  <li>
+    <Link href="/training-programs/leadership" className="hover:text-white transition-colors">
+      Leadership
+    </Link>
+  </li>
+
+  <li>
+    <Link href="/training-programs/soft-skills-training" className="hover:text-white transition-colors">
+      Soft Skills Training
+    </Link>
+  </li>
+
+  <li>
+    <Link href="/training-programs/core-hr-trainings" className="hover:text-white transition-colors">
+      Core HR Trainings
+    </Link>
+  </li>
+
+  <li>
+    <Link href="/training-programs/retail" className="hover:text-white transition-colors">
+      Retail Training
+    </Link>
+  </li>
+
+  <li>
+    <Link href="/training-programs/it-ites" className="hover:text-white transition-colors">
+      IT & ITES Training
+    </Link>
+  </li>
+
+</ul>
             </div>
 
-            {/* Company */}
+            {/* Premium Services + Contact */}
             <div>
-              <h4 className="text-lg font-semibold mb-6">
-                Company
+
+                <h4 className="text-lg font-semibold mb-6">
+                Premium Services
               </h4>
+<ul className="space-y-4 text-slate-400 mb-10">
 
-              <ul className="space-y-4 text-slate-400">
+  <li>
+    <Link href="/premium-services/coaching-mentoring" className="hover:text-white transition-colors">
+      Coaching & Mentoring
+    </Link>
+  </li>
 
-                {[
-                  {
-                    label: 'About Us',
-                    href: '/about',
-                  },
-                  {
-                    label: 'Expert Trainers',
-                    href: '/trainers',
-                  },
-                  {
-                    label: 'Enterprise Solutions',
-                    href: '/contact',
-                  },
-                  {
-                    label: 'Contact',
-                    href: '/contact',
-                  },
-                ].map((item) => (
-                  <li key={item.label}>
-                    <Link
-                      href={item.href}
-                      className="hover:text-white transition-colors"
-                    >
-                      {item.label}
-                    </Link>
-                  </li>
-                ))}
+  <li>
+    <Link href="/premium-services/assessment-development-centre" className="hover:text-white transition-colors">
+      Assessment Development Centre
+    </Link>
+  </li>
 
-              </ul>
-            </div>
+  <li>
+    <Link href="/premium-services/organizational-development" className="hover:text-white transition-colors">
+      Organizational Development
+    </Link>
+  </li>
 
-            {/* Contact */}
-            <div>
-              <h4 className="text-lg font-semibold mb-6">
+  <li>
+    <Link href="/premium-services/psychometric-test" className="hover:text-white transition-colors">
+      Psychometric Tests
+    </Link>
+  </li>
+
+  <li>
+    <Link href="/premium-services/boot-camps-ttt" className="hover:text-white transition-colors">
+      Boot Camps & TTT
+    </Link>
+  </li>
+
+  <li>
+    <Link href="/premium-services/outbound-training" className="hover:text-white transition-colors">
+      Outbound Training
+    </Link>
+  </li>
+
+</ul>
+
+              <h4 className="text-lg font-semibold mb-5">
                 Contact
               </h4>
 
               <div className="space-y-4 text-slate-400">
 
-                <p>
-                  info@learningsolutions.com
-                </p>
+                <div className="flex gap-3">
+                  <Mail size={18} className="text-blue-400" />
+                  <span>
+                    info@creeklearningsolutions.com
+                  </span>
+                </div>
 
-                <p>
-                  +1 (234) 567-890
-                </p>
+                <div className="flex gap-3">
+                  <Phone size={18} className="text-blue-400" />
+                  <span>
+                    +91 9322393157
+                  </span>
+                </div>
 
-                <p>
-                  Enterprise Learning Solutions Worldwide
-                </p>
+                 <div className="flex gap-3">
+                  <Phone size={18} className="text-blue-400" />
+                  <span>
+                   +91 9618331539
+                  </span>
+                </div>
+
+                <div className="flex gap-3">
+                 <MapPin size={18} className="text-blue-400" />
+                  <span>
+                    Hyderabad, Telangana, India
+                  </span>
+                </div>
 
               </div>
+
             </div>
 
           </div>
 
-          {/* Bottom */}
-          <div className="mt-20 pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4">
+        </div>
+
+        {/* Bottom */}
+        <div className="border-t border-white/10 py-8">
+
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
 
             <p className="text-slate-500 text-sm">
-              © 2025 LearningSolutions. All rights reserved.
+              © 2026 Creek Learning Solutions. All Rights Reserved.
             </p>
 
-            <div className="flex items-center gap-6 text-sm text-slate-500">
+            <div className="flex gap-6 text-sm text-slate-500">
 
               <Link
-                href="#"
+                href="/privacy-policy"
                 className="hover:text-white transition-colors"
               >
                 Privacy Policy
               </Link>
 
               <Link
-                href="#"
+                href="/terms-and-conditions"
                 className="hover:text-white transition-colors"
               >
-                Terms of Service
+                Terms & Conditions
               </Link>
 
               <Link
-                href="#"
-                className="hover:text-white transition-colors"
-              >
-                Cookie Policy
-              </Link>
+  href="/disclaimer"
+  className="hover:text-white transition-colors"
+>
+  Disclaimer
+</Link>
+
+<Link
+  href="/website-usage-policy"
+  className="hover:text-white transition-colors"
+>
+  Website Usage Policy
+</Link>
 
             </div>
 
@@ -265,6 +316,7 @@ export function Footer() {
         </div>
 
       </div>
+
     </footer>
   )
 }

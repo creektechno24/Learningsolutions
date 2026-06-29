@@ -1,6 +1,35 @@
+import Link from 'next/link'
 import Image from 'next/image'
+import { createClient } from '@/lib/supabase/server'
 
-export default function IndustrialSafetyPage() {
+import {
+  ShieldCheck,
+  Clock3,
+  BarChart3,
+  ArrowRight
+} from 'lucide-react'
+export default async function IndustrialSafetyPage() {
+  const supabase = await createClient()
+
+const { data: courses } = await supabase
+  .from('courses')
+  .select(`
+    id,
+    title,
+    slug,
+    description,
+    duration,
+    level,
+    course_categories!inner(
+      slug
+    )
+  `)
+  .eq('is_published', true)
+  .eq(
+    'course_categories.slug',
+    'industrial-safety'
+  )
+  .limit(6)
   return (
     <main className="min-h-screen bg-slate-50">
 
@@ -58,284 +87,687 @@ export default function IndustrialSafetyPage() {
       </section>
 
       {/* What Is Industrial Safety Training */}
-      <section className="py-20">
+    <section className="py-24 bg-gradient-to-b from-slate-50 via-white to-white">
 
-        <div className="container mx-auto px-6 max-w-6xl">
+  <div className="container mx-auto px-6 max-w-7xl">
 
-          <div className="bg-white rounded-[32px] p-10 shadow-sm border">
+    <div className="bg-white rounded-[40px] border border-slate-200 shadow-xl p-12">
 
-            <h2 className="text-4xl font-bold mb-8">
-              What Is Industrial Safety Training?
-            </h2>
+      <div className="text-center mb-14">
 
-            <p className="text-lg text-slate-600 leading-8 mb-8">
-              Industrial Safety Training is a structured program designed to
-              educate employees about:
-            </p>
+        <span className="inline-flex bg-orange-100 text-orange-700 px-6 py-2 rounded-full text-sm font-semibold">
+          Industrial Safety
+        </span>
 
-            <div className="grid md:grid-cols-2 gap-5">
+        <h2 className="text-5xl font-bold mt-6">
+          What Is Industrial Safety Training?
+        </h2>
 
-              <div className="bg-slate-50 rounded-2xl p-5 border">
-                Workplace hazards (chemical, mechanical, electrical, etc.)
-              </div>
+        <p className="text-xl text-slate-600 leading-8 mt-6 max-w-3xl mx-auto">
+          Industrial Safety Training is a structured program designed to
+          educate employees about:
+        </p>
 
-              <div className="bg-slate-50 rounded-2xl p-5 border">
-                Safe operating procedures for machinery and equipment
-              </div>
+      </div>
 
-              <div className="bg-slate-50 rounded-2xl p-5 border">
-                Emergency response protocols
-              </div>
+      {/* Safety Topics */}
 
-              <div className="bg-slate-50 rounded-2xl p-5 border">
-                Use of Personal Protective Equipment (PPE)
-              </div>
+      <div className="grid md:grid-cols-2 gap-8">
 
-              <div className="bg-slate-50 rounded-2xl p-5 border md:col-span-2">
-                Risk assessment and hazard identification
-              </div>
+        <div className="group bg-gradient-to-br from-orange-500 to-red-500 rounded-[28px] p-8 text-white shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
 
-            </div>
+          <div className="text-5xl mb-6">⚠️</div>
 
-            <h3 className="text-2xl font-bold mt-12 mb-6">
-              Training can be delivered through:
-            </h3>
+          <h3 className="text-2xl font-bold mb-4">
+            Workplace Hazards
+          </h3>
 
-            <div className="grid md:grid-cols-2 gap-5">
+          <p className="text-orange-100 leading-8">
+            Workplace hazards (chemical, mechanical, electrical, etc.)
+          </p>
 
-              <div className="bg-blue-50 rounded-2xl p-5 border border-blue-100">
-                Classroom sessions
-              </div>
+        </div>
 
-              <div className="bg-blue-50 rounded-2xl p-5 border border-blue-100">
-                Online modules
-              </div>
+        <div className="group bg-gradient-to-br from-blue-600 to-cyan-500 rounded-[28px] p-8 text-white shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
 
-              <div className="bg-blue-50 rounded-2xl p-5 border border-blue-100">
-                Hands-on simulations
-              </div>
+          <div className="text-5xl mb-6">⚙️</div>
 
-              <div className="bg-blue-50 rounded-2xl p-5 border border-blue-100">
-                Toolbox talks and refresher courses
-              </div>
+          <h3 className="text-2xl font-bold mb-4">
+            Safe Operating Procedures
+          </h3>
 
-            </div>
+          <p className="text-blue-100 leading-8">
+            Safe operating procedures for machinery and equipment
+          </p>
+
+        </div>
+
+        <div className="group bg-gradient-to-br from-rose-500 to-pink-600 rounded-[28px] p-8 text-white shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
+
+          <div className="text-5xl mb-6">🚨</div>
+
+          <h3 className="text-2xl font-bold mb-4">
+            Emergency Response
+          </h3>
+
+          <p className="text-rose-100 leading-8">
+            Emergency response protocols
+          </p>
+
+        </div>
+
+        <div className="group bg-gradient-to-br from-green-500 to-emerald-600 rounded-[28px] p-8 text-white shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
+
+          <div className="text-5xl mb-6">🦺</div>
+
+          <h3 className="text-2xl font-bold mb-4">
+            Personal Protective Equipment
+          </h3>
+
+          <p className="text-green-100 leading-8">
+            Use of Personal Protective Equipment (PPE)
+          </p>
+
+        </div>
+
+        <div className="group md:col-span-2 bg-gradient-to-r from-violet-600 via-purple-600 to-indigo-600 rounded-[28px] p-8 text-white shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
+
+          <div className="text-5xl mb-6">📋</div>
+
+          <h3 className="text-2xl font-bold mb-4">
+            Risk Assessment & Hazard Identification
+          </h3>
+
+          <p className="text-violet-100 leading-8">
+            Risk assessment and hazard identification
+          </p>
+
+        </div>
+
+      </div>
+
+      {/* Delivery Methods */}
+
+      <div className="mt-20">
+
+        <h3 className="text-4xl font-bold text-center mb-12">
+          Training can be delivered through:
+        </h3>
+
+        <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-8">
+
+          <div className="bg-gradient-to-br from-indigo-500 to-violet-600 rounded-[28px] p-8 text-center text-white shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
+
+            <div className="text-5xl mb-5">🏫</div>
+
+            <h4 className="text-xl font-bold">
+              Classroom sessions
+            </h4>
+
+          </div>
+
+          <div className="bg-gradient-to-br from-sky-500 to-blue-600 rounded-[28px] p-8 text-center text-white shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
+
+            <div className="text-5xl mb-5">💻</div>
+
+            <h4 className="text-xl font-bold">
+              Online modules
+            </h4>
+
+          </div>
+
+          <div className="bg-gradient-to-br from-emerald-500 to-green-600 rounded-[28px] p-8 text-center text-white shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
+
+            <div className="text-5xl mb-5">🛠️</div>
+
+            <h4 className="text-xl font-bold">
+              Hands-on simulations
+            </h4>
+
+          </div>
+
+          <div className="bg-gradient-to-br from-orange-500 to-red-500 rounded-[28px] p-8 text-center text-white shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
+
+            <div className="text-5xl mb-5">👷</div>
+
+            <h4 className="text-xl font-bold">
+              Toolbox talks and refresher courses
+            </h4>
 
           </div>
 
         </div>
 
-      </section>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
 
       {/* Why Important */}
-      <section className="pb-20">
+     <section className="py-24 bg-gradient-to-b from-slate-50 via-white to-white">
 
-        <div className="container mx-auto px-6 max-w-6xl">
+  <div className="container mx-auto px-6 max-w-7xl">
 
-          <h2 className="text-4xl font-bold text-center mb-14">
-            Why Is It Important?
-          </h2>
+    <div className="text-center mb-16">
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <span className="inline-flex bg-red-100 text-red-700 px-6 py-2 rounded-full text-sm font-semibold">
+        Safety Benefits
+      </span>
 
-            <div className="bg-white rounded-3xl p-8 shadow-sm border">
-              <h3 className="font-bold text-xl mb-4">
-                1. Reduces Workplace Accidents
-              </h3>
+      <h2 className="text-5xl font-bold mt-6">
+        Why Is It Important?
+      </h2>
 
-              <p className="text-slate-600">
-                Proper training minimizes human error and unsafe practices.
-              </p>
+      <p className="text-slate-600 text-xl mt-4 max-w-3xl mx-auto leading-8">
+        Industrial safety training helps organizations create safer,
+        healthier and more productive workplaces.
+      </p>
 
-              <p className="text-slate-500 mt-4">
-                Example: A manufacturing firm saw a 40% drop in accidents after
-                implementing machinery safety training.
-              </p>
-            </div>
+    </div>
 
-            <div className="bg-white rounded-3xl p-8 shadow-sm border">
-              <h3 className="font-bold text-xl mb-4">
-                2. Ensures Legal Compliance
-              </h3>
+    <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-8">
 
-              <p className="text-slate-600">
-                Meets regulatory standards like OSHA, ISO, or local labor laws.
-              </p>
+      {/* Card 1 */}
 
-              <p className="text-slate-500 mt-4">
-                Avoids fines, shutdowns, and legal liabilities.
-              </p>
-            </div>
+      <div className="group bg-gradient-to-br from-red-500 to-rose-600 rounded-[32px] p-8 text-white shadow-xl hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
 
-            <div className="bg-white rounded-3xl p-8 shadow-sm border">
-              <h3 className="font-bold text-xl mb-4">
-                3. Boosts Employee Awareness
-              </h3>
+        <div className="text-5xl mb-6">🚧</div>
 
-              <p className="text-slate-600">
-                Workers become more alert to potential hazards.
-              </p>
+        <h3 className="text-2xl font-bold mb-5">
+          1. Reduces Workplace Accidents
+        </h3>
 
-              <p className="text-slate-500 mt-4">
-                Example: Chemical plant employees reduced spill incidents after
-                hazard handling training.
-              </p>
-            </div>
+        <p className="text-red-100 leading-8">
+          Proper training minimizes human error and unsafe practices.
+        </p>
 
-            <div className="bg-white rounded-3xl p-8 shadow-sm border">
-              <h3 className="font-bold text-xl mb-4">
-                4. Improves Productivity
-              </h3>
-
-              <p className="text-slate-600">
-                A safe environment allows employees to focus on tasks without
-                fear.
-              </p>
-
-              <p className="text-slate-500 mt-4">
-                Example: Logistics operations improved by 15% after lifting
-                technique training.
-              </p>
-            </div>
-
-            <div className="bg-white rounded-3xl p-8 shadow-sm border">
-              <h3 className="font-bold text-xl mb-4">
-                5. Enhances Confidence and Morale
-              </h3>
-
-              <p className="text-slate-600">
-                Employees feel empowered to handle emergencies and operate
-                equipment safely.
-              </p>
-
-              <p className="text-slate-500 mt-4">
-                This leads to higher job satisfaction and lower turnover.
-              </p>
-            </div>
-
-            <div className="bg-white rounded-3xl p-8 shadow-sm border">
-              <h3 className="font-bold text-xl mb-4">
-                6. Lowers Injury and Illness Rates
-              </h3>
-
-              <p className="text-slate-600">
-                Reduces absenteeism and healthcare costs.
-              </p>
-
-              <p className="text-slate-500 mt-4">
-                Fewer disruptions in workflow and better team cohesion.
-              </p>
-            </div>
-
-          </div>
-
+        <div className="mt-6 border-t border-white/20 pt-5 text-red-100 leading-7">
+          Example: A manufacturing firm saw a 40% drop in accidents after
+          implementing machinery safety training.
         </div>
 
-      </section>
+      </div>
+
+      {/* Card 2 */}
+
+      <div className="group bg-gradient-to-br from-blue-600 to-cyan-500 rounded-[32px] p-8 text-white shadow-xl hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
+
+        <div className="text-5xl mb-6">📜</div>
+
+        <h3 className="text-2xl font-bold mb-5">
+          2. Ensures Legal Compliance
+        </h3>
+
+        <p className="text-blue-100 leading-8">
+          Meets regulatory standards like OSHA, ISO, or local labor laws.
+        </p>
+
+        <div className="mt-6 border-t border-white/20 pt-5 text-blue-100 leading-7">
+          Avoids fines, shutdowns, and legal liabilities.
+        </div>
+
+      </div>
+
+      {/* Card 3 */}
+
+      <div className="group bg-gradient-to-br from-orange-500 to-amber-500 rounded-[32px] p-8 text-white shadow-xl hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
+
+        <div className="text-5xl mb-6">👀</div>
+
+        <h3 className="text-2xl font-bold mb-5">
+          3. Boosts Employee Awareness
+        </h3>
+
+        <p className="text-orange-100 leading-8">
+          Workers become more alert to potential hazards.
+        </p>
+
+        <div className="mt-6 border-t border-white/20 pt-5 text-orange-100 leading-7">
+          Example: Chemical plant employees reduced spill incidents after
+          hazard handling training.
+        </div>
+
+      </div>
+
+      {/* Card 4 */}
+
+      <div className="group bg-gradient-to-br from-emerald-500 to-green-600 rounded-[32px] p-8 text-white shadow-xl hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
+
+        <div className="text-5xl mb-6">📈</div>
+
+        <h3 className="text-2xl font-bold mb-5">
+          4. Improves Productivity
+        </h3>
+
+        <p className="text-green-100 leading-8">
+          A safe environment allows employees to focus on tasks without
+          fear.
+        </p>
+
+        <div className="mt-6 border-t border-white/20 pt-5 text-green-100 leading-7">
+          Example: Logistics operations improved by 15% after lifting
+          technique training.
+        </div>
+
+      </div>
+
+      {/* Card 5 */}
+
+      <div className="group bg-gradient-to-br from-violet-600 to-purple-700 rounded-[32px] p-8 text-white shadow-xl hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
+
+        <div className="text-5xl mb-6">💪</div>
+
+        <h3 className="text-2xl font-bold mb-5">
+          5. Enhances Confidence and Morale
+        </h3>
+
+        <p className="text-violet-100 leading-8">
+          Employees feel empowered to handle emergencies and operate
+          equipment safely.
+        </p>
+
+        <div className="mt-6 border-t border-white/20 pt-5 text-violet-100 leading-7">
+          This leads to higher job satisfaction and lower turnover.
+        </div>
+
+      </div>
+
+      {/* Card 6 */}
+
+      <div className="group bg-gradient-to-br from-sky-500 to-blue-700 rounded-[32px] p-8 text-white shadow-xl hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
+
+        <div className="text-5xl mb-6">🏥</div>
+
+        <h3 className="text-2xl font-bold mb-5">
+          6. Lowers Injury and Illness Rates
+        </h3>
+
+        <p className="text-sky-100 leading-8">
+          Reduces absenteeism and healthcare costs.
+        </p>
+
+        <div className="mt-6 border-t border-white/20 pt-5 text-sky-100 leading-7">
+          Fewer disruptions in workflow and better team cohesion.
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
 
       {/* Impact */}
-      <section className="pb-20">
+      <section className="py-24 bg-gradient-to-b from-white via-slate-50 to-white">
 
-        <div className="container mx-auto px-6 max-w-6xl">
+  <div className="container mx-auto px-6 max-w-7xl">
 
-          <div className="bg-white rounded-[32px] p-10 border shadow-sm">
+    <div className="text-center mb-16">
 
-            <h2 className="text-4xl font-bold mb-10">
-              Impact on Employees
-            </h2>
+      <span className="inline-flex bg-emerald-100 text-emerald-700 px-6 py-2 rounded-full text-sm font-semibold">
+        Employee Benefits
+      </span>
 
-            <div className="overflow-x-auto">
+      <h2 className="text-5xl font-bold mt-6">
+        Impact on Employees
+      </h2>
 
-              <table className="w-full border border-slate-200">
+      <p className="text-slate-600 text-xl mt-4 max-w-3xl mx-auto">
+        Industrial Safety Training creates a healthier, safer and more
+        productive workforce.
+      </p>
 
-                <thead>
-                  <tr className="bg-slate-100">
-                    <th className="p-4 text-left">Impact Area</th>
-                    <th className="p-4 text-left">Description</th>
-                  </tr>
-                </thead>
+    </div>
 
-                <tbody>
+    <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-8">
 
-                  <tr className="border-t">
-                    <td className="p-4 font-medium">Physical Well-being</td>
-                    <td className="p-4">
-                      Fewer injuries and long-term health issues
-                    </td>
-                  </tr>
+      {/* Card 1 */}
 
-                  <tr className="border-t">
-                    <td className="p-4 font-medium">Mental Health</td>
-                    <td className="p-4">
-                      Reduced stress and anxiety about workplace safety
-                    </td>
-                  </tr>
+      <div className="group bg-gradient-to-br from-emerald-500 to-green-600 rounded-[32px] p-8 text-white shadow-xl hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
 
-                  <tr className="border-t">
-                    <td className="p-4 font-medium">Professional Development</td>
-                    <td className="p-4">
-                      Skills in risk management and emergency response
-                    </td>
-                  </tr>
+        <div className="text-5xl mb-6">💚</div>
 
-                  <tr className="border-t">
-                    <td className="p-4 font-medium">Engagement & Retention</td>
-                    <td className="p-4">
-                      Higher morale and loyalty due to a caring work environment
-                    </td>
-                  </tr>
+        <h3 className="text-2xl font-bold mb-5">
+          Physical Well-being
+        </h3>
 
-                  <tr className="border-t">
-                    <td className="p-4 font-medium">Career Advancement</td>
-                    <td className="p-4">
-                      Safety certifications can lead to promotions and leadership roles
-                    </td>
-                  </tr>
+        <p className="text-emerald-100 leading-8">
+          Fewer injuries and long-term health issues
+        </p>
 
-                </tbody>
+      </div>
 
-              </table>
+      {/* Card 2 */}
 
-            </div>
+      <div className="group bg-gradient-to-br from-sky-500 to-blue-600 rounded-[32px] p-8 text-white shadow-xl hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
 
-          </div>
+        <div className="text-5xl mb-6">🧠</div>
 
-        </div>
+        <h3 className="text-2xl font-bold mb-5">
+          Mental Health
+        </h3>
 
-      </section>
+        <p className="text-sky-100 leading-8">
+          Reduced stress and anxiety about workplace safety
+        </p>
+
+      </div>
+
+      {/* Card 3 */}
+
+      <div className="group bg-gradient-to-br from-violet-600 to-purple-700 rounded-[32px] p-8 text-white shadow-xl hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
+
+        <div className="text-5xl mb-6">📚</div>
+
+        <h3 className="text-2xl font-bold mb-5">
+          Professional Development
+        </h3>
+
+        <p className="text-violet-100 leading-8">
+          Skills in risk management and emergency response
+        </p>
+
+      </div>
+
+      {/* Card 4 */}
+
+      <div className="group bg-gradient-to-br from-orange-500 to-red-500 rounded-[32px] p-8 text-white shadow-xl hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
+
+        <div className="text-5xl mb-6">🤝</div>
+
+        <h3 className="text-2xl font-bold mb-5">
+          Engagement & Retention
+        </h3>
+
+        <p className="text-orange-100 leading-8">
+          Higher morale and loyalty due to a caring work environment
+        </p>
+
+      </div>
+
+      {/* Card 5 */}
+
+      <div className="group bg-gradient-to-br from-pink-500 to-rose-600 rounded-[32px] p-8 text-white shadow-xl hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
+
+        <div className="text-5xl mb-6">🚀</div>
+
+        <h3 className="text-2xl font-bold mb-5">
+          Career Advancement
+        </h3>
+
+        <p className="text-pink-100 leading-8">
+          Safety certifications can lead to promotions and leadership roles
+        </p>
+
+      </div>
+
+      {/* Card 6 */}
+
+      <div className="group bg-gradient-to-br from-slate-700 to-slate-900 rounded-[32px] p-8 text-white shadow-xl hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 flex flex-col justify-center">
+
+        <div className="text-6xl mb-6">🛡️</div>
+
+        <h3 className="text-2xl font-bold mb-5">
+          Safer Workplace
+        </h3>
+
+        <p className="text-slate-300 leading-8">
+          Industrial Safety Training protects employees while improving
+          confidence, productivity and long-term organizational success.
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
 
       {/* Long Term Benefits */}
-      <section className="pb-20">
+     <section className="py-24 bg-gradient-to-b from-slate-50 via-white to-white">
 
-        <div className="container mx-auto px-6 max-w-6xl">
+  <div className="container mx-auto px-6 max-w-7xl">
 
-          <h2 className="text-4xl font-bold text-center mb-14">
-            Long-Term Benefits for Organizations
-          </h2>
+    <div className="text-center mb-16">
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <span className="inline-flex bg-indigo-100 text-indigo-700 px-6 py-2 rounded-full text-sm font-semibold">
+        Organizational Benefits
+      </span>
 
-            <div className="bg-white rounded-3xl p-6 border shadow-sm">
-              Lower insurance premiums
+      <h2 className="text-5xl font-bold mt-6">
+        Long-Term Benefits for Organizations
+      </h2>
+
+      <p className="text-slate-600 text-xl mt-4 max-w-3xl mx-auto leading-8">
+        Investing in industrial safety creates long-term operational,
+        financial and organizational value.
+      </p>
+
+    </div>
+
+    <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-8">
+
+      {/* Card 1 */}
+
+      <div className="group bg-gradient-to-br from-emerald-500 to-green-600 rounded-[32px] p-8 text-white shadow-xl hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
+
+        <div className="text-5xl mb-6">💰</div>
+
+        <h3 className="text-2xl font-bold mb-5">
+          Lower Insurance Premiums
+        </h3>
+
+        <p className="text-emerald-100 leading-8">
+          Lower insurance premiums
+        </p>
+
+      </div>
+
+      {/* Card 2 */}
+
+      <div className="group bg-gradient-to-br from-orange-500 to-red-500 rounded-[32px] p-8 text-white shadow-xl hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
+
+        <div className="text-5xl mb-6">⚙️</div>
+
+        <h3 className="text-2xl font-bold mb-5">
+          Operational Efficiency
+        </h3>
+
+        <p className="text-orange-100 leading-8">
+          Reduced downtime and equipment damage
+        </p>
+
+      </div>
+
+      {/* Card 3 */}
+
+      <div className="group bg-gradient-to-br from-blue-600 to-cyan-500 rounded-[32px] p-8 text-white shadow-xl hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
+
+        <div className="text-5xl mb-6">🤝</div>
+
+        <h3 className="text-2xl font-bold mb-5">
+          Reputation & Trust
+        </h3>
+
+        <p className="text-blue-100 leading-8">
+          Improved reputation and trust with clients and regulators
+        </p>
+
+      </div>
+
+      {/* Card 4 */}
+
+      <div className="group bg-gradient-to-br from-violet-600 to-purple-700 rounded-[32px] p-8 text-white shadow-xl hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
+
+        <div className="text-5xl mb-6">📈</div>
+
+        <h3 className="text-2xl font-bold mb-5">
+          Continuous Improvement
+        </h3>
+
+        <p className="text-violet-100 leading-8">
+          Culture of accountability and continuous improvement
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+      {/* Available Courses */}
+{/* Available Courses */}
+<section className="pb-24 bg-gradient-to-b from-slate-50 via-white to-white">
+
+  <div className="container mx-auto px-6">
+
+    <div className="text-center mb-16">
+
+      <span className="inline-flex bg-violet-100 text-violet-700 px-6 py-2 rounded-full text-sm font-semibold">
+        Available Courses
+      </span>
+
+      <h2 className="text-5xl font-bold mt-6">
+        Industrial Safety Training Courses
+      </h2>
+
+      <p className="text-slate-600 text-xl mt-4 max-w-3xl mx-auto leading-8">
+        Explore our industrial safety learning programs designed
+        to improve workplace safety, regulatory compliance,
+        hazard prevention and risk management.
+      </p>
+
+    </div>
+
+    <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-10">
+
+      {courses?.map((course) => (
+
+        <Link
+          key={course.id}
+          href={`/courses/${course.slug}`}
+        >
+
+          <div className="group bg-white rounded-[36px] border border-slate-200 shadow-sm hover:shadow-2xl hover:-translate-y-3 transition-all duration-300 overflow-hidden h-full">
+
+            {/* Header */}
+
+            <div className="bg-gradient-to-r from-violet-600 via-purple-600 to-indigo-600 p-8">
+
+              <div className="w-20 h-20 rounded-full bg-white/20 backdrop-blur flex items-center justify-center">
+
+                <ShieldCheck className="h-10 w-10 text-white" />
+
+              </div>
+
             </div>
 
-            <div className="bg-white rounded-3xl p-6 border shadow-sm">
-              Reduced downtime and equipment damage
+            {/* Body */}
+
+            <div className="p-8">
+
+              <h3 className="text-2xl font-bold text-slate-900 mb-5 group-hover:text-violet-600 transition-colors">
+
+                {course.title}
+
+              </h3>
+
+              <p className="text-slate-600 leading-8 line-clamp-3">
+
+                {course.description}
+
+              </p>
+
             </div>
 
-            <div className="bg-white rounded-3xl p-6 border shadow-sm">
-              Improved reputation and trust with clients and regulators
-            </div>
+            {/* Footer */}
 
-            <div className="bg-white rounded-3xl p-6 border shadow-sm">
-              Culture of accountability and continuous improvement
+            <div className="border-t px-8 py-6">
+
+              <div className="flex justify-between items-center">
+
+                <div className="space-y-4">
+
+                  <div className="flex items-center gap-3">
+
+                    <Clock3 className="h-5 w-5 text-violet-600" />
+
+                    <div>
+
+                      <p className="text-xs text-slate-500">
+                        Duration
+                      </p>
+
+                      <p className="font-semibold text-slate-900">
+                        {course.duration || "2 Days"}
+                      </p>
+
+                    </div>
+
+                  </div>
+
+                  <div className="flex items-center gap-3">
+
+                    <BarChart3 className="h-5 w-5 text-violet-600" />
+
+                    <div>
+
+                      <p className="text-xs text-slate-500">
+                        Level
+                      </p>
+
+                      <p className="font-semibold text-slate-900">
+                        {course.level || "Intermediate"}
+                      </p>
+
+                    </div>
+
+                  </div>
+
+                </div>
+
+                <div className="w-14 h-14 rounded-full border-2 border-violet-200 flex items-center justify-center text-violet-600 group-hover:bg-violet-600 group-hover:text-white transition-all">
+
+                  <ArrowRight className="h-6 w-6" />
+
+                </div>
+
+              </div>
+
             </div>
 
           </div>
 
-        </div>
+        </Link>
 
-      </section>
+      ))}
+
+    </div>
+
+    <div className="text-center mt-14">
+
+      <Link href="/courses?category=industrial-safety-training">
+
+        <button className="bg-gradient-to-r from-violet-600 via-purple-600 to-indigo-600 hover:from-violet-700 hover:to-indigo-700 text-white px-12 py-4 rounded-2xl font-semibold shadow-lg hover:shadow-xl transition-all">
+
+          View All Industrial Safety Courses
+
+        </button>
+
+      </Link>
+
+    </div>
+
+  </div>
+
+</section>
 
       {/* CTA */}
       <section className="py-24 bg-gradient-to-r from-blue-700 via-indigo-700 to-violet-700">

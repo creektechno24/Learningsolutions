@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import ClientLogosMarquee from "@/components/client-logos-marquee"
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import {
@@ -137,35 +138,7 @@ and workforce development solutions designed for modern organizations.
       </section>
 
 
-{/* Trusted Companies */}
-{/*<section className="py-8 bg-white">
-  <div className="max-w-7xl mx-auto px-6">
-
-    <p className="text-center text-sm font-semibold tracking-[0.3em] text-slate-500 uppercase mb-10">
-      TRUSTED BY LEADING ORGANIZATIONS
-    </p>
-
-    <div className="grid grid-cols-2 md:grid-cols-5 gap-6">
-
-      {[
-        'Infosys',
-        'TCS',
-        'Wipro',
-        'Accenture',
-        'Cognizant',
-      ].map((company) => (
-        <div
-          key={company}
-          className="h-16 rounded-xl border bg-white shadow-sm hover:shadow-md transition-al flex items-center justify-center font-bold text-slate-700 hover:shadow-lg transition-all"
-        >
-          {company}
-        </div>
-      ))}
-
-    </div>
-
-  </div>
-</section>*/}
+<ClientLogosMarquee />
 
 {/* Enterprise Solutions */}
 <section className="relative py-16 md:py-20 overflow-hidden bg-gradient-to-b from-white via-slate-50 to-white">

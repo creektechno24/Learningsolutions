@@ -31,8 +31,15 @@ export function TrainerProfileForm({
     bio: initialData?.bio || '',
     qualification: initialData?.qualification || '',
     years_of_experience: initialData?.years_of_experience || '',
-    hourly_rate: initialData?.hourly_rate || '',
     profile_image_url: initialData?.profile_image_url || '',
+    designation: initialData?.designation || '',
+certifications: initialData?.certifications || '',
+specializations: initialData?.specializations || '',
+industries_served: initialData?.industries_served || '',
+methodology: initialData?.methodology || '',
+awards: initialData?.awards || '',
+testimonials: initialData?.testimonials || '',
+linkedin: initialData?.linkedin || '',
   })
 
   const handleChange = (
@@ -102,7 +109,7 @@ export function TrainerProfileForm({
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      <div className="grid md:grid-cols-2 gap-4">
+      <div className="grid md:grid-cols-3 gap-4">
         <div>
           <label className="block text-sm font-medium mb-1">First Name</label>
           <Input
@@ -169,6 +176,19 @@ export function TrainerProfileForm({
             placeholder="e.g., MBA, PhD"
           />
         </div>
+
+        <div>
+  <label className="block text-sm font-medium mb-1">
+    Designation / Role
+  </label>
+
+  <Input
+    name="designation"
+    value={formData.designation}
+    onChange={handleChange}
+    placeholder="Corporate Trainer"
+  />
+</div>
         <div>
           <label className="block text-sm font-medium mb-1">
             Years of Experience
@@ -183,17 +203,7 @@ export function TrainerProfileForm({
         </div>
       </div>
 
-      <div>
-        <label className="block text-sm font-medium mb-1">Hourly Rate ($)</label>
-        <Input
-          name="hourly_rate"
-          type="number"
-          step="0.01"
-          value={formData.hourly_rate}
-          onChange={handleChange}
-          placeholder="50.00"
-        />
-      </div>
+   
 
       <div>
         <label className="block text-sm font-medium mb-2">Expertise</label>
@@ -223,6 +233,108 @@ export function TrainerProfileForm({
           ))}
         </div>
       </div>
+
+      <div>
+  <label className="block text-sm font-medium mb-1">
+    Certifications
+  </label>
+
+  <Textarea
+    name="certifications"
+    value={formData.certifications}
+    onChange={handleChange}
+    rows={4}
+    placeholder="PMP, Six Sigma, NLP Practitioner"
+  />
+</div>
+
+<div>
+  <label className="block text-sm font-medium mb-1">
+    Specializations
+  </label>
+
+  <Textarea
+    name="specializations"
+    value={formData.specializations}
+    onChange={handleChange}
+    rows={4}
+    placeholder="Leadership, Communication, Sales"
+  />
+</div>
+
+
+<div>
+  <label className="block text-sm font-medium mb-1">
+    Industries Served
+  </label>
+
+  <Textarea
+    name="industries_served"
+    value={formData.industries_served}
+    onChange={handleChange}
+    rows={4}
+    placeholder="IT, Banking, Manufacturing"
+  />
+</div>
+
+
+<div>
+  <label className="block text-sm font-medium mb-1">
+    Methodology / Approach
+  </label>
+
+  <Textarea
+    name="methodology"
+    value={formData.methodology}
+    onChange={handleChange}
+    rows={4}
+    placeholder="Interactive, Experiential, Gamified"
+  />
+</div>
+
+
+<div>
+  <label className="block text-sm font-medium mb-1">
+    Awards & Recognition
+  </label>
+
+  <Textarea
+    name="awards"
+    value={formData.awards}
+    onChange={handleChange}
+    rows={4}
+    placeholder="Best Trainer Award 2024"
+  />
+</div>
+
+
+<div>
+  <label className="block text-sm font-medium mb-1">
+    Client Testimonials
+  </label>
+
+  <Textarea
+    name="testimonials"
+    value={formData.testimonials}
+    onChange={handleChange}
+    rows={5}
+    placeholder="Client feedback and testimonials"
+  />
+</div>
+
+
+<div>
+  <label className="block text-sm font-medium mb-1">
+    LinkedIn Profile
+  </label>
+
+  <Input
+    name="linkedin"
+    value={formData.linkedin}
+    onChange={handleChange}
+    placeholder="https://linkedin.com/in/username"
+  />
+</div>
 
       <Button type="submit" disabled={loading} className="w-full">
         {loading ? 'Saving...' : 'Save Profile'}

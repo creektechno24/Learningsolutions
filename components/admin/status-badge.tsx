@@ -1,29 +1,56 @@
 interface StatusBadgeProps {
-  status: 'approved' | 'pending' | 'rejected'
+  status: string;
 }
 
-export function StatusBadge({
-  status,
-}: StatusBadgeProps) {
-  if (status === 'approved') {
-    return (
-      <span className="px-3 py-1 rounded-full text-sm bg-green-100 text-green-700">
-        Approved
-      </span>
-    )
-  }
+export default function StatusBadge({ status }: StatusBadgeProps) {
+  switch (status.toUpperCase()) {
+    case "NEW":
+      return (
+        <span className="rounded-full bg-blue-100 px-3 py-1 text-sm font-semibold text-blue-700">
+          NEW
+        </span>
+      );
 
-  if (status === 'rejected') {
-    return (
-      <span className="px-3 py-1 rounded-full text-sm bg-red-100 text-red-700">
-        Rejected
-      </span>
-    )
-  }
+    case "CONTACTED":
+      return (
+        <span className="rounded-full bg-orange-100 px-3 py-1 text-sm font-semibold text-orange-700">
+          CONTACTED
+        </span>
+      );
 
-  return (
-    <span className="px-3 py-1 rounded-full text-sm bg-yellow-100 text-yellow-700">
-      Pending
-    </span>
-  )
+    case "RESOLVED":
+      return (
+        <span className="rounded-full bg-green-100 px-3 py-1 text-sm font-semibold text-green-700">
+          RESOLVED
+        </span>
+      );
+
+    case "APPROVED":
+      return (
+        <span className="rounded-full bg-green-100 px-3 py-1 text-sm font-semibold text-green-700">
+          APPROVED
+        </span>
+      );
+
+    case "PENDING":
+      return (
+        <span className="rounded-full bg-yellow-100 px-3 py-1 text-sm font-semibold text-yellow-700">
+          PENDING
+        </span>
+      );
+
+    case "REJECTED":
+      return (
+        <span className="rounded-full bg-red-100 px-3 py-1 text-sm font-semibold text-red-700">
+          REJECTED
+        </span>
+      );
+
+    default:
+      return (
+        <span className="rounded-full bg-slate-100 px-3 py-1 text-sm font-semibold text-slate-700">
+          {status}
+        </span>
+      );
+  }
 }

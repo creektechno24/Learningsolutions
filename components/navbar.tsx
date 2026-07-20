@@ -148,6 +148,70 @@ export function Navbar() {
   Trainers
 </Link>
 
+
+<div className="relative group">
+
+  <button
+    className={`text-[15px] font-semibold whitespace-nowrap transition-all ${
+      pathname.startsWith("/resources")
+        ? "text-blue-600"
+        : "text-slate-700 hover:text-blue-600"
+    }`}
+  >
+    Resources
+  </button>
+
+  <div className="absolute top-full left-0 mt-2 w-64 rounded-xl border bg-white shadow-xl opacity-0 invisible transition-all duration-200 group-hover:visible group-hover:opacity-100 z-50">
+
+    <Link
+      href="/resources"
+      className="block px-5 py-3 hover:bg-blue-50
+hover:text-blue-600
+transition-all"
+    >
+      All Resources
+    </Link>
+
+    <Link
+      href="/resources/frameworks"
+      className="block px-5 py-3 hover:bg-blue-50
+hover:text-blue-600
+transition-all"
+    >
+      Frameworks
+    </Link>
+
+    <Link
+      href="/resources/stories"
+      className="block px-5 py-3 hover:bg-blue-50
+hover:text-blue-600
+transition-all"
+    >
+      Stories
+    </Link>
+
+    <Link
+      href="/resources/pdfs"
+      className="block px-5 py-3 hover:bg-blue-50
+hover:text-blue-600
+transition-all"
+    >
+      PDFs
+    </Link>
+
+    <Link
+      href="/resources/documents"
+      className="block px-5 py-3 hover:bg-blue-50
+hover:text-blue-600
+transition-all"
+    >
+      Documents
+    </Link>
+
+  </div>
+
+</div>
+
   <div className="relative group">
  <button
   className={`text-[15px] font-semibold whitespace-nowrap transition-all ${
@@ -163,21 +227,27 @@ export function Navbar() {
 
  <Link
   href="/training-programs/behavioral-training"
-  className="block px-5 py-3 hover:bg-slate-100"
+  className="block px-5 py-3 hover:bg-blue-50
+hover:text-blue-600
+transition-all"
 >
   Behavioral Training
 </Link>
 
 <Link
 href="/training-programs/core-hr-trainings"
-  className="block px-5 py-3 hover:bg-slate-100"
+  className="block px-5 py-3 hover:bg-blue-50
+hover:text-blue-600
+transition-all"
 >
   Core HR Trainings
 </Link>
 
 <Link
   href="/training-programs/leadership"
-  className="block px-5 py-3 hover:bg-slate-100"
+  className="block px-5 py-3 hover:bg-blue-50
+hover:text-blue-600
+transition-all"
 >
   Leadership
 </Link>
@@ -185,28 +255,36 @@ href="/training-programs/core-hr-trainings"
 <Link
   href="/training-programs/retail"
 
-  className="block px-5 py-3 hover:bg-slate-100"
+  className="block px-5 py-3 hover:bg-blue-50
+hover:text-blue-600
+transition-all"
 >
   Retail
 </Link>
 
 <Link
   href="/training-programs/soft-skills-training"
-  className="block px-5 py-3 hover:bg-slate-100"
+  className="block px-5 py-3 hover:bg-blue-50
+hover:text-blue-600
+transition-all"
 >
   Soft Skills
 </Link>
 
 <Link
   href="/training-programs/industrial-safety"
-  className="block px-5 py-3 hover:bg-slate-100"
+  className="block px-5 py-3 hover:bg-blue-50
+hover:text-blue-600
+transition-all"
 >
   Industrial Safety
 </Link>
 
 <Link
   href="/training-programs/it-ites"
-  className="block px-5 py-3 hover:bg-slate-100"
+  className="block px-5 py-3 hover:bg-blue-50
+hover:text-blue-600
+transition-all"
 >
   IT & ITES
 </Link>
@@ -228,49 +306,63 @@ href="/training-programs/core-hr-trainings"
 
     <Link
       href="/premium-services/assessment-development-centre"
-      className="block px-5 py-3 hover:bg-slate-100 text-slate-700"
+      className="block px-5 py-3 hover:bg-blue-50
+hover:text-blue-600
+transition-all text-slate-700"
     >
       Assessment Development Centre (ADC)
     </Link>
 
     <Link
       href="/premium-services/boot-camps-ttt"
-  className="block px-5 py-3 hover:bg-slate-100 text-slate-700"
+  className="block px-5 py-3 hover:bg-blue-50
+hover:text-blue-600
+transition-all text-slate-700"
     >
       Boot Camps & TTT Programs
     </Link>
 
     <Link
       href="/premium-services/coaching-mentoring"
-      className="block px-5 py-3 hover:bg-slate-100 text-slate-700"
+      className="block px-5 py-3 hover:bg-blue-50
+hover:text-blue-600
+transition-all text-slate-700"
     >
       Coaching & Mentoring
     </Link>
 
     <Link
       href="/premium-services/csr-projects"
-     className="block px-5 py-3 hover:bg-slate-100 text-slate-700"
+     className="block px-5 py-3 hover:bg-blue-50
+hover:text-blue-600
+transition-all text-slate-700"
     >
       CSR Projects
     </Link>
 
     <Link
       href="/premium-services/organizational-development"
-     className="block px-5 py-3 hover:bg-slate-100 text-slate-700"
+     className="block px-5 py-3 hover:bg-blue-50
+hover:text-blue-600
+transition-all text-slate-700"
     >
       Organizational Development (OD)
     </Link>
 
     <Link
       href="/premium-services/outbound-training"
-     className="block px-5 py-3 hover:bg-slate-100 text-slate-700"
+     className="block px-5 py-3 hover:bg-blue-50
+hover:text-blue-600
+transition-all text-slate-700"
     >
       Out Bound Training (OBT)
     </Link>
 
     <Link
       href="/premium-services/psychometric-test"
-   className="block px-5 py-3 hover:bg-slate-100 text-slate-700"
+   className="block px-5 py-3 hover:bg-blue-50
+hover:text-blue-600
+transition-all text-slate-700"
     >
       Psychometric Test
     </Link>
@@ -334,10 +426,11 @@ href="/training-programs/core-hr-trainings"
 
             <div className="flex flex-col gap-2">
               {[
-  { label: 'About Us', href: '/about' },
-  { label: 'Courses', href: '/courses' },
-  { label: 'Trainers', href: '/trainers' },
-  { label: 'Contact', href: '/contact' },
+  { label: "About Us", href: "/about" },
+  { label: "Courses", href: "/courses" },
+  { label: "Trainers", href: "/trainers" },
+  { label: "Resources", href: "/resources" },
+  { label: "Contact", href: "/contact" },
 ].map((item) => (
                 <Link
                   key={item.label}

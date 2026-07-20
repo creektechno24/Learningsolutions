@@ -11,7 +11,9 @@ import {
   TableRow,
 } from '@/components/ui/table'
 
-import { StatusBadge } from '@/components/admin/status-badge'
+import StatusBadge  from '@/components/admin/status-badge'
+
+
 
 import { AdminActionButtons } from '@/components/admin/admin-action-buttons'
 
@@ -131,20 +133,11 @@ export default function TrainersManagement() {
                   </TableCell>
 
                   <TableCell className="text-right">
-                    <AdminActionButtons
-                      id={trainer.id}
-                      status={trainer.status}
-                      type="trainer"
-                      onStatusChange={(newStatus) =>
-  handleStatusChange(
-    trainer.id,
-    newStatus as
-      | 'approved'
-      | 'pending'
-      | 'rejected'
-  )
-}
-                    />
+                   <AdminActionButtons
+  id={trainer.id}
+  status={trainer.status}
+  type="trainer"
+/>
                   </TableCell>
                 </TableRow>
               ))

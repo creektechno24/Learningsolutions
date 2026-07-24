@@ -16,30 +16,33 @@ export async function GET(request: NextRequest) {
 
     let query = supabase
       .from('courses')
-      .select(
-        `
-        id,
-        title,
-        slug,
-        description,
-        duration_hours,
-        level,
-        price,
-        thumbnail_url,
-        rating,
-        view_count,
-        is_featured,
-        trainers(id, first_name, last_name, profile_image_url),
-        course_categories(id, name, slug)
-      `,
-        { count: 'exact' }
-      )
+   .select(
+`
+id,
+title,
+slug,
+description,
+duration,
+level,
+price,
+category_id,
+course_categories!inner(
+  id,
+  name,
+  slug
+)
+`,
+{ count: 'exact' }
+)
       .eq('is_published', true)
 
+      
+      if (category) {
+  query = query.eq('course_categories.slug', category)
+}
+
     // Apply filters
-    if (category) {
-      query = query.eq('category_id', category)
-    }
+   
 
     if (level) {
       query = query.eq('level', level)
@@ -52,18 +55,13 @@ export async function GET(request: NextRequest) {
     }
 
     // Apply sorting
-    if (sort === 'rating') {
-      query = query.order('rating', { ascending: false })
-    } else if (sort === 'price_low') {
-      query = query.order('price', { ascending: true })
-    } else if (sort === 'price_high') {
-      query = query.order('price', { ascending: false })
-    } else if (sort === 'popular') {
-      query = query.order('view_count', { ascending: false })
-    } else {
-      query = query.order('created_at', { ascending: false })
-    }
-
+  if (sort === 'price_low') {
+  query = query.order('price', { ascending: true })
+} else if (sort === 'price_high') {
+  query = query.order('price', { ascending: false })
+} else {
+  query = query.order('created_at', { ascending: false })
+}
     // Apply pagination
     const from = (page - 1) * limit
     const to = from + limit - 1

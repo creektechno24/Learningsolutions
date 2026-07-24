@@ -17,18 +17,24 @@ export async function GET(request: Request) {
     }
 
     // Fetch trainer's courses
-    const { data: courses, error } = await supabase
-      .from('courses')
-      .select(
-        `
-        *,
-        category:course_categories(id, name, slug),
-        trainer:trainers(id, first_name, last_name, email)
-      `
-      )
-      .eq('trainer_id', user.id)
-      .order('created_at', { ascending: false })
-
+  const { data: courses, error } = await supabase
+  .from('courses')
+  .select(`
+    id,
+    title,
+    description,
+    duration_hours,
+    level,
+    is_published,
+    slug,
+    course_categories (
+      id,
+      name,
+      slug
+    )
+  `)
+  .eq('is_published', true)
+  .order('created_at', { ascending: false })
     if (error) {
       console.error('[v0] Error fetching courses:', error)
       return NextResponse.json({ error: error.message }, { status: 500 })
@@ -58,21 +64,25 @@ export async function POST(request: Request) {
 
     const body = await request.json()
 
-    const {
-      title,
-      description,
-      long_description,
-      category_id,
-      duration_hours,
-      level,
-      price,
-      max_participants,
-      thumbnail_url,
-      course_image_url,
-      seo_title,
-      seo_description,
-      seo_keywords,
-    } = body
+   const {
+  title,
+  course_code,
+  description,
+  long_description,
+  category_id,
+  duration,
+  level,
+  delivery_mode,
+  learning_objectives,
+  modules_covered,
+  prerequisites,
+  assessment_method,
+  price,
+  seo_title,
+  seo_description,
+  seo_keywords,
+} = body
+    
 
     // Validate required fields
     if (!title || !description || !category_id) {
@@ -83,32 +93,36 @@ export async function POST(request: Request) {
     }
 
     // Create slug from title
-    const slug = title
-      .toLowerCase()
-      .replace(/\s+/g, '-')
-      .replace(/[^a-z0-9-]/g, '')
+    const slug =
+  title
+    .toLowerCase()
+    .replace(/\s+/g, '-')
+    .replace(/[^a-z0-9-]/g, '') +
+  '-' +
+  Date.now()
 
     // Insert course
     const { data: course, error } = await supabase
       .from('courses')
-      .insert({
-        trainer_id: user.id,
-        title,
-        slug,
-        description,
-        long_description,
-        category_id,
-        duration_hours,
-        level,
-        price,
-        max_participants,
-        thumbnail_url,
-        course_image_url,
-        seo_title,
-        seo_description,
-        seo_keywords,
-        is_published: false,
-      })
+     .insert({
+  title,
+  course_code,
+  slug,
+  description,
+  long_description,
+  category_id,
+  duration,
+  level,
+  delivery_mode,
+  learning_objectives,
+  modules_covered,
+  prerequisites,
+  assessment_method,
+  price,
+  seo_title,
+  seo_description,
+  seo_keywords,
+})
       .select()
       .single()
 

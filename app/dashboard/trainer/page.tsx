@@ -2,8 +2,7 @@ import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import {
   BookOpen,
-  CalendarDays,
-  Clock3,
+  FolderOpen,
   User2,
 } from 'lucide-react'
 
@@ -32,6 +31,23 @@ export default async function TrainerDashboardPage() {
     redirect('/auth/login')
   }
 
+
+  const { count: resourcesCount } = await supabase
+  .from('resources')
+  .select('*', {
+    count: 'exact',
+    head: true,
+  })
+  .eq('published', true)
+
+  const { count: coursesCount } = await supabase
+  .from('courses')
+  .select('*', {
+    count: 'exact',
+    head: true,
+  })
+  .eq('published', true)
+
   // PENDING
   if (trainer.status === 'pending') {
     redirect('/dashboard/trainer-pending')
@@ -59,62 +75,46 @@ export default async function TrainerDashboardPage() {
       {/* Analytics Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
 
-        {/* Assigned Trainings */}
-        <div className="bg-white rounded-2xl border p-6 shadow-sm">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-slate-500">
-                Assigned Trainings
-              </p>
+    {/* My Courses */}
+<div className="bg-white rounded-2xl border p-6 shadow-sm">
+  <div className="flex items-center justify-between">
+    <div>
+      <p className="text-sm text-slate-500">
+        My Courses
+      </p>
 
-              <h2 className="text-3xl font-bold mt-2">
-                0
-              </h2>
-            </div>
+    <h2 className="text-3xl font-bold mt-2">
+  {coursesCount ?? 0}
+</h2>
+    </div>
 
-            <div className="w-12 h-12 rounded-xl bg-blue-100 flex items-center justify-center">
-              <BookOpen className="text-blue-600" />
-            </div>
-          </div>
-        </div>
+    <div className="w-12 h-12 rounded-xl bg-blue-100 flex items-center justify-center">
+      <BookOpen className="text-blue-600" />
+    </div>
+  </div>
+</div>
 
-        {/* Upcoming Sessions */}
-        <div className="bg-white rounded-2xl border p-6 shadow-sm">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-slate-500">
-                Upcoming Sessions
-              </p>
+      {/* Resources */}
+<div className="bg-white rounded-2xl border p-6 shadow-sm">
+  <div className="flex items-center justify-between">
+    <div>
+      <p className="text-sm text-slate-500">
+        Resources
+      </p>
 
-              <h2 className="text-3xl font-bold mt-2">
-                0
-              </h2>
-            </div>
+     <h2 className="text-3xl font-bold mt-2">
+  {resourcesCount ?? 0}
+</h2>
+    </div>
 
-            <div className="w-12 h-12 rounded-xl bg-green-100 flex items-center justify-center">
-              <CalendarDays className="text-green-600" />
-            </div>
-          </div>
-        </div>
+    <div className="w-12 h-12 rounded-xl bg-indigo-100 flex items-center justify-center">
+      <FolderOpen className="text-indigo-600" />
+    </div>
+  </div>
+</div>
+      
 
-        {/* Training Hours */}
-        <div className="bg-white rounded-2xl border p-6 shadow-sm">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-slate-500">
-                Training Hours
-              </p>
-
-              <h2 className="text-3xl font-bold mt-2">
-                0
-              </h2>
-            </div>
-
-            <div className="w-12 h-12 rounded-xl bg-purple-100 flex items-center justify-center">
-              <Clock3 className="text-purple-600" />
-            </div>
-          </div>
-        </div>
+     
 
         {/* Profile Status */}
         <div className="bg-white rounded-2xl border p-6 shadow-sm">
@@ -150,13 +150,12 @@ export default async function TrainerDashboardPage() {
             Edit Profile
           </Link>
 
-          <Link
-            href="/dashboard/trainer/trainings"
-            className="px-5 py-3 rounded-xl bg-green-600 text-white hover:bg-green-700 transition-colors"
-          >
-            View Trainings
-          </Link>
-
+         <Link
+  href="/dashboard/trainer/resources"
+  className="px-5 py-3 rounded-xl bg-indigo-600 text-white hover:bg-indigo-700 transition-colors"
+>
+  My Resources
+</Link>
           <Link
             href="/dashboard/trainer/courses"
             className="px-5 py-3 rounded-xl bg-purple-600 text-white hover:bg-purple-700 transition-colors"
@@ -166,16 +165,25 @@ export default async function TrainerDashboardPage() {
         </div>
       </div>
 
-      {/* Recent Trainings */}
-      <div className="bg-white rounded-2xl border p-6 shadow-sm">
-        <h3 className="text-xl font-semibold mb-6">
-          Recent Assigned Trainings
-        </h3>
+    {/* Recent Resources */}
+<div className="bg-white rounded-2xl border p-6 shadow-sm">
+  <div className="flex items-center justify-between mb-6">
+    <h3 className="text-xl font-semibold">
+      Recent Resources
+    </h3>
 
-        <div className="border rounded-xl p-6 text-center text-slate-500">
-          No trainings assigned yet
-        </div>
-      </div>
+    <Link
+      href="/dashboard/trainer/resources"
+      className="text-sm font-medium text-blue-600 hover:text-blue-700"
+    >
+      View All
+    </Link>
+  </div>
+
+  <div className="border rounded-xl p-6 text-center text-slate-500">
+    Recent published resources will appear here.
+  </div>
+</div>
     </div>
   )
 }

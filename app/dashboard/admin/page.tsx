@@ -5,6 +5,7 @@ import {
   Users,
   BookOpen,
   MessageSquare,
+  FolderOpen,
 } from 'lucide-react'
 
 export default async function AdminDashboardPage() {
@@ -31,6 +32,13 @@ export default async function AdminDashboardPage() {
       head: true,
     })
 
+    const { count: resourceCount } = await supabase
+  .from('resources')
+  .select('*', {
+    count: 'exact',
+    head: true,
+  })
+
   const { count: pendingTrainerCount } = await supabase
     .from('trainer_profiles')
     .select('*', {
@@ -53,7 +61,7 @@ export default async function AdminDashboardPage() {
       </div>
 
       {/* Analytics Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
         {/* Trainers */}
         <div className="bg-white rounded-2xl border p-6 shadow-sm">
           <div className="flex items-center justify-between">
@@ -91,6 +99,25 @@ export default async function AdminDashboardPage() {
             </div>
           </div>
         </div>
+
+        {/* Resources */}
+<div className="bg-white rounded-2xl border p-6 shadow-sm">
+  <div className="flex items-center justify-between">
+    <div>
+      <p className="text-sm text-slate-500">
+        Resources
+      </p>
+
+      <h2 className="text-3xl font-bold mt-2">
+        {resourceCount || 0}
+      </h2>
+    </div>
+
+    <div className="w-12 h-12 rounded-xl bg-emerald-100 flex items-center justify-center">
+      <FolderOpen className="text-emerald-600" />
+    </div>
+  </div>
+</div>
 
         {/* Inquiries */}
         <div className="bg-white rounded-2xl border p-6 shadow-sm">
@@ -132,6 +159,13 @@ export default async function AdminDashboardPage() {
           >
             Manage Courses
           </Link>
+
+          <Link
+  href="/dashboard/admin/resources"
+  className="px-5 py-3 rounded-xl bg-emerald-600 text-white hover:bg-emerald-700 transition-colors"
+>
+  Manage Resources
+</Link>
 
           <Link
             href="/dashboard/admin/inquiries"

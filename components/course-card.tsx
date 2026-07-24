@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import Image from 'next/image'
+//import Image from 'next/image'
 import {
   Star,
   Clock3,
@@ -14,32 +14,24 @@ interface CourseCardProps {
   title: string
   slug: string
   description: string
-  thumbnail_url: string
-  duration_hours: number
-  price: number
-  rating: number
-  level: string
-  trainers: {
-    first_name: string
-    last_name: string
-    profile_image_url: string
-  }
+  //duration?: string
+    duration_hours?: number
+
+price?: number
+level: string
   course_categories: {
     name: string
   }
 }
 
 export function CourseCard({
-  title,
-  slug,
-  description,
-  thumbnail_url,
-  duration_hours,
-  price,
-  rating,
-  level,
-  trainers,
-  course_categories,
+title,
+slug,
+description,
+duration_hours,
+price,
+level,
+course_categories,
 }: CourseCardProps) {
   return (
     <Link href={`/courses/${slug}`} className="group">
@@ -49,19 +41,10 @@ export function CourseCard({
         <div className="relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent z-10" />
 
-          {thumbnail_url ? (
-            <Image
-              src={thumbnail_url}
-              alt={title}
-              width={600}
-              height={400}
-              className="h-64 w-full object-cover transition-transform duration-700 group-hover:scale-110"
-            />
-          ) : (
-            <div className="h-64 w-full bg-gradient-to-br from-blue-600 via-indigo-600 to-violet-600 flex items-center justify-center">
-              <BookOpen className="w-14 h-14 text-white/80" />
-            </div>
-          )}
+        <div className="h-64 w-full bg-gradient-to-br from-blue-600 via-indigo-600 to-violet-600 flex items-center justify-center">
+  <BookOpen className="w-14 h-14 text-white/80" />
+</div>
+          
 
           {/* Top Badges */}
           <div className="absolute top-5 left-5 z-20 flex gap-2">
@@ -79,7 +62,7 @@ export function CourseCard({
             <Star className="w-4 h-4 text-yellow-400 fill-yellow-400" />
 
             <span className="text-white text-sm font-semibold">
-              {rating?.toFixed(1) || '4.8'}
+              4.8
             </span>
           </div>
 
@@ -104,41 +87,31 @@ export function CourseCard({
 
           {/* Trainer */}
           <div className="flex items-center gap-3 pb-6 border-b border-slate-100">
-            <div className="relative w-12 h-12 rounded-2xl overflow-hidden bg-slate-100">
-              {trainers?.profile_image_url ? (
-                <Image
-                  src={trainers.profile_image_url}
-                  alt={`${trainers.first_name} ${trainers.last_name}`}
-                  fill
-                  className="object-cover"
-                />
-              ) : (
-                <div className="w-full h-full bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center text-white font-bold">
-                  {trainers?.first_name?.charAt(0)}
-                  {trainers?.last_name?.charAt(0)}
-                </div>
-              )}
-            </div>
+  <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center text-white font-bold">
+    LS
+  </div>
 
-            <div>
-              <p className="text-sm text-slate-500">
-                Enterprise Trainer
-              </p>
+  <div>
+    <p className="text-sm text-slate-500">
+      LearningSolutions
+    </p>
 
-              <h4 className="font-semibold text-slate-900">
-                {trainers?.first_name} {trainers?.last_name}
-              </h4>
-            </div>
-          </div>
+    <h4 className="font-semibold text-slate-900">
+      Professional Training
+    </h4>
+  </div>
+</div>
 
           {/* Footer */}
           <div className="flex items-center justify-between pt-5">
             <div className="flex items-center gap-2 text-slate-600">
               <Clock3 className="w-4 h-4" />
+              
 
               <span className="text-sm font-medium">
-                {duration_hours} Hours
-              </span>
+  {duration_hours ? `${duration_hours} Hours` : 'Self Paced'}
+</span>
+
             </div>
 
             <div className="text-right">

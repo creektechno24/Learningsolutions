@@ -17,37 +17,68 @@ export function CourseForm({
   initialData,
   onSubmit,
 }: CourseFormProps) {
+  
   const [loading, setLoading] = useState(false)
   const [categories, setCategories] = useState<any[]>([])
   const { toast } = useToast()
 
-  const [formData, setFormData] = useState({
-    title: initialData?.title || '',
-    description: initialData?.description || '',
-    long_description: initialData?.long_description || '',
-    category_id: initialData?.category_id || '',
-    duration_hours: initialData?.duration_hours || '',
-    level: initialData?.level || 'beginner',
-    price: initialData?.price || '',
-    max_participants: initialData?.max_participants || '',
-    seo_title: initialData?.seo_title || '',
-    seo_description: initialData?.seo_description || '',
-    seo_keywords: initialData?.seo_keywords || '',
-  })
+const [formData, setFormData] = useState({
+  title: '',
+  course_code: '',
+  description: '',
+  long_description: '',
+  category_id: '',
+  duration: '',
+  level: 'beginner',
+  delivery_mode: 'online',
+  learning_objectives: '',
+  modules_covered: '',
+  prerequisites: '',
+  assessment_method: '',
+  price: '',
+  seo_title: '',
+  seo_description: '',
+  seo_keywords: '',
+})
+
+
+useEffect(() => {
+  if (!initialData) return
+
+ setFormData({
+  title: initialData.title || '',
+  course_code: initialData.course_code || '',
+  description: initialData.description || '',
+  long_description: initialData.long_description || '',
+  category_id: initialData.category_id || '',
+  duration: initialData.duration || '',
+  level: initialData.level || 'beginner',
+  delivery_mode: initialData.delivery_mode || 'online',
+  learning_objectives: initialData.learning_objectives || '',
+  modules_covered: initialData.modules_covered || '',
+  prerequisites: initialData.prerequisites || '',
+  assessment_method: initialData.assessment_method || '',
+  price: initialData.price || '',
+  seo_title: initialData.seo_title || '',
+  seo_description: initialData.seo_description || '',
+  seo_keywords: initialData.seo_keywords || '',
+})
+}, [initialData])
 
   useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const response = await fetch('/api/courses/categories')
-        const data = await response.json()
-        setCategories(data)
-      } catch (error) {
-        console.error('[v0] Error fetching categories:', error)
-      }
-    }
+  const fetchCategories = async () => {
+    try {
+      const response = await fetch('/api/courses/categories')
+      const result = await response.json()
 
-    fetchCategories()
-  }, [])
+      setCategories(result.data || [])
+    } catch (error) {
+      console.error('Error fetching categories:', error)
+    }
+  }
+
+  fetchCategories()
+}, [])
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -67,9 +98,9 @@ export function CourseForm({
 
     try {
       const method = courseId ? 'PATCH' : 'POST'
-      const url = courseId
-        ? `/api/trainer/courses/${courseId}`
-        : '/api/trainer/courses'
+   const url = courseId
+  ? `/api/admin/courses/${courseId}`
+  : '/api/trainer/courses'
 
       const response = await fetch(url, {
         method,
@@ -85,11 +116,12 @@ export function CourseForm({
       }
 
       const data = await response.json()
-      toast({
-        description: courseId
-          ? 'Course updated successfully'
-          : 'Course created successfully',
-      })
+    toast({
+  title: 'Success',
+  description: courseId
+    ? 'Course updated successfully'
+    : 'Course created successfully',
+})
 
       if (onSubmit) {
         onSubmit(data)
@@ -118,6 +150,20 @@ export function CourseForm({
           required
         />
       </div>
+
+      <div>
+  <label className="block text-sm font-medium mb-1">
+    Course Code
+  </label>
+
+  <Input
+    name="course_code"
+    value={formData.course_code}
+    onChange={handleChange}
+    placeholder="LDP-001"
+    required
+  />
+</div>
 
       <div>
         <label className="block text-sm font-medium mb-1">Category</label>
@@ -162,18 +208,74 @@ export function CourseForm({
         />
       </div>
 
+      <div>
+  <label className="block text-sm font-medium mb-1">
+    Learning Objectives / Outcomes
+  </label>
+
+  <Textarea
+    name="learning_objectives"
+    value={formData.learning_objectives}
+    onChange={handleChange}
+    placeholder="Enter learning outcomes (one per line)"
+    rows={5}
+  />
+</div>
+
+<div>
+  <label className="block text-sm font-medium mb-1">
+    Modules / Topics Covered
+  </label>
+
+  <Textarea
+    name="modules_covered"
+    value={formData.modules_covered}
+    onChange={handleChange}
+    placeholder="Module 1 - Introduction&#10;Module 2 - Advanced Concepts&#10;Module 3 - Practical Exercises"
+    rows={6}
+  />
+</div>
+
+<div>
+  <label className="block text-sm font-medium mb-1">
+    Prerequisites
+  </label>
+
+  <Textarea
+    name="prerequisites"
+    value={formData.prerequisites}
+    onChange={handleChange}
+    placeholder="Enter prerequisites if any"
+    rows={3}
+  />
+</div>
+
+<div>
+  <label className="block text-sm font-medium mb-1">
+    Assessment Method
+  </label>
+
+  <Textarea
+    name="assessment_method"
+    value={formData.assessment_method}
+    onChange={handleChange}
+    placeholder="Quiz, Case Study, Project, Participation, Practical Assessment"
+    rows={3}
+  />
+</div>
+
       <div className="grid md:grid-cols-2 gap-4">
         <div>
           <label className="block text-sm font-medium mb-1">
-            Duration (hours)
-          </label>
-          <Input
-            name="duration_hours"
-            type="number"
-            value={formData.duration_hours}
-            onChange={handleChange}
-            placeholder="40"
-          />
+  Duration
+</label>
+
+<Input
+  name="duration"
+  value={formData.duration}
+  onChange={handleChange}
+  placeholder="2 Days / 16 Hours / 1 Week"
+/>
         </div>
         <div>
           <label className="block text-sm font-medium mb-1">Level</label>
@@ -190,30 +292,38 @@ export function CourseForm({
         </div>
       </div>
 
+      <div>
+  <label className="block text-sm font-medium mb-1">
+    Mode of Delivery
+  </label>
+
+  <select
+    name="delivery_mode"
+    value={formData.delivery_mode}
+    onChange={handleChange}
+    className="w-full px-3 py-2 border border-gray-300 rounded-md"
+  >
+    <option value="online">Online</option>
+    <option value="offline">Offline</option>
+    <option value="hybrid">Hybrid</option>
+  </select>
+</div>
+
       <div className="grid md:grid-cols-2 gap-4">
-        <div>
-          <label className="block text-sm font-medium mb-1">Price ($)</label>
-          <Input
-            name="price"
-            type="number"
-            step="0.01"
-            value={formData.price}
-            onChange={handleChange}
-            placeholder="99.99"
-          />
-        </div>
-        <div>
-          <label className="block text-sm font-medium mb-1">
-            Max Participants
-          </label>
-          <Input
-            name="max_participants"
-            type="number"
-            value={formData.max_participants}
-            onChange={handleChange}
-            placeholder="30"
-          />
-        </div>
+      <div>
+  <label className="block text-sm font-medium mb-1">
+    Price ($)
+  </label>
+
+  <Input
+    name="price"
+    type="number"
+    step="0.01"
+    value={formData.price}
+    onChange={handleChange}
+    placeholder="99.99"
+  />
+</div>
       </div>
 
       <div className="border-t pt-4">

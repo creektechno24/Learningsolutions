@@ -7,6 +7,7 @@ import { TrainerCard } from '@/components/trainer-card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
+import Image from 'next/image'
 
 interface Trainer {
   id: string
@@ -105,70 +106,94 @@ function TrainersPageContent() {
   return (
     <main className="min-h-screen bg-slate-50">
 
-<section className="relative overflow-hidden bg-gradient-to-br from-slate-950 via-blue-950 to-indigo-950 text-white">  <div className="container mx-auto px-6 py-20">
+<section className="relative h-[700px] overflow-hidden">
 
-    <span className="bg-white/10 px-4 py-2 rounded-full text-sm">
-      CORPORATE TRAINING EXPERTS
-    </span>
+  {/* Background Image */}
+ <Image
+  src="/images/hero/training-hero1.jpg"
+  alt="Corporate Trainers"
+  fill
+  priority
+  className="object-cover object-center"
+/>
 
-    <h1 className="text-5xl font-bold mt-6">
-      Meet Our Expert Trainers
-    </h1>
+  {/* Overlay */}
+<div className="absolute inset-0 bg-gradient-to-r from-black/90 via-slate-950/75 to-black/20" />
+  {/* Content */}
+  <div className="relative z-10 container mx-auto px-6 h-full flex items-center pt-20">
 
-    <p className="text-xl text-slate-200 mt-4 max-w-3xl">
-      Learn from experienced industry leaders, consultants and
-      certified corporate trainers across India.
-    </p>
+    <div className="max-w-3xl">
 
-    <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-10">
+      <span className="inline-flex items-center px-5 py-3 rounded-full bg-white/10 border border-blue-500/30 text-blue-100 font-medium">
+        ⭐ CORPORATE TRAINING EXPERTS
+      </span>
 
-      <div>
-        <h2 className="text-4xl font-bold">
-        {pagination?.total || 0}+
-        </h2>
-        <p className="text-slate-300">
-          Expert Trainers
-        </p>
-      </div>
+   <h1 className="text-6xl lg:text-7xl font-black leading-[1.05] mt-8">
+  Meet Our
+  <br />
+ <span className="bg-gradient-to-r from-white via-blue-100 to-cyan-200 bg-clip-text text-transparent">
+  Expert Trainers
+</span>
+</h1>
 
-      <div>
-        <h2 className="text-4xl font-bold">
-          100+
-        </h2>
-        <p className="text-slate-300">
-          Programs
-        </p>
-      </div>
+<p className="text-2xl text-white/90 mt-6 max-w-3xl leading-relaxed">
+        Learn from experienced industry leaders,
+        consultants and certified corporate trainers
+        across India.
+      </p>
 
-      <div>
-        <h2 className="text-4xl font-bold">
-          25+
-        </h2>
-        <p className="text-slate-300">
-          Years Experience
-        </p>
-      </div>
+      {/* Stats Cards */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mt-12 max-w-6xl">
 
-      <div>
-        <h2 className="text-4xl font-bold">
-          2L+
-        </h2>
-        <p className="text-slate-300">
-          Professionals Trained
-        </p>
+        <div className="bg-white/5 backdrop-blur-2xl border border-white/20 rounded-3xl p-8 shadow-2xl">
+          <h3 className="text-4xl font-bold">
+            {pagination.total}+
+          </h3>
+          <p className="text-slate-300">
+            Expert Trainers
+          </p>
+        </div>
+
+        <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-6">
+          <h3 className="text-4xl font-bold">
+            100+
+          </h3>
+          <p className="text-slate-300">
+            Programs
+          </p>
+        </div>
+
+        <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-6">
+          <h3 className="text-4xl font-bold">
+            25+
+          </h3>
+          <p className="text-slate-300">
+            Years Experience
+          </p>
+        </div>
+
+        <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-6">
+          <h3 className="text-4xl font-bold">
+            2L+
+          </h3>
+          <p className="text-slate-300">
+            Professionals Trained
+          </p>
+        </div>
+
       </div>
 
     </div>
 
   </div>
-</section>
 
-      <div className="container mx-auto px-6 -mt-16 relative z-20">
+</section>
+   <div className="container mx-auto px-6 -mt-8 relative z-20">
 
      <div className="py-6">
 
   {/* Search Bar */}
- <div className="relative overflow-hidden rounded-[40px] border border-white/20 bg-white/95 backdrop-blur-xl shadow-[0_30px_80px_rgba(15,23,42,0.12)] p-12 mb-14">
+<div className="relative overflow-hidden rounded-[40px] bg-white shadow-[0_25px_80px_rgba(15,23,42,0.18)] border border-slate-200 p-12">
 
   <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600" />
 
@@ -245,10 +270,12 @@ function TrainersPageContent() {
 </div>
 
   {/* Heading */}
-  <div className="flex justify-between items-center mb-10 mt-4">
-
+<div className="flex justify-between items-center mb-14 mt-20">
     <div>
-    <h2 className="text-4xl font-bold text-slate-900">
+      <p className="text-blue-600 font-semibold uppercase tracking-widest mb-3">
+  Our Experts
+</p>
+    <h2 className="text-5xl font-extrabold text-slate-900">
   Our Certified Corporate Trainers
 </h2>
 
@@ -261,7 +288,7 @@ function TrainersPageContent() {
 
   {/* Cards */}
   {loading ? (
- <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-8">
+ <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-10">
       {[...Array(6)].map((_, i) => (
         <div
           key={i}
@@ -271,7 +298,7 @@ function TrainersPageContent() {
     </div>
   ) : trainers.length > 0 ? (
     <>
-   <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-8">
+  <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-10">
         {trainers.map((trainer) => (
           <TrainerCard
             key={trainer.id}
@@ -279,6 +306,56 @@ function TrainersPageContent() {
           />
         ))}
       </div>
+
+    {/* Pagination */}
+{pagination.pages > 1 && (
+  <div className="flex items-center justify-center gap-4 mt-16">
+
+    {currentPage > 1 && (
+      <Link href={`/trainers?page=${currentPage - 1}`}>
+        <Button
+          variant="outline"
+          className="rounded-xl px-4"
+        >
+          <ChevronLeft size={16} className="mr-2" />
+          Previous
+        </Button>
+      </Link>
+    )}
+
+    {[...Array(pagination.pages)].map((_, index) => {
+      const pageNum = index + 1
+      const isActive = pageNum === currentPage
+
+      return (
+        <Link
+          key={pageNum}
+          href={`/trainers?page=${pageNum}`}
+        >
+          <Button
+            variant={isActive ? 'default' : 'outline'}
+            className="rounded-xl min-w-[44px]"
+          >
+            {pageNum}
+          </Button>
+        </Link>
+      )
+    })}
+
+    {currentPage < pagination.pages && (
+      <Link href={`/trainers?page=${currentPage + 1}`}>
+        <Button
+          variant="outline"
+          className="rounded-xl px-4"
+        >
+          Next
+          <ChevronRight size={16} className="ml-2" />
+        </Button>
+      </Link>
+    )}
+
+  </div>
+)}
     </>
   ) : (
     <div className="bg-white rounded-3xl border p-12 text-center">

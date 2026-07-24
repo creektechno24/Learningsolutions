@@ -11,12 +11,13 @@ export async function GET(request: NextRequest) {
     }
 
     // Fetch all counts in parallel
-    const [trainers, enterprises, courses, inquiries] = await Promise.all([
-      supabase.from('trainer_profiles').select('id', { count: 'exact' }),
-      supabase.from('enterprise_profiles').select('id', { count: 'exact' }),
-      supabase.from('courses').select('id', { count: 'exact' }),
-      supabase.from('training_inquiries').select('id', { count: 'exact' }),
-    ])
+  const [trainers, enterprises, courses, inquiries, resources] = await Promise.all([
+  supabase.from('trainer_profiles').select('id', { count: 'exact' }),
+  supabase.from('enterprise_profiles').select('id', { count: 'exact' }),
+  supabase.from('courses').select('id', { count: 'exact' }),
+  supabase.from('training_inquiries').select('id', { count: 'exact' }),
+  supabase.from('resources').select('id', { count: 'exact' }),
+])
 
     const pendingTrainers = await supabase
       .from('trainer_profiles')
@@ -28,14 +29,16 @@ export async function GET(request: NextRequest) {
       .select('id', { count: 'exact' })
       .eq('status', 'pending')
 
-    return NextResponse.json({
-      totalTrainers: trainers.count || 0,
-      totalEnterprises: enterprises.count || 0,
-      totalCourses: courses.count || 0,
-      totalInquiries: inquiries.count || 0,
-      pendingTrainers: pendingTrainers.count || 0,
-      pendingEnterprises: pendingEnterprises.count || 0,
-    })
+  return NextResponse.json({
+  totalTrainers: trainers.count || 0,
+  totalEnterprises: enterprises.count || 0,
+  totalCourses: courses.count || 0,
+  totalInquiries: inquiries.count || 0,
+  totalResources: resources.count || 0,
+  pendingTrainers: pendingTrainers.count || 0,
+  pendingEnterprises: pendingEnterprises.count || 0,
+})
+
   } catch (error: any) {
     console.error('Error fetching analytics:', error.message)
     return NextResponse.json(

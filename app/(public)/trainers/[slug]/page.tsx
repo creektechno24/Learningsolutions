@@ -113,7 +113,13 @@ setTrainer(result.data)
                   <h1 className="text-text-4xl lg:text-5xl font-bold mb-2">
                     {trainer.first_name} {trainer.last_name}
                   </h1>
-                  <p className="text-xl text-slate-500 mb-3">{trainer.qualification}</p>
+                  <p className="text-xl text-slate-600 font-semibold">
+  {trainer.designation}
+</p>
+
+<p className="text-base text-slate-500 mt-2">
+  {trainer.qualification}
+</p>
                   {trainer.is_verified && (
                     <div className="flex items-center gap-1 text-green-600 font-semibold">
                       <Award size={20} />
@@ -121,20 +127,10 @@ setTrainer(result.data)
                     </div>
                   )}
                 </div>
-                 <div className="text-right">
-
-  <p className="text-sm uppercase tracking-wider text-slate-500">
-    Training Fee
-  </p>
-
-  <h2 className="text-5xl font-bold text-blue-600">
-    ${trainer.hourly_rate}
-  </h2>
-
-  <p className="text-slate-500">
-    Per Hour
-  </p>
-
+     <div className="text-right">
+  <span className="px-4 py-2 rounded-full bg-green-100 text-green-700 font-semibold">
+    Corporate Trainer
+  </span>
 </div>
               </div>
 
@@ -148,10 +144,15 @@ setTrainer(result.data)
                   <p className="text-sm text-gray-600">Courses Taught</p>
                   <p className="text-2xl font-bold">{trainer.courses?.length || 0}</p>
                 </div>
-                <div className="bg-slate-50 rounded-2xl p-5 border">
-                  <p className="text-sm text-gray-600">Students</p>
-                  <p className="text-2xl font-bold">500+</p>
-                </div>
+               <p className="text-sm text-gray-600">
+  Specializations
+</p>
+
+<p className="text-2xl font-bold">
+  {trainer.specializations
+    ? trainer.specializations.split(',').length
+    : 0}
+</p>
               </div>
 
               {/* Bio */}
@@ -213,10 +214,120 @@ setTrainer(result.data)
 
 </div>
 
+{trainer.designation && (
+  <div className="bg-white rounded-[32px] border p-8 mb-8">
+    <h2 className="text-3xl font-bold mb-4">
+      Designation
+    </h2>
+
+    <p className="text-slate-700">
+      {trainer.designation}
+    </p>
+  </div>
+)}
+
+{trainer.certifications && (
+  <div className="bg-white rounded-[32px] border p-8 mb-8">
+    <h2 className="text-3xl font-bold mb-4">
+      Certifications
+    </h2>
+
+    <p className="whitespace-pre-line text-slate-700">
+      {trainer.certifications}
+    </p>
+  </div>
+)}
+
+
+{trainer.specializations && (
+  <div className="bg-white rounded-[32px] border p-8 mb-8">
+    <h2 className="text-3xl font-bold mb-4">
+      Specializations
+    </h2>
+
+    <p className="whitespace-pre-line text-slate-700">
+      {trainer.specializations}
+    </p>
+  </div>
+)}
+
+
+{trainer.industries_served && (
+  <div className="bg-white rounded-[32px] border p-8 mb-8">
+    <h2 className="text-3xl font-bold mb-4">
+      Industries Served
+    </h2>
+
+    <p className="whitespace-pre-line text-slate-700">
+      {trainer.industries_served}
+    </p>
+  </div>
+)}
+
+
+{trainer.methodology && (
+  <div className="bg-white rounded-[32px] border p-8 mb-8">
+    <h2 className="text-3xl font-bold mb-4">
+      Methodology & Approach
+    </h2>
+
+    <p className="whitespace-pre-line text-slate-700">
+      {trainer.methodology}
+    </p>
+  </div>
+)}
+
+
+{trainer.awards && (
+  <div className="bg-white rounded-[32px] border p-8 mb-8">
+    <h2 className="text-3xl font-bold mb-4">
+      Awards & Recognition
+    </h2>
+
+    <p className="whitespace-pre-line text-slate-700">
+      {trainer.awards}
+    </p>
+  </div>
+)}
+
+
+{trainer.testimonials && (
+  <div className="bg-white rounded-[32px] border p-8 mb-8">
+    <h2 className="text-3xl font-bold mb-4">
+      Client Testimonials
+    </h2>
+
+    <p className="whitespace-pre-line text-slate-700">
+      {trainer.testimonials}
+    </p>
+  </div>
+)}
+
+
+{trainer.linkedin && (
+  <div className="bg-white rounded-[32px] border p-8 mb-8">
+    <h2 className="text-3xl font-bold mb-4">
+      LinkedIn Profile
+    </h2>
+
+  <a
+  href={trainer.linkedin}
+  target="_blank"
+  rel="noopener noreferrer"
+>
+  <Button>
+    View LinkedIn Profile
+  </Button>
+</a>
+  </div>
+)}
+
         {/* Courses */}
         {trainer.courses && trainer.courses.length > 0 && (
           <div className="bg-white rounded-lg p-8">
-            <h2 className="text-2xl font-bold mb-6">Courses</h2>
+          <h2 className="text-3xl font-bold mb-6">
+  Training Programs
+</h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {trainer.courses.map((course: any) => (
                 <div

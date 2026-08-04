@@ -2,6 +2,7 @@ import Link from 'next/link'
 import ClientLogosMarquee from "@/components/client-logos-marquee"
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
+import HomeCTA from "@/components/home/home-cta";
 import {
   ArrowRight,
   CheckCircle,
@@ -311,28 +312,12 @@ duration-500
               performance.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/contact">
-                <Button
-                  size="lg"
-                  className="h-14 px-8 rounded-2xl text-base bg-white text-blue-700 hover:bg-slate-100"
-                >
-                  Submit Training Inquiry
-                </Button>
-              </Link>
+            <HomeCTA />
 
-              <Link href="/courses">
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="h-14 px-8 rounded-2xl border-white/20 bg-white/10 backdrop-blur-xl text-white hover:bg-white/20"
-                >
-                  Explore Programs
-                </Button>
-              </Link>
+              
             </div>
           </div>
-        </div>
+        
       </section>
     </main>
   )

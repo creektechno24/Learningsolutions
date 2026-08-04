@@ -75,37 +75,80 @@ export async function logout() {
   return { error: null }
 }
 
+
+export async function forgotPassword(email: string) {
+  const supabase = createClient()
+
+  const { error } =
+    await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo:
+        `${window.location.origin}/auth/update-password`,
+    })
+
+  if (error) {
+    return { error: error.message }
+  }
+
+  return { error: null }
+}
+
+export async function updatePassword(password: string) {
+  const supabase = createClient()
+
+  const { error } = await supabase.auth.updateUser({
+    password,
+  })
+
+  if (error) {
+    return { error: error.message }
+  }
+
+  return { error: null }
+}
+
 export async function createTrainerProfile(
   userId: string,
   data: {
-    firstName: string
-    lastName: string
-    email: string
-    phone?: string
-    bio?: string
-    expertise?: string[]
-    qualification?: string
-    yearsOfExperience?: number
-  }
+  firstName: string
+  lastName: string
+  email: string
+  phone?: string
+  bio?: string
+  expertise?: string[]
+  qualification?: string
+  yearsOfExperience?: number
+  designation?: string
+  linkedin?: string
+}
 ) {
   const supabase = createClient()
 
   const { data: profile, error } = await supabase
     .from('trainer_profiles')
     .insert([
-      {
-        id: userId,
-        first_name: data.firstName,
-        last_name: data.lastName,
-        email: data.email,
-        phone: data.phone || null,
-        bio: data.bio || null,
-        expertise: data.expertise || [],
-        qualification: data.qualification || null,
-        years_of_experience: data.yearsOfExperience || 0,
-        status: 'pending',
-        approved: false,
-      },
+    {
+  id: userId,
+  first_name: data.firstName,
+  last_name: data.lastName,
+  email: data.email,
+
+  phone: data.phone || null,
+  bio: data.bio || null,
+
+  expertise: data.expertise || [],
+
+  qualification: data.qualification || null,
+
+  years_of_experience: data.yearsOfExperience || 0,
+
+  designation: data.designation || null,
+
+  linkedin: data.linkedin || null,
+
+  status: 'pending',
+
+  approved: false,
+},
     ])
     .select()
     .single()

@@ -6,8 +6,18 @@ import Link from 'next/link'
 import { CourseCard } from '@/components/course-card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
 import Image from 'next/image'
+import {
+  ChevronLeft,
+  ChevronRight,
+  GraduationCap,
+  Users,
+  Briefcase,
+  Laptop,
+  ShoppingCart,
+  ShieldCheck,
+  ArrowRight,
+} from "lucide-react";
 
 interface Course {
   id: string
@@ -60,6 +70,164 @@ function CoursesPageContent() {
   'it-ites': 'IT & ITES',
 }
 
+const heroContent: Record<
+  string,
+  {
+    badge: string;
+    title: string;
+    description: string;
+    gradient: string;
+    benefits: string[];
+  }
+> = {
+  "behavioral-training": {
+    badge: "Behavioral Excellence",
+    title: "Behavioral Training Programs",
+    description:
+      "Strengthen communication, collaboration, emotional intelligence, and workplace behaviour through practical behavioral learning.",
+    gradient: "from-violet-600 to-indigo-600",
+    benefits: [
+      "Communication",
+      "Emotional Intelligence",
+      "Team Collaboration",
+      "Workplace Behaviour",
+    ],
+  },
+
+  leadership: {
+    badge: "Leadership Excellence",
+    title: "Leadership Training Programs",
+    description:
+      "Develop inspiring leaders capable of driving teams, making strategic decisions, and building high-performance organizations.",
+    gradient: "from-blue-600 to-cyan-600",
+    benefits: [
+      "Strategic Thinking",
+      "Executive Presence",
+      "People Management",
+      "Decision Making",
+    ],
+  },
+
+  "core-hr-trainings": {
+    badge: "HR Excellence",
+    title: "Core HR Training Programs",
+    description:
+      "Enhance HR capabilities across talent acquisition, payroll, compliance, employee engagement, and HR operations.",
+    gradient: "from-emerald-600 to-green-600",
+    benefits: [
+      "HR Compliance",
+      "Payroll",
+      "Recruitment",
+      "Performance Management",
+    ],
+  },
+
+  retail: {
+    badge: "Retail Excellence",
+    title: "Retail Training Programs",
+    description:
+      "Build customer service excellence, retail sales performance, merchandising, and store management capabilities.",
+    gradient: "from-orange-500 to-red-500",
+    benefits: [
+      "Customer Service",
+      "Sales",
+      "Visual Merchandising",
+      "Store Operations",
+    ],
+  },
+
+  "soft-skills": {
+    badge: "Professional Skills",
+    title: "Soft Skills Training Programs",
+    description:
+      "Develop workplace communication, presentation skills, confidence, teamwork, and professional effectiveness.",
+    gradient: "from-pink-500 to-rose-500",
+    benefits: [
+      "Communication",
+      "Presentation Skills",
+      "Confidence",
+      "Teamwork",
+    ],
+  },
+
+  "industrial-safety": {
+    badge: "Safety Excellence",
+    title: "Industrial Safety Training Programs",
+    description:
+      "Improve workplace safety, compliance, risk management, emergency preparedness, and operational excellence.",
+    gradient: "from-amber-500 to-orange-500",
+    benefits: [
+      "Risk Management",
+      "Safety Compliance",
+      "Emergency Response",
+      "Hazard Awareness",
+    ],
+  },
+
+  "it-ites": {
+    badge: "Technology Excellence",
+    title: "IT & ITES Training Programs",
+    description:
+      "Upskill technology professionals in software development, cloud, cybersecurity, DevOps, AI, and enterprise IT.",
+    gradient: "from-sky-600 to-blue-700",
+    benefits: [
+      "Cloud",
+      "Cyber Security",
+      "DevOps",
+      "Software Development",
+    ],
+  },
+};
+
+const currentHero =
+  heroContent[category] ??
+  {
+    badge: "Professional Learning",
+    title: "All Training Programs",
+    description:
+      "Explore our complete portfolio of enterprise training programs.",
+    gradient: "from-blue-600 to-indigo-600",
+    benefits: [
+      "Expert Trainers",
+      "Industry Ready",
+      "Certification",
+      "Corporate Learning",
+    ],
+  };
+
+  const categoryCards = [
+  {
+    title: "Leadership",
+    slug: "leadership",
+    icon: Users,
+  },
+  {
+    title: "Behavioral Training",
+    slug: "behavioral-training",
+    icon: GraduationCap,
+  },
+  {
+    title: "Core HR Trainings",
+    slug: "core-hr-trainings",
+    icon: Briefcase,
+  },
+  {
+    title: "IT & ITES",
+    slug: "it-ites",
+    icon: Laptop,
+  },
+  {
+    title: "Retail",
+    slug: "retail",
+    icon: ShoppingCart,
+  },
+  {
+    title: "Industrial Safety",
+    slug: "industrial-safety",
+    icon: ShieldCheck,
+  },
+];
+
 
   useEffect(() => {
   setCategory(searchParams?.get('category') || '')
@@ -100,112 +268,131 @@ function CoursesPageContent() {
 
   return (
    <main className="min-h-screen bg-gradient-to-b from-slate-50 via-white to-slate-50">
+
       {/* Header */}
-  <section className="relative overflow-hidden py-40 md:py-52">
-
-  {/* Background Image */}
-  <div className="absolute inset-0">
-  <Image
-  src="/images/hero/image2.jpg"
-  alt="Corporate Training"
-  fill
-  className="object-cover object-center"
-/>
-  </div>
-
-  {/* Dark Overlay */}
-  <div className="absolute inset-0 bg-slate-950/75" />
-
-  <div className="relative container mx-auto px-6 text-center">
-
-    <span className="inline-block px-5 py-2 rounded-full bg-blue-500/20 border border-blue-500/30 text-blue-300 mb-6">
-      Premium Training Programs
-    </span>
-
-    <h1 className="text-6xl md:text-8xl font-black bg-gradient-to-r from-white via-blue-100 to-indigo-200 bg-clip-text text-transparent">
-      Discover. Learn. Grow.
-    </h1>
-
-    <p className="mt-6 text-xl text-slate-200 max-w-3xl mx-auto">
-      Explore our premium collection of professional training programs designed
-      to build skills, enhance productivity, and drive growth.
-    </p>
-
-  </div>
-
-  </section>
+  <section className="relative overflow-hidden py-24 bg-gradient-to-br from-slate-50 via-blue-50/60 to-indigo-50/70">
 
 
+<div className="relative container mx-auto px-6 z-10">
 
-<div className="container mx-auto px-6 -mt-24 relative z-20 pb-8">
+  <div
+    className="relative max-w-7xl mx-auto overflow-hidden rounded-[40px] border border-slate-200/70 bg-white shadow-[0_25px_80px_rgba(15,23,42,0.08)]"
+  >
 
- <div className="max-w-6xl mx-auto bg-white/95 backdrop-blur-xl rounded-[40px] shadow-[0_30px_100px_rgba(15,23,42,0.15)] border border-white p-10 md:p-14">
+<div
+  className="relative rounded-[40px] overflow-hidden px-10 py-20 md:px-16 bg-cover bg-center bg-no-repeat"
+ style={{
+backgroundImage:
+"linear-gradient(rgba(15,23,42,0.55), rgba(15,23,42,0.45)), url('/images/hero-pattern.jpg')",
+  backgroundSize: "cover",
+  backgroundPosition: "center center",
+  backgroundRepeat: "no-repeat",
+}}
+>
+    
 
-    <span className="inline-flex items-center px-4 py-2 rounded-full bg-blue-50 text-blue-700 text-sm font-medium mb-5">
-      Professional Learning Programs
-    </span>
+<div className="relative z-10">
+        {/* Left */}
 
-    <h2 className="text-5xl font-bold text-slate-900 mb-4">
-      {category
-        ? categoryTitles[category]
-        : 'All Training Programs'}
-    </h2>
-
-    <p className="text-lg text-slate-600">
-      {pagination.total} published courses available for learning and workforce development.
-    </p>
-
-    <div className="flex flex-wrap gap-10 mt-10 pt-8 border-t border-slate-200">
-
-  <div>
-    <p className="text-3xl font-bold text-slate-900">
-      500+
-    </p>
-
-    <p className="text-slate-500">
-      Training Programs
-    </p>
-  </div>
-
-  <div>
-    <p className="text-3xl font-bold text-slate-900">
-      100+
-    </p>
-
-    <p className="text-slate-500">
-      Expert Trainers
-    </p>
-  </div>
-
-  <div>
-    <p className="text-3xl font-bold text-slate-900">
-      50+
-    </p>
-
-    <p className="text-slate-500">
-      Corporate Clients
-    </p>
-  </div>
-
-</div>
-
-  </div>
+        <div className="relative z-10 max-w-5xl mx-auto text-center">
 
 
-    <div className="flex items-center gap-3 mt-5">
-  <div className="h-3 w-3 rounded-full bg-green-500"></div>
+          <span className="inline-flex items-center rounded-full border border-white/20 bg-white/10 backdrop-blur-md px-5 py-2 text-sm font-semibold text-white">
+            {currentHero.badge}
+          </span>
 
-  <span className="text-slate-600 font-medium">
-    {pagination.total} Active Training Programs
+          <h1 className="mt-6 text-6xl md:text-7xl leading-[0.95] font-black tracking-tight text-white">
+            {currentHero.title}
+          </h1>
+
+          <p className="mt-8 mx-auto max-w-3xl text-xl leading-9 text-slate-200">
+            {currentHero.description}
+          </p>
+
+          <div className="mt-8 flex items-center justify-center gap-3">
+  <span className="h-3 w-3 rounded-full bg-emerald-500 animate-pulse"></span>
+
+  <span className="text-base font-medium text-white">
+    <span className="font-bold text-slate-900">
+      {pagination.total}
+    </span>{" "}
+    Active Training Programs
   </span>
 </div>
 
+  
+
+        <div className="mt-14 grid grid-cols-2 gap-5 md:grid-cols-4">
+
+  {[
+    {
+      value: "500+",
+      label: "Training Programs",
+      icon: GraduationCap,
+    },
+    {
+      value: "100+",
+      label: "Expert Trainers",
+      icon: Users,
+    },
+    {
+      value: "50+",
+      label: "Enterprise Clients",
+      icon: Briefcase,
+    },
+    {
+      value: "15K+",
+      label: "Professionals Trained",
+      icon: ShieldCheck,
+    },
+  ].map((item) => {
+    const Icon = item.icon;
+
+    return (
+      <div
+        key={item.label}
+        className="rounded-3xl bg-white/95 backdrop-blur-md border border-slate-200 px-6 py-5 shadow-xl">
+        <div className="mx-auto mb-5 flex h-8 w-8 items-center justify-center rounded-full bg-blue-50">
+          <Icon className="h-6 w-6 text-blue-600" />
+        </div>
+
+        <h3 className="text-[2rem] font-bold text-slate-900">
+          {item.value}
+        </h3>
+
+        <p className="mt-1 text-sm text-slate-500">
+          {item.label}
+        </p>
+      </div>
+    );
+  })}
+
+</div>
+</div>
+
+    
+
+      </div>
+
+    </div>
+
+  </div>
+
 </div>
 
 
 
-<section className="container mx-auto px-6 -mt-2 relative z-30 mb-10">
+</section>
 
+
+
+
+
+
+
+
+
+<section className="container mx-auto px-6 mt-10 mb-10">
   <div className="max-w-6xl mx-auto">
 
    <div className="p-2">

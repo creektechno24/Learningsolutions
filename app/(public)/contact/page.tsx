@@ -42,7 +42,7 @@ export default function ContactPage() {
   try {
     setLoading(true)
 
-    const response = await fetch("/api/inquiries", {
+    const response = await fetch("/api/contact", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -109,7 +109,7 @@ export default function ContactPage() {
 
       <span className="inline-flex rounded-full border border-blue-500/20 bg-white/10 px-6 py-3 text-blue-300 backdrop-blur-xl">
 
-        Get In Touch
+        Contact Us
 
       </span>
 
@@ -121,8 +121,11 @@ export default function ContactPage() {
 
       <p className="mt-8 text-xl leading-9 text-slate-300 max-w-3xl mx-auto">
 
-        Connect with Creek Learning Solutions and discover how we can help transform learning, leadership, performance and organizational growth.
-
+        Whether you have questions about our corporate training programs,
+need support, want to discuss a partnership,
+or simply wish to learn more about Creek Learning Solutions,
+our team is here to help.
+  
       </p>
 
       {/* Buttons */}
@@ -173,10 +176,13 @@ export default function ContactPage() {
 
         <h3 className="mt-6 text-2xl font-bold text-slate-900">
           Call Us
+
+Speak directly with our team for
+general assistance and training information.
         </h3>
 
         <p className="mt-3 text-slate-600">
-          Corporate Training
+          General Enquiries
         </p>
 
         <a
@@ -228,7 +234,7 @@ export default function ContactPage() {
         </div>
 
         <h3 className="mt-6 text-2xl font-bold text-slate-900">
-          Office
+          Corporate Office
         </h3>
 
         <p className="mt-3 leading-7 text-slate-600">
@@ -293,15 +299,16 @@ export default function ContactPage() {
 
       <h2 className="mt-5 text-3xl font-bold text-slate-900">
 
-        Let's Talk
+        How Can We Help?
 
       </h2>
 
       <p className="mt-4 leading-8 text-slate-600">
 
-        We'd love to hear about your learning,
-        training and organizational development needs.
-
+       Whether you have a question,
+need assistance,
+or want more information about our services,
+our team is ready to assist you.
       </p>
 
     </div>
@@ -318,7 +325,7 @@ export default function ContactPage() {
 
     <span className="inline-flex rounded-full bg-blue-100 px-4 py-2 text-sm font-semibold text-blue-700">
 
-      Primary Contact
+     Talk To Us
 
     </span>
 
@@ -334,14 +341,15 @@ export default function ContactPage() {
 
         <h3 className="text-2xl font-bold text-slate-900">
 
-          Corporate Training
+        Customer Support
 
         </h3>
 
         <p className="mt-2 text-slate-600">
 
-          Speak directly with our corporate learning specialists.
-
+           Speak directly with our team
+for assistance, guidance,
+or general enquiries.
         </p>
 
         <a
@@ -406,7 +414,9 @@ export default function ContactPage() {
 
         <p className="mt-2 text-slate-600">
 
-          Send your corporate training enquiries anytime.
+        Send your questions,
+feedback,
+or partnership requests.
 
         </p>
 
@@ -536,7 +546,8 @@ export default function ContactPage() {
 
           <p className="text-sm text-blue-100">
 
-            We typically respond to enquiries within <span className="font-semibold text-white">24 business hours</span>.
+            We typically respond
+within one business day.
 
           </p>
 
@@ -616,8 +627,7 @@ export default function ContactPage() {
 
         <h4 className="font-bold text-slate-900">
 
-          100+ Companies
-
+       Trusted Support
         </h4>
 
         <p className="text-sm text-slate-600">
@@ -644,7 +654,7 @@ export default function ContactPage() {
 
         <h4 className="font-bold text-slate-900">
 
-          Quick Response
+Fast Response
 
         </h4>
 
@@ -672,8 +682,7 @@ export default function ContactPage() {
 
         <h4 className="font-bold text-slate-900">
 
-          Expert Team
-
+Experienced Team
         </h4>
 
         <p className="text-sm text-slate-600">
@@ -700,8 +709,7 @@ export default function ContactPage() {
 
 <h2 className="mt-6 text-4xl lg:text-5xl font-bold tracking-tight text-slate-900">
 
-  Let's Start the Conversation
-
+Send Us a Message
 </h2>
 
 <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-600">
@@ -721,27 +729,18 @@ export default function ContactPage() {
 
   <span className="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">
 
-    ✓ Corporate Training
+    ✓ General Enquiries
+
 
   </span>
 
   <span className="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">
 
-    ✓ Leadership Development
+✓ Customer Support
 
   </span>
 
-  <span className="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">
-
-    ✓ Soft Skills
-
-  </span>
-
-  <span className="rounded-full bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700">
-
-    ✓ Behavioral Training
-
-  </span>
+  
 
 </div>
 
@@ -776,8 +775,7 @@ export default function ContactPage() {
 
   <label className="mb-3 block text-sm font-semibold text-slate-700">
 
-    Business Email *
-
+Email Address
   </label>
 
   <Input
@@ -802,7 +800,7 @@ export default function ContactPage() {
 
                 <label className="mb-3 block font-semibold">
 
-                  Company Name
+                  Company / Organization (Optional)
 
                 </label>
 
@@ -852,7 +850,7 @@ className="h-14 rounded-2xl border-slate-300 bg-slate-50 px-5 transition-all dur
                 value={formData.subject}
                 onChange={handleChange}
                 required
-                placeholder="Corporate Training Requirement"
+                placeholder="How can we help you?"
                 className="h-14 rounded-2xl border-slate-300 bg-slate-50 px-5 transition-all duration-300 focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-100"
               />
 
@@ -874,7 +872,10 @@ className="h-14 rounded-2xl border-slate-300 bg-slate-50 px-5 transition-all dur
                 onChange={handleChange}
                 required
                 rows={8}
-                placeholder="Please share your training requirements, expected audience size, preferred training mode (online/offline), and any additional details..."
+                placeholder="Please describe your question,
+feedback,
+support request,
+or any information you would like to receive from our team."
                 className="w-full rounded-3xl border border-slate-300 bg-slate-50 p-5 leading-8 transition-all duration-300 focus:border-blue-500 focus:bg-white focus:outline-none focus:ring-4 focus:ring-blue-100 resize-none"
               />
 
@@ -927,7 +928,7 @@ className="h-14 rounded-2xl border-slate-300 bg-slate-50 px-5 transition-all dur
 
       <>
 
-        Send Enquiry
+      Send Message
 
         <ArrowUpRight className="ml-3 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
 

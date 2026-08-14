@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
 
 import {
   Table,
@@ -15,7 +16,6 @@ import StatusBadge  from '@/components/admin/status-badge'
 
 
 
-import { AdminActionButtons } from '@/components/admin/admin-action-buttons'
 
 interface Trainer {
   id: string
@@ -27,6 +27,8 @@ interface Trainer {
 }
 
 export default function TrainersManagement() {
+
+  const router = useRouter()
   const [trainers, setTrainers] = useState<Trainer[]>([])
 
   const [loading, setLoading] = useState(true)
@@ -112,11 +114,17 @@ export default function TrainersManagement() {
             {trainers.length > 0 ? (
               trainers.map((trainer) => (
                 <TableRow key={trainer.id}>
-                  <TableCell className="font-medium">
-                    {trainer.first_name}{' '}
-                    {trainer.last_name}
-                  </TableCell>
-
+                 <TableCell>
+  <button
+    type="button"
+    onClick={() =>
+      router.push(`/dashboard/admin/trainers/${trainer.id}`)
+    }
+    className="font-medium text-blue-600 hover:underline"
+  >
+    {trainer.first_name} {trainer.last_name}
+  </button>
+</TableCell>
                   <TableCell>
                     {trainer.email}
                   </TableCell>
@@ -133,12 +141,15 @@ export default function TrainersManagement() {
                   </TableCell>
 
                   <TableCell className="text-right">
-                   <AdminActionButtons
-  id={trainer.id}
-  status={trainer.status}
-  type="trainer"
-/>
-                  </TableCell>
+  <button
+    onClick={() =>
+      router.push(`/dashboard/admin/trainers/${trainer.id}`)
+    }
+    className="rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-800"
+  >
+    View Details
+  </button>
+</TableCell>
                 </TableRow>
               ))
             ) : (

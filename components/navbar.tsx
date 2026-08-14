@@ -91,7 +91,7 @@ export function Navbar() {
     </Button>
   </Link>
 
-  <Link href="/auth/sign-up">
+  <Link href="/auth/trainer-sign-up">
     <Button className="h-12 px-7 rounded-2xl bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600 shadow-lg hover:shadow-xl transition-all">
       Get Started
     </Button>
@@ -149,68 +149,6 @@ export function Navbar() {
 </Link>
 
 
-<div className="relative group">
-
-  <button
-    className={`text-[15px] font-semibold whitespace-nowrap transition-all ${
-      pathname.startsWith("/resources")
-        ? "text-blue-600"
-        : "text-slate-700 hover:text-blue-600"
-    }`}
-  >
-    Resources
-  </button>
-
-  <div className="absolute top-full left-0 mt-2 w-64 rounded-xl border bg-white shadow-xl opacity-0 invisible transition-all duration-200 group-hover:visible group-hover:opacity-100 z-50">
-
-    <Link
-      href="/resources"
-      className="block px-5 py-3 hover:bg-blue-50
-hover:text-blue-600
-transition-all"
-    >
-      All Resources
-    </Link>
-
-    <Link
-      href="/resources/frameworks"
-      className="block px-5 py-3 hover:bg-blue-50
-hover:text-blue-600
-transition-all"
-    >
-      Frameworks
-    </Link>
-
-    <Link
-      href="/resources/stories"
-      className="block px-5 py-3 hover:bg-blue-50
-hover:text-blue-600
-transition-all"
-    >
-      Stories
-    </Link>
-
-    <Link
-      href="/resources/pdfs"
-      className="block px-5 py-3 hover:bg-blue-50
-hover:text-blue-600
-transition-all"
-    >
-      PDFs
-    </Link>
-
-    <Link
-      href="/resources/documents"
-      className="block px-5 py-3 hover:bg-blue-50
-hover:text-blue-600
-transition-all"
-    >
-      Documents
-    </Link>
-
-  </div>
-
-</div>
 
   <div className="relative group">
  <button

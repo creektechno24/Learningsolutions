@@ -1,48 +1,50 @@
-import { NextResponse } from "next/server";
-import { createClient } from "@supabase/supabase-js";
+import { NextRequest, NextResponse } from "next/server";
+import { supabaseAdmin } from "@/lib/supabase/admin";
+import { createClient } from "@/lib/supabase/server";
+import { resend } from "@/lib/resend";
+import InquiryNotification from "@/emails/inquiry-notification";
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
-
-export async function POST(req: Request) {
+export async function POST(request: NextRequest) {
   try {
-    const body = await req.json();
+    console.log("API HIT");
+
+    const supabase = supabaseAdmin;
+
+    const body = await request.json();
+
+    console.log("BODY:", body);
 
     const {
-      name,
+      company_name,
+      contact_person,
       email,
       phone,
-      company,
-      subject,
-      message,
-      course_id,
-      employee_count,
+      course,
       training_mode,
+      participants,
+      message,
     } = body;
 
     const { data, error } = await supabase
-      .from("inquiries")
+      .from("training_inquiries")
       .insert([
         {
-          name,
+          company_name,
+          contact_person,
           email,
           phone,
-          company,
-          subject,
+          course,
+          training_mode,
+          participants,
           message,
-          course_id: course_id || null,
-          employee_count: employee_count || null,
-          training_mode: training_mode || null,
         },
       ])
-      .select()
-      .single();
+      .select();
+
+    console.log("DATA:", data);
+    console.log("ERROR:", error);
 
     if (error) {
-      console.error(error);
-
       return NextResponse.json(
         {
           success: false,
@@ -52,21 +54,39 @@ export async function POST(req: Request) {
       );
     }
 
+    try {
+  await resend.emails.send({
+    from: "Creek Learning Solutions <onboarding@resend.dev>",
+    to: process.env.ADMIN_EMAIL!,
+    subject: "New Training Inquiry Received",
+    react: InquiryNotification({
+      company_name,
+      contact_person,
+      email,
+      phone,
+      course,
+      training_mode,
+      participants,
+      message,
+    }),
+  });
+} catch (emailError) {
+  console.error("Email Error:", emailError);
+}
+
     return NextResponse.json({
       success: true,
-      inquiry: data,
+      message: "Inquiry submitted successfully.",
     });
   } catch (error) {
-    console.error(error);
+    console.error("CATCH ERROR:", error);
 
     return NextResponse.json(
       {
         success: false,
         message: "Something went wrong.",
       },
-      {
-        status: 500,
-      }
+      { status: 500 }
     );
   }
 }

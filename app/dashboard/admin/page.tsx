@@ -6,6 +6,7 @@ import {
   BookOpen,
   MessageSquare,
   FolderOpen,
+  Mail,
 } from 'lucide-react'
 
 export default async function AdminDashboardPage() {
@@ -25,12 +26,19 @@ export default async function AdminDashboardPage() {
       head: true,
     })
 
-  const { count: inquiryCount } = await supabase
-    .from('inquiries')
-    .select('*', {
-      count: 'exact',
-      head: true,
-    })
+const { count: inquiryCount } = await supabase
+  .from("training_inquiries")
+  .select("*", {
+    count: "exact",
+    head: true,
+  })
+  
+    const { count: contactCount } = await supabase
+  .from("contact_messages")
+  .select("*", {
+    count: "exact",
+    head: true,
+  });
 
     const { count: resourceCount } = await supabase
   .from('resources')
@@ -49,33 +57,57 @@ export default async function AdminDashboardPage() {
 
   return (
     <div className="space-y-8">
-      {/* Header */}
-      <div>
-        <h1 className="text-3xl font-bold text-slate-900">
-          Admin Dashboard
-        </h1>
 
-        <p className="text-slate-600 mt-2">
-          Manage trainers, courses and inquiries.
-        </p>
-      </div>
+      {/* Header */}
+     <div className="flex items-center justify-between">
+  <div>
+    <h1 className="text-4xl font-bold text-slate-900">
+      Dashboard
+    </h1>
+
+    <p className="mt-2 text-slate-500">
+      Manage trainers, courses, resources and inquiries.
+    </p>
+  </div>
+
+  <div className="rounded-2xl border bg-white px-5 py-3 shadow-sm">
+    <p className="text-sm text-slate-500">
+      Today
+    </p>
+
+    <p className="font-semibold">
+      {new Date().toLocaleDateString()}
+    </p>
+  </div>
+</div>
 
       {/* Analytics Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
         {/* Trainers */}
-        <div className="bg-white rounded-2xl border p-6 shadow-sm">
+        <div className="
+group
+rounded-3xl
+border
+bg-white
+p-7
+shadow-sm
+transition-all
+duration-300
+hover:-translate-y-1
+hover:shadow-xl
+">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-slate-500">
                 Total Trainers
               </p>
 
-              <h2 className="text-3xl font-bold mt-2">
+              <h2 className="text-5xl font-bold mt-2">
                 {trainerCount || 0}
               </h2>
             </div>
 
-            <div className="w-12 h-12 rounded-xl bg-blue-100 flex items-center justify-center">
+            <div className="w-16 h-16 rounded-2xl bg-blue-100 flex items-center justify-center">
               <Users className="text-blue-600" />
             </div>
           </div>
@@ -137,7 +169,29 @@ export default async function AdminDashboardPage() {
             </div>
           </div>
         </div>
+
+        
+      <div className="bg-white rounded-2xl border p-6 shadow-sm">
+  <div className="flex items-center justify-between">
+    <div>
+      <p className="text-sm text-slate-500">
+        Contact Messages
+      </p>
+
+      <h2 className="text-3xl font-bold mt-2">
+        {contactCount || 0}
+      </h2>
+    </div>
+
+    <div className="w-12 h-12 rounded-xl bg-cyan-100 flex items-center justify-center">
+      <Mail className="text-cyan-600" />
+    </div>
+  </div>
+</div>
+
       </div>
+
+
 
       {/* Quick Actions */}
       <div className="bg-white rounded-2xl border p-6 shadow-sm">
@@ -173,8 +227,67 @@ export default async function AdminDashboardPage() {
           >
             Manage Inquiries
           </Link>
+             <Link
+  href="/dashboard/admin/contact"
+  className="px-5 py-3 rounded-xl bg-cyan-600 text-white hover:bg-cyan-700 transition-colors"
+>
+  Contact Messages
+</Link>
+
         </div>
       </div>
+
+<div className="rounded-3xl border bg-white p-8 shadow-sm">
+
+<h3 className="text-xl font-semibold">
+Recent Activity
+</h3>
+
+<div className="mt-6 space-y-4">
+
+<div className="flex items-center justify-between rounded-xl border p-4">
+
+<div>
+
+<p className="font-medium">
+New trainer registered
+</p>
+
+<p className="text-sm text-slate-500">
+Waiting for approval
+</p>
+
+</div>
+
+<span className="text-sm text-slate-400">
+2 mins ago
+</span>
+
+</div>
+
+<div className="flex items-center justify-between rounded-xl border p-4">
+
+<div>
+
+<p className="font-medium">
+New inquiry received
+</p>
+
+<p className="text-sm text-slate-500">
+Corporate Training
+</p>
+
+</div>
+
+<span className="text-sm text-slate-400">
+15 mins ago
+</span>
+
+</div>
+
+</div>
+
+</div>
 
       {/* Pending Trainer Approvals */}
       <div className="bg-white rounded-2xl border p-6 shadow-sm">

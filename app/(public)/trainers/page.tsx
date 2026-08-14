@@ -106,80 +106,82 @@ function TrainersPageContent() {
   return (
     <main className="min-h-screen bg-slate-50">
 
-<section className="relative h-[700px] overflow-hidden">
-
+<section className="relative min-h-[620px] lg:min-h-[680px] overflow-hidden">
   {/* Background Image */}
  <Image
   src="/images/hero/training-hero1.jpg"
   alt="Corporate Trainers"
   fill
   priority
-  className="object-cover object-center"
+  className="object-cover object-right"
 />
 
   {/* Overlay */}
-<div className="absolute inset-0 bg-gradient-to-r from-black/90 via-slate-950/75 to-black/20" />
+  <div className="absolute inset-0 bg-gradient-to-r from-slate-950/95 via-slate-900/80 to-slate-900/25" />
   {/* Content */}
   <div className="relative z-10 container mx-auto px-6 h-full flex items-center pt-20">
 
     <div className="max-w-3xl">
 
-      <span className="inline-flex items-center px-5 py-3 rounded-full bg-white/10 border border-blue-500/30 text-blue-100 font-medium">
-        ⭐ CORPORATE TRAINING EXPERTS
+      <span className="inline-flex items-center rounded-full border border-white/15 bg-white/10 backdrop-blur-xl px-6 py-3 text-sm font-semibold tracking-wide text-white">
+        Professional Learning Network
       </span>
 
    <h1 className="text-6xl lg:text-7xl font-black leading-[1.05] mt-8">
-  Meet Our
+  Industry Expert
+
   <br />
  <span className="bg-gradient-to-r from-white via-blue-100 to-cyan-200 bg-clip-text text-transparent">
-  Expert Trainers
+Corporate Trainers
 </span>
 </h1>
 
 <p className="text-2xl text-white/90 mt-6 max-w-3xl leading-relaxed">
-        Learn from experienced industry leaders,
-        consultants and certified corporate trainers
-        across India.
+       Connect with certified corporate trainers delivering
+high-impact learning solutions across leadership,
+technology, HR, safety and business excellence.
       </p>
 
       {/* Stats Cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mt-12 max-w-6xl">
 
-        <div className="bg-white/5 backdrop-blur-2xl border border-white/20 rounded-3xl p-8 shadow-2xl">
-          <h3 className="text-4xl font-bold">
+        <div className="bg-white rounded-3xl border border-slate-200 shadow-2xl rounded-3xl px-6 py-5 shadow-2xl">
+          <h3 className="text-4xl font-extrabold text-slate-900">
             {pagination.total}+
           </h3>
-          <p className="text-slate-300">
+          <p className="text-slate-600 font-medium">
             Expert Trainers
           </p>
         </div>
 
-        <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-6">
-          <h3 className="text-4xl font-bold">
+        <div className="bg-white rounded-3xl border border-slate-200 shadow-2xl rounded-3xl p-6">
+          <h3 className="text-4xl font-extrabold text-slate-900">
             100+
           </h3>
-          <p className="text-slate-300">
+          <p className="text-slate-600 font-medium">
             Programs
           </p>
         </div>
 
-        <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-6">
-          <h3 className="text-4xl font-bold">
+        <div className="bg-white rounded-3xl border border-slate-200 shadow-2xl rounded-3xl p-6">
+          <h3 className="text-4xl font-extrabold text-slate-900">
             25+
           </h3>
-          <p className="text-slate-300">
+          <p className="text-slate-600 font-medium">
             Years Experience
           </p>
         </div>
 
-        <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-6">
-          <h3 className="text-4xl font-bold">
+        <div className="bg-white rounded-3xl border border-slate-200 shadow-2xl rounded-3xl p-6">
+          <h3 className="text-4xl font-extrabold text-slate-900">
             2L+
           </h3>
-          <p className="text-slate-300">
+          <p className="text-slate-600 font-medium">
             Professionals Trained
           </p>
         </div>
+
+        
 
       </div>
 

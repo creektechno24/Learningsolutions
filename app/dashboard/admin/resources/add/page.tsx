@@ -17,7 +17,6 @@ export default function AddResourcePage() {
   const [type, setType] = useState('PDF')
 
   const [featured, setFeatured] = useState(false)
-  const [published, setPublished] = useState(true)
 
   const [thumbnail, setThumbnail] = useState<File | null>(null)
   const [resourceFile, setResourceFile] = useState<File | null>(null)
@@ -71,7 +70,7 @@ filePublicId = uploadedResource.publicId
             'Content-Type': 'application/json',
           },
 
-          body: JSON.stringify({
+     body: JSON.stringify({
   title,
   slug,
   description,
@@ -85,7 +84,7 @@ filePublicId = uploadedResource.publicId
   file_public_id: filePublicId,
 
   featured,
-  published,
+  published: true,
   display_order: 0,
 }),
         }
@@ -360,57 +359,7 @@ filePublicId = uploadedResource.publicId
 
 </div>
 
-{/* Publish Settings */}
 
-<div className="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
-
-  <h2 className="text-2xl font-bold text-slate-900">
-    Publish Settings
-  </h2>
-
-  <p className="mt-2 text-slate-500">
-    Configure the visibility of this resource.
-  </p>
-
-  <div className="mt-8 space-y-6">
-
-    <label className="flex items-center gap-3">
-
-      <input
-        type="checkbox"
-        checked={featured}
-        onChange={(e) =>
-          setFeatured(e.target.checked)
-        }
-        className="h-5 w-5"
-      />
-
-      <span className="font-medium">
-        Featured Resource
-      </span>
-
-    </label>
-
-    <label className="flex items-center gap-3">
-
-      <input
-        type="checkbox"
-        checked={published}
-        onChange={(e) =>
-          setPublished(e.target.checked)
-        }
-        className="h-5 w-5"
-      />
-
-      <span className="font-medium">
-        Publish Resource
-      </span>
-
-    </label>
-
-  </div>
-
-</div>
 
 {/* Action Buttons */}
 

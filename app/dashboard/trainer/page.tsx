@@ -40,13 +40,13 @@ export default async function TrainerDashboardPage() {
   })
   .eq('published', true)
 
-  const { count: coursesCount } = await supabase
+const { count: coursesCount } = await supabase
   .from('courses')
   .select('*', {
     count: 'exact',
     head: true,
   })
-  .eq('published', true)
+  .eq('is_published', true)
 
   // PENDING
   if (trainer.status === 'pending') {

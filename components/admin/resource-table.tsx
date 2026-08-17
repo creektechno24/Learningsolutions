@@ -5,9 +5,14 @@ import Link from 'next/link'
 import Image from "next/image";
 import {
   Eye,
- Download,
+  Download,
   Pencil,
   Trash2,
+  X,
+  FileText,
+  Calendar,
+  Tag,
+  Star,
 } from "lucide-react";
 
 interface Resource {
@@ -37,6 +42,10 @@ export default function ResourceTable({
   const [loading, setLoading] = useState(true)
 
   const [search, setSearch] = useState('')
+
+  const [selectedResource, setSelectedResource] = useState<Resource | null>(null)
+
+
 
   const [statusFilter, setStatusFilter] = useState('all')
 
@@ -522,15 +531,15 @@ const filteredResources = resources.filter((resource) => {
 
     {/* View */}
 
-    <a
-      href={resource.file_url}
-      target="_blank"
-      rel="noopener noreferrer"
-      title="View"
-      className="rounded-lg border p-2 text-blue-600 transition hover:bg-blue-50"
-    >
-      <Eye size={18} />
-    </a>
+
+<button
+  type="button"
+  onClick={() => setSelectedResource(resource)}
+  title="View Details"
+  className="rounded-lg border p-2 text-blue-600 transition hover:bg-blue-50"
+>
+  <Eye size={18} />
+</button>
 
     {/* Download */}
 
@@ -577,6 +586,232 @@ const filteredResources = resources.filter((resource) => {
     </table>
 
   </div>
+
+  {/* Resource Details Modal */}
+
+{selectedResource && (
+  <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/60 p-4 backdrop-blur-sm">
+
+    <div className="relative w-full max-w-3xl overflow-hidden rounded-3xl bg-white shadow-2xl">
+
+      {/* Modal Header */}
+
+      <div className="flex items-center justify-between border-b border-slate-200 px-7 py-5">
+
+        <div>
+          <p className="text-sm font-medium text-blue-600">
+            Resource Details
+          </p>
+
+          <h2 className="mt-1 text-2xl font-bold text-slate-900">
+            {selectedResource.title}
+          </h2>
+        </div>
+
+        <button
+          type="button"
+          onClick={() => setSelectedResource(null)}
+          className="rounded-xl p-2 text-slate-500 transition hover:bg-slate-100 hover:text-slate-900"
+        >
+          <X className="h-5 w-5" />
+        </button>
+
+      </div>
+
+
+      {/* Modal Content */}
+
+      <div className="max-h-[75vh] overflow-y-auto p-7">
+
+        <div className="grid gap-8 md:grid-cols-[220px_1fr]">
+
+          {/* Thumbnail */}
+
+          <div>
+
+            <div className="overflow-hidden rounded-2xl border border-slate-200 bg-slate-50">
+
+              <Image
+                src={selectedResource.thumbnail}
+                alt={selectedResource.title}
+                width={220}
+                height={220}
+                className="h-[220px] w-full object-cover"
+              />
+
+            </div>
+
+          </div>
+
+
+          {/* Details */}
+
+          <div className="space-y-6">
+
+            {/* Description */}
+
+            <div>
+
+              <p className="text-sm font-semibold text-slate-500">
+                Description
+              </p>
+
+              <p className="mt-2 leading-7 text-slate-700">
+                {selectedResource.description || "No description available."}
+              </p>
+
+            </div>
+
+
+            {/* Details Grid */}
+
+            <div className="grid gap-4 sm:grid-cols-2">
+
+              {/* Category */}
+
+              <div className="rounded-2xl bg-slate-50 p-4">
+
+                <div className="flex items-center gap-2 text-slate-500">
+
+                  <Tag className="h-4 w-4" />
+
+                  <span className="text-sm">
+                    Category
+                  </span>
+
+                </div>
+
+                <p className="mt-2 font-semibold text-slate-900">
+                  {selectedResource.category}
+                </p>
+
+              </div>
+
+
+              {/* Type */}
+
+              <div className="rounded-2xl bg-slate-50 p-4">
+
+                <div className="flex items-center gap-2 text-slate-500">
+
+                  <FileText className="h-4 w-4" />
+
+                  <span className="text-sm">
+                    Type
+                  </span>
+
+                </div>
+
+                <p className="mt-2 font-semibold text-slate-900">
+                  {selectedResource.type}
+                </p>
+
+              </div>
+
+
+              {/* Status */}
+
+              <div className="rounded-2xl bg-slate-50 p-4">
+
+                <p className="text-sm text-slate-500">
+                  Status
+                </p>
+
+                <div className="mt-2">
+
+                  {selectedResource.published ? (
+                    <span className="inline-flex rounded-full bg-green-100 px-3 py-1 text-sm font-semibold text-green-700">
+                      Published
+                    </span>
+                  ) : (
+                    <span className="inline-flex rounded-full bg-yellow-100 px-3 py-1 text-sm font-semibold text-yellow-700">
+                      Draft
+                    </span>
+                  )}
+
+                </div>
+
+              </div>
+
+
+              {/* Featured */}
+
+              <div className="rounded-2xl bg-slate-50 p-4">
+
+                <div className="flex items-center gap-2 text-slate-500">
+
+                  <Star className="h-4 w-4" />
+
+                  <span className="text-sm">
+                    Featured
+                  </span>
+
+                </div>
+
+                <p className="mt-2 font-semibold text-slate-900">
+                  {selectedResource.featured ? "Yes" : "No"}
+                </p>
+
+              </div>
+
+
+              {/* Created */}
+
+              <div className="rounded-2xl bg-slate-50 p-4 sm:col-span-2">
+
+                <div className="flex items-center gap-2 text-slate-500">
+
+                  <Calendar className="h-4 w-4" />
+
+                  <span className="text-sm">
+                    Created
+                  </span>
+
+                </div>
+
+                <p className="mt-2 font-semibold text-slate-900">
+                  {new Date(
+                    selectedResource.created_at
+                  ).toLocaleDateString()}
+                </p>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      {/* Modal Footer */}
+
+      <div className="flex flex-col gap-3 border-t border-slate-200 bg-slate-50 px-7 py-5 sm:flex-row sm:justify-end">
+
+        <button
+          type="button"
+          onClick={() => setSelectedResource(null)}
+          className="rounded-xl border border-slate-300 bg-white px-5 py-3 font-semibold text-slate-700 transition hover:bg-slate-100"
+        >
+          Close
+        </button>
+
+        <a
+          href={`${selectedResource.file_url}?fl_attachment`}
+          className="inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-5 py-3 font-semibold text-white transition hover:bg-blue-700"
+        >
+          <Download className="h-4 w-4" />
+          Download Resource
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+)}
 
 </div>
 

@@ -54,24 +54,29 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    try {
-  await resend.emails.send({
-    from: "Creek Learning Solutions <onboarding@resend.dev>",
-    to: process.env.ADMIN_EMAIL!,
-    subject: "New Training Inquiry Received",
-    react: InquiryNotification({
-      company_name,
-      contact_person,
-      email,
-      phone,
-      course,
-      training_mode,
-      participants,
-      message,
-    }),
-  });
+   try {
+  const { data: emailData, error: emailError } =
+    await resend.emails.send({
+      from: "Creek Learning Solutions <noreply@creeklearningsolutions.com>",
+        to: "info@creeklearningsolutions.com",
+        subject: "New Training Inquiry Received",
+      react: InquiryNotification({
+        company_name,
+        contact_person,
+        email,
+        phone,
+        course,
+        training_mode,
+        participants,
+        message,
+      }),
+    });
+
+  console.log("RESEND DATA:", emailData);
+  console.log("RESEND ERROR:", emailError);
+
 } catch (emailError) {
-  console.error("Email Error:", emailError);
+  console.error("EMAIL EXCEPTION:", emailError);
 }
 
     return NextResponse.json({

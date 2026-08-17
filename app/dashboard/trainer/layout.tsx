@@ -3,6 +3,13 @@ import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import LogoutButton from '@/components/logout-button'
 
+import {
+  LayoutDashboard,
+  UserRound,
+  BookOpen,
+  FolderOpen,
+} from 'lucide-react'
+
 export default async function TrainerLayout({
   children,
 }: {
@@ -45,68 +52,108 @@ export default async function TrainerLayout({
   }
 
   return (
-    <div className="min-h-screen flex bg-slate-100">
+    <div className="min-h-screen bg-slate-100">
 
       {/* Sidebar */}
-      <aside className="w-72 bg-black text-white flex flex-col justify-between p-6">
+      <aside className="fixed inset-y-0 left-0 z-40 flex w-72 flex-col border-r border-slate-800 bg-slate-950 px-5 py-6 text-white">
 
-        <div>
+        {/* Logo / Brand */}
+        <div className="border-b border-slate-800 pb-6">
 
-          {/* Logo */}
-          <div className="mb-12">
-            <h2 className="text-3xl font-bold">
-              Trainer Panel
-            </h2>
+          <Link
+            href="/dashboard/trainer"
+            className="flex items-center gap-3"
+          >
 
-            <p className="text-slate-400 mt-2 text-sm">
-              LearningSolutions
-            </p>
-          </div>
+            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-600 text-lg font-bold shadow-lg">
+              LS
+            </div>
 
-          {/* Navigation */}
-          <nav className="space-y-3">
+            <div>
+              <h2 className="text-lg font-bold tracking-tight">
+                LearningSolutions
+              </h2>
 
-            <Link
-              href="/dashboard/trainer"
-              className="block px-4 py-3 rounded-xl hover:bg-slate-800 transition-colors"
-            >
-              Dashboard
-            </Link>
+              <p className="mt-1 text-xs text-slate-400">
+                Trainer Portal
+              </p>
+            </div>
 
-            <Link
-              href="/dashboard/trainer/profile"
-              className="block px-4 py-3 rounded-xl hover:bg-slate-800 transition-colors"
-            >
-              My Profile
-            </Link>
+          </Link>
 
-            <Link
-              href="/dashboard/trainer/courses"
-              className="block px-4 py-3 rounded-xl hover:bg-slate-800 transition-colors"
-            >
-              Courses
-            </Link>
-    
-             <Link
-  href="/dashboard/trainer/resources"
-  className="block px-4 py-3 rounded-xl hover:bg-slate-800 transition-colors"
->
-  Resources
-</Link>
-
-          </nav>
         </div>
 
-        {/* Logout */}
-        <div className="pt-10">
+        {/* Navigation */}
+        <nav className="mt-8 flex-1 space-y-2">
+
+          <Link
+            href="/dashboard/trainer"
+            className="group flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-slate-300 transition-all duration-200 hover:bg-slate-800 hover:text-white"
+          >
+            <LayoutDashboard className="h-5 w-5 text-slate-400 transition group-hover:text-blue-400" />
+            Dashboard
+          </Link>
+
+          <Link
+            href="/dashboard/trainer/profile"
+            className="group flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-slate-300 transition-all duration-200 hover:bg-slate-800 hover:text-white"
+          >
+            <UserRound className="h-5 w-5 text-slate-400 transition group-hover:text-blue-400" />
+            My Profile
+          </Link>
+
+          <Link
+            href="/dashboard/trainer/courses"
+            className="group flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-slate-300 transition-all duration-200 hover:bg-slate-800 hover:text-white"
+          >
+            <BookOpen className="h-5 w-5 text-slate-400 transition group-hover:text-blue-400" />
+            Courses
+          </Link>
+
+          <Link
+            href="/dashboard/trainer/resources"
+            className="group flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-slate-300 transition-all duration-200 hover:bg-slate-800 hover:text-white"
+          >
+            <FolderOpen className="h-5 w-5 text-slate-400 transition group-hover:text-blue-400" />
+            Resources
+          </Link>
+
+        </nav>
+
+        {/* Trainer Status */}
+        <div className="border-t border-slate-800 pt-5">
+
+          <div className="mb-4 rounded-2xl border border-slate-800 bg-slate-900 p-4">
+
+            <p className="text-sm font-semibold text-white">
+              Trainer Account
+            </p>
+
+            <div className="mt-2 flex items-center gap-2">
+
+              <span className="h-2 w-2 rounded-full bg-emerald-400" />
+
+              <span className="text-xs text-emerald-400">
+                Active
+              </span>
+
+            </div>
+
+          </div>
+
           <LogoutButton />
+
         </div>
 
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 p-8 overflow-y-auto">
-        {children}
+      <main className="min-h-screen pl-72">
+
+        <div className="p-8">
+          {children}
+        </div>
+
       </main>
 
     </div>

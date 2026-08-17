@@ -23,45 +23,41 @@ export async function POST(request: NextRequest) {
           success: false,
           message: "Please fill all required fields.",
         },
-        {
-          status: 400,
-        }
+        { status: 400 }
       );
     }
 
     const supabase = await createClient();
 
-    // Save to database
-    const { error } = await supabase
+    // Save message to Supabase
+    const { error: dbError } = await supabase
       .from("contact_messages")
       .insert({
         name,
         email,
-        phone,
-        company,
+        phone: phone || null,
+        company: company || null,
         subject,
         message,
       });
 
-    if (error) {
-      console.error("Supabase Error:", error);
+    if (dbError) {
+      console.error("Supabase Error:", dbError);
 
       return NextResponse.json(
         {
           success: false,
-          message: error.message,
+          message: "Failed to save your message.",
         },
-        {
-          status: 500,
-        }
+        { status: 500 }
       );
     }
 
-    // Send Email Notification
+    // Send notification email
     try {
       const { error: emailError } = await resend.emails.send({
-        from: "Creek Learning Solutions <onboarding@resend.dev>",
-        to: process.env.ADMIN_EMAIL!, // Later change to process.env.ADMIN_EMAIL!
+        from: "Creek Learning Solutions <noreply@creeklearningsolutions.com>",
+        to: "info@creeklearningsolutions.com",
         subject: "New Contact Message Received",
         react: ContactNotification({
           name,
@@ -75,8 +71,6 @@ export async function POST(request: NextRequest) {
 
       if (emailError) {
         console.error("Resend Error:", emailError);
-      } else {
-        console.log("Contact notification email sent successfully.");
       }
     } catch (emailError) {
       console.error("Email Exception:", emailError);
@@ -95,9 +89,7 @@ export async function POST(request: NextRequest) {
         success: false,
         message: "Something went wrong.",
       },
-      {
-        status: 500,
-      }
+      { status: 500 }
     );
   }
-} 
+}

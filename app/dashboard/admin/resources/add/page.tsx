@@ -253,39 +253,50 @@ filePublicId = uploadedResource.publicId
 
     {/* Resource Type */}
 
-    <div>
 
-      <label className="mb-2 block text-sm font-semibold text-slate-700">
-        Resource Type *
-      </label>
+<div>
 
-      <select
-        value={type}
-        onChange={(e) => setType(e.target.value)}
-        className="h-12 w-full rounded-xl border border-slate-300 px-4 outline-none focus:border-blue-500"
-      >
+  <label className="mb-2 block text-sm font-semibold text-slate-700">
+    Resource Type *
+  </label>
 
-        <option value="PDF">PDF</option>
+  <select
+    value={type}
+    onChange={(e) => setType(e.target.value)}
+    className="h-12 w-full rounded-xl border border-slate-300 px-4 outline-none focus:border-blue-500"
+  >
 
-        <option value="DOCX">DOCX</option>
+    <option value="PDF">PDF</option>
 
-        <option value="PPT">PPT</option>
+    <option value="JPG">JPG</option>
 
-        <option value="PPTX">PPTX</option>
+    <option value="JPEG">JPEG</option>
 
-        <option value="XLS">XLS</option>
+    <option value="PNG">PNG</option>
 
-        <option value="XLSX">XLSX</option>
+    <option value="WEBP">WEBP</option>
 
-        <option value="ZIP">ZIP</option>
+    <option value="DOC">DOC</option>
 
-        <option value="Video">Video</option>
+    <option value="DOCX">DOCX</option>
 
-        <option value="Link">Link</option>
+    <option value="PPT">PPT</option>
 
-      </select>
+    <option value="PPTX">PPTX</option>
 
-    </div>
+    <option value="XLS">XLS</option>
+
+    <option value="XLSX">XLSX</option>
+
+    <option value="ZIP">ZIP</option>
+
+    <option value="Video">Video</option>
+
+    <option value="Link">Link</option>
+
+  </select>
+
+</div>
 
   </div>
 

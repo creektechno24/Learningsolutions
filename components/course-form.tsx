@@ -309,22 +309,23 @@ useEffect(() => {
   </select>
 </div>
 
-      <div className="grid md:grid-cols-2 gap-4">
-      <div>
-  <label className="block text-sm font-medium mb-1">
-    Price ($)
-  </label>
+  <div className="grid md:grid-cols-2 gap-4">
+  <div>
+    <label className="block text-sm font-medium mb-1">
+      Price (₹)
+    </label>
 
-  <Input
-    name="price"
-    type="number"
-    step="0.01"
-    value={formData.price}
-    onChange={handleChange}
-    placeholder="99.99"
-  />
+    <Input
+      name="price"
+      type="number"
+      step="1"
+      min="0"
+      value={formData.price}
+      onChange={handleChange}
+      placeholder="5000"
+    />
+  </div>
 </div>
-      </div>
 
       <div className="border-t pt-4">
         <h3 className="font-semibold mb-4">SEO Settings</h3>

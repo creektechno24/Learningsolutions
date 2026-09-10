@@ -1,13 +1,13 @@
 'use client'
 
-import { useState } from 'react'
+import { Suspense, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { signUp } from '@/lib/supabase/auth'
 
-export default function SignUpPage() {
+function SignUpPageContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
 
@@ -225,5 +225,14 @@ export default function SignUpPage() {
       </div>
 
     </div>
+  )
+}
+
+
+export default function SignUpPage() {
+  return (
+    <Suspense fallback={null}>
+      <SignUpPageContent />
+    </Suspense>
   )
 }

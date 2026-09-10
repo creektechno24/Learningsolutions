@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
+import { createClient } from '@/lib/supabase/client'
 
 import {
   signUp,
@@ -63,14 +64,13 @@ export default function TrainerProfilePage() {
     }))
   }
 
-
-  const handleSubmit = async (
+const handleSubmit = async (
   e: React.FormEvent<HTMLFormElement>
 ) => {
   e.preventDefault()
 
   if (!signupData) {
-    setError("Signup data not found")
+    setError('Signup data not found')
     return
   }
 
@@ -78,67 +78,155 @@ export default function TrainerProfilePage() {
   setError(null)
 
   try {
-    const result = await signUp({
-      email: signupData.email,
-      password: signupData.password,
-      userType: "trainer",
-      firstName: signupData.firstName,
-      lastName: signupData.lastName,
-    })
+    let userId: string
 
-    if (result.error) {
-      setError(result.error)
-      return
+    // -----------------------------------------
+    // 1. Existing user
+    // -----------------------------------------
+
+    if (signupData.existingUser) {
+      const supabase = (await import('@/lib/supabase/client'))
+        .createClient()
+
+      const {
+        data: { user },
+        error: userError,
+      } = await supabase.auth.getUser()
+
+      if (userError || !user) {
+        setError(
+          'Please login before submitting your trainer application.'
+        )
+        return
+      }
+
+      // Make sure logged-in email matches signup email
+      if (
+        user.email?.trim().toLowerCase() !==
+        signupData.email.trim().toLowerCase()
+      ) {
+        setError(
+          'The logged-in email does not match the trainer application email.'
+        )
+        return
+      }
+
+      userId = user.id
     }
 
-    const user = result.data?.user
+    // -----------------------------------------
+    // 2. New user
+    // -----------------------------------------
 
-    if (!user) {
-      setError("User creation failed")
-      return
+    else {
+      const result = await signUp({
+        email: signupData.email,
+        password: signupData.password,
+        userType: 'trainer',
+        firstName: signupData.firstName,
+        lastName: signupData.lastName,
+      })
+
+      if (result.error) {
+        setError(result.error)
+        return
+      }
+
+      const user = result.data?.user
+
+      if (!user) {
+        setError('User creation failed')
+        return
+      }
+
+      userId = user.id
     }
 
-    const trainerProfile = await createTrainerProfile(
-  user.id,
-  {
-    firstName: signupData.firstName,
-    lastName: signupData.lastName,
-    email: signupData.email,
 
-    phone: formData.phone,
-    designation: formData.designation,
+    // -----------------------------------------
+// 3. Check for existing trainer application
+// -----------------------------------------
 
-    yearsOfExperience: Number(
-      formData.yearsOfExperience
-    ),
+const supabase = createClient()
 
-    linkedin: formData.linkedin,
+const {
+  data: existingTrainerProfile,
+  error: existingTrainerError,
+} = await supabase
+  .from('trainer_profiles')
+  .select('id, status')
+  .eq('id', userId)
+  .maybeSingle()
 
-    bio: formData.bio,
+if (existingTrainerError) {
+  console.error(
+    'Existing trainer profile check error:',
+    existingTrainerError
+  )
 
-    expertise: formData.expertise
-      .split(",")
-      .map((item) => item.trim())
-      .filter(Boolean),
-  }
-)
+  setError(
+    'Unable to check existing trainer application.'
+  )
 
-if (trainerProfile.error) {
-  setError(trainerProfile.error)
   return
 }
 
-sessionStorage.removeItem("trainer-signup")
+if (existingTrainerProfile) {
+  setError(
+    'You already have a trainer application.'
+  )
 
-router.push("/auth/sign-up-success")
+  return
+}
 
+    // -----------------------------------------
+    // 3. Create trainer profile
+    // -----------------------------------------
+
+    const trainerProfile = await createTrainerProfile(
+      userId,
+      {
+        firstName: signupData.firstName,
+        lastName: signupData.lastName,
+        email: signupData.email,
+
+        phone: formData.phone,
+        designation: formData.designation,
+
+        yearsOfExperience: Number(
+          formData.yearsOfExperience
+        ),
+
+        linkedin: formData.linkedin,
+
+        bio: formData.bio,
+
+        expertise: formData.expertise
+          .split(',')
+          .map((item) => item.trim())
+          .filter(Boolean),
+      }
+    )
+
+    if (trainerProfile.error) {
+      setError(trainerProfile.error)
+      return
+    }
+
+    // Clear signup information
+    sessionStorage.removeItem('trainer-signup')
+
+    router.push('/auth/sign-up-success')
 
   } catch (error) {
-    setError("Something went wrong")
+    console.error('Trainer application error:', error)
+
+    setError('Something went wrong')
   } finally {
     setLoading(false)
   }
 }
+ 
 
 
     

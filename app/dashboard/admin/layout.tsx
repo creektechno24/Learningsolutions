@@ -19,10 +19,25 @@ export default async function AdminLayout({
     redirect('/auth/login')
   }
 
-  // Not admin
-  if (user.user_metadata?.user_type !== 'admin') {
-    redirect('/dashboard')
-  }
+ // Get public.users record
+const {
+  data: publicUser,
+  error: publicUserError,
+} = await supabase
+  .from('users')
+  .select('role')
+  .eq('auth_user_id', user.id)
+  .single()
+
+// User profile not found
+if (publicUserError || !publicUser) {
+  redirect('/dashboard')
+}
+
+// Not admin
+if (publicUser.role !== 'ADMIN') {
+  redirect('/dashboard')
+}
 
   async function logout() {
     'use server'

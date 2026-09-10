@@ -1,11 +1,12 @@
 'use client'
 
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { login } from '@/lib/supabase/auth'
+import { createClient } from '@/lib/supabase/client'
 import {
   Eye,
   EyeOff,
@@ -16,6 +17,11 @@ import {
 
 export default function LoginPage() {
   const router = useRouter()
+  const searchParams = useSearchParams()
+    const supabase = createClient()
+
+  const redirect = searchParams.get('redirect')
+
   const [loading, setLoading] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -29,28 +35,148 @@ export default function LoginPage() {
     setFormData((prev) => ({ ...prev, [name]: value }))
   }
 
+
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setError(null)
-    setLoading(true)
+  e.preventDefault()
 
-    try {
-      const result = await login({
+  setError(null)
+  setLoading(true)
+
+  try {
+    // -----------------------------------------
+    // 1. Check whether user is registered
+    // -----------------------------------------
+
+    const checkResponse = await fetch('/api/auth/check-user', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
         email: formData.email,
-        password: formData.password,
-      })
+      }),
+    })
 
-      if (result.error) {
-        setError(result.error)
-      } else {
-        router.push('/dashboard')
-      }
-    } catch (err) {
-      setError('An unexpected error occurred')
-    } finally {
-      setLoading(false)
+    const checkData = await checkResponse.json()
+
+    if (!checkResponse.ok) {
+      setError(
+        checkData.error || 'Unable to check user account.'
+      )
+      return
     }
+
+    // -----------------------------------------
+    // 2. User is NOT registered
+    // -----------------------------------------
+
+    if (!checkData.exists) {
+      setError(
+        "You don't have an account. Please sign up first."
+      )
+      return
+    }
+
+    // -----------------------------------------
+    // 3. User exists → Login
+    // -----------------------------------------
+
+    const result = await login({
+      email: formData.email,
+      password: formData.password,
+    })
+
+    if (result.error) {
+      console.error('Login error:', result.error)
+
+      setError(
+        'Invalid email or password. Please try again.'
+      )
+
+      return
+    }
+
+    // -----------------------------------------
+    // 4. Login successful
+    // -----------------------------------------
+     // -----------------------------------------
+// 4. Login successful
+// -----------------------------------------
+
+const {
+  data: { user },
+  error: userError,
+} = await supabase.auth.getUser()
+
+if (userError || !user) {
+  setError('Unable to get logged-in user.')
+  return
+}
+
+// Get user's role from public.users  
+const {
+  data: publicUser,
+  error: publicUserError,
+} = await supabase
+  .from('users')
+  .select('role')
+  .eq('auth_user_id', user.id)
+  .single()
+
+  console.log('Logged in auth user:', user)
+console.log('Public user:', publicUser)
+console.log('Public user error:', publicUserError)
+console.log('User role:', publicUser?.role)
+
+
+if (publicUserError || !publicUser) {
+  console.error('Public user fetch error:', publicUserError)
+
+  setError('User profile not found.')
+  return
+}
+
+// Admin → Admin Dashboard
+
+if (publicUser.role === 'ADMIN') {
+  console.log('ADMIN REDIRECT STARTED')
+  window.location.href = '/dashboard/admin'
+  return
+}
+
+
+// Learner → requested redirect or normal dashboard
+// Admin → Admin Dashboard
+if (publicUser.role === 'ADMIN') {
+  console.log('ADMIN REDIRECT STARTED')
+  window.location.href = '/dashboard/admin'
+  return
+}
+
+// Trainer → Trainer Dashboard
+if (publicUser.role === 'TRAINER') {
+  router.push('/dashboard/trainer')
+  return
+}
+
+// Learner → My Courses / requested redirect
+if (redirect) {
+  router.push(redirect)
+} else {
+  router.push('/my-courses')
+  return
+}
+
+  } catch (err) {
+    console.error('Login error:', err)
+
+    setError('Unable to login. Please try again.')
+
+  } finally {
+    setLoading(false)
   }
+}
+
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-100 via-blue-50 to-indigo-100 flex items-center justify-center px-4">
@@ -168,11 +294,16 @@ export default function LoginPage() {
   <p className="text-sm text-slate-600">
     Don't have an account?{" "}
     <Link
-      href="/auth/sign-up"
-      className="font-semibold text-blue-600 hover:text-blue-700"
-    >
-      Sign Up
-    </Link>
+  href={
+    redirect
+      ? `/auth/signup?redirect=${encodeURIComponent(redirect)}`
+      : '/auth/signup'
+  }
+  className="font-semibold text-blue-600 hover:text-blue-700"
+>
+  Sign Up
+</Link>
+   
   </p>
 
 </div>

@@ -2,7 +2,7 @@
 
 import { createClient } from '@/lib/supabase/client'
 
-export type UserType = 'trainer' | 'enterprise'
+export type UserType = 'trainer' | 'learner'
 
 export interface SignUpData {
   email: string

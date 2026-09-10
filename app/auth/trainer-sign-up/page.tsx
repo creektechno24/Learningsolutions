@@ -104,12 +104,55 @@ const passwordTooShort =
     }
 
    try {
+    try {
+  // Check whether this email is already registered
+  const response = await fetch('/api/auth/check-user', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      email: formData.email,
+    }),
+  })
+
+  const data = await response.json()
+
+  if (!response.ok) {
+    setError(
+      data.error || 'Unable to check this email.'
+    )
+    return
+  }
+
+  // Store signup details except password
   sessionStorage.setItem(
-    "trainer-signup",
-    JSON.stringify(formData)
+    'trainer-signup',
+    JSON.stringify({
+      email: formData.email.trim().toLowerCase(),
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+      password: formData.password,
+      existingUser: data.exists,
+    })
   )
 
-  router.push("/auth/trainer-profile")
+  // Existing user → login first
+  if (data.exists) {
+    router.push(
+      `/auth/login?redirect=/auth/trainer-profile`
+    )
+    return
+  }
+
+  // New user → continue to profile
+  router.push('/auth/trainer-profile')
+
+} catch (error) {
+  console.error('Trainer signup error:', error)
+  setError('Unable to continue. Please try again.')
+}
+  
 } catch (error) {
   setError("Something went wrong")
 }

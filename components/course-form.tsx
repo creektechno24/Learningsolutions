@@ -98,9 +98,11 @@ useEffect(() => {
 
     try {
       const method = courseId ? 'PATCH' : 'POST'
-   const url = courseId
+
+const url = courseId
   ? `/api/admin/courses/${courseId}`
-  : '/api/trainer/courses'
+  : '/api/admin/courses'
+      
 
       const response = await fetch(url, {
         method,

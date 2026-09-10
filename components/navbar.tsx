@@ -93,7 +93,7 @@ export function Navbar() {
 
   <Link href="/auth/trainer-sign-up">
     <Button className="h-12 px-7 rounded-2xl bg-gradient-to-r from-blue-600 via-indigo-600 to-violet-600 shadow-lg hover:shadow-xl transition-all">
-      Get Started
+      Become a trainer
     </Button>
   </Link>
 </div>
